@@ -1,0 +1,18 @@
+<%= form_with(model: @login, local: true) do |f| %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Sign In' %>
+  </div>
+  <div class="actions">
+    <%= link_to 'Sign-Up',controller: 'sign_up',action: "index" %>
+  </div>
+<%end %>
