@@ -4,7 +4,6 @@ class StudentsController < ApplicationController
     params.require(:student).permit(:name, :email, :password, :password_confirmation, :educational_level, :university, :maximum_book_limit)
   end
 
- #  wrap_parameters :student, include: [:name, :email, :password, :password_confirmation, :educational_level, :university]
   def index
   end
 
@@ -37,7 +36,8 @@ class StudentsController < ApplicationController
     end
     respond_to do |format|
       if @student.save
-        format.html { redirect_to @student, notice: 'Student was successfully signed up.' }
+        #redirect_to controller: 'session', action: 'create', email: @student[:email]
+        format.html { redirect_to @student }
         format.json { render json: @student, status: :created, location: @student }
       else
         format.html { render action: "new" }

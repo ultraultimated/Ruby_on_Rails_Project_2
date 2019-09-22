@@ -1,5 +1,6 @@
 <%= form_with(model: @login, local: true) do |f| %>
 
+<h1>Login To Library System</h1>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email %>
@@ -9,10 +10,14 @@
     <%= f.label :password %><br />
     <%= f.password_field :password %>
   </div>
+  <br>
+
   <div class="actions">
     <%= f.submit 'Sign In' %>
   </div>
+  <br>
+
   <div class="actions">
-    <%= link_to 'Sign-Up',controller: 'sign_up',action: "index" %>
-  </div>
+    <h3><%= link_to 'SIGN-UP',controller: 'sign_up',action: "index" %></h3>
+     </div>
 <%end %>
