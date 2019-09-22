@@ -28,12 +28,13 @@ class StudentsController < ApplicationController
 
   def create
   	@student = Student.new(student_params)
-  	puts "******"
-    if params[:educational_level]=="Undergraduate"
-    	puts "inside ******************************"
+    if params[:student][:educational_level]=="Undergraduate"
     	@student[:maximum_book_limit] = 2
+    elsif params[:student][:educational_level]=="graduate"
+    	@student[:maximum_book_limit] = 4
+    elsif params[:student][:educational_level]=="phd"
+    	@student[:maximum_book_limit] = 6
     end
-	
     respond_to do |format|
       if @student.save
         format.html { redirect_to @student, notice: 'Student was successfully signed up.' }
