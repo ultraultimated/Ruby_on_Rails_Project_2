@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_22_083035) do
+ActiveRecord::Schema.define(version: 2019_09_22_210258) do
+
+  create_table "librarians", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.string "name"
+    t.string "library"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_librarians_on_email", unique: true
+  end
 
   create_table "logins", force: :cascade do |t|
     t.string "email"

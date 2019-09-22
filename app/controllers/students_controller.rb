@@ -4,7 +4,6 @@ class StudentsController < ApplicationController
     params.require(:student).permit(:name, :email, :password, :password_confirmation, :educational_level, :university, :maximum_book_limit)
   end
 
- #  wrap_parameters :student, include: [:name, :email, :password, :password_confirmation, :educational_level, :university]
   def index
   end
 
