@@ -6,6 +6,7 @@ class Student < ApplicationRecord
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates :educational_level,  :presence =>true
   validates :university,  :presence =>true
+  validates :name, :presence => true
   #validates :password, :presence => {:message => "please enter password"}, :length => {minimum: 8}, allow_nil: true
   #validates :maximum_books, :presence => true, :length => {:in =>  1..1}
   
