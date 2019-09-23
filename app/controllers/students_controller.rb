@@ -18,7 +18,6 @@ class StudentsController < ApplicationController
   end
 
   def new
-
     @student = Student.new
     respond_to do |format|
       format.html
@@ -31,7 +30,6 @@ class StudentsController < ApplicationController
     ####to find if user is already librarian
     librarian = Librarian.find_by_email(@student[:email])
     if librarian == nil
-            ######
             if params[:student][:educational_level]=="Undergraduate"
             	@student[:maximum_book_limit] = 2
             elsif params[:student][:educational_level]=="graduate"
@@ -53,5 +51,24 @@ class StudentsController < ApplicationController
          flash[:notice] = "Account already created as librarian"
          redirect_to root_path
     end
-end
+   end
+
+  def edit
+  end
+
+  def mybooks
+    @librarian = Librarian.all
+  end
+
+  def allbooks
+  end
+
+  def bookmark
+  end 
+
+  def fines
+  end
+
+
+
 end
