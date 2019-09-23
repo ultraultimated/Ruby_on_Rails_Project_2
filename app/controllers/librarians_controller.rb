@@ -8,10 +8,12 @@ class LibrariansController < ApplicationController
 
   public
 
+  def index
+
+  end
+
   def new
-    puts "**************in librarian"
     @librarian = Librarian.new
-    puts @librarian == nil
     respond_to do |format|
       format.html
       format.json { render json: @librarian }

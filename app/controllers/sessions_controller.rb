@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   	student = Student.find_by(email: params[:email])
     if student&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to posts_url, notice: 'Logged in!'
+      redirect_to student_path, notice: 'Logged in!'
     else
       flash.now.alert = 'Email or password is invalid'
       render :new
