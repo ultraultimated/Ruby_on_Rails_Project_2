@@ -1,0 +1,57 @@
+<%= form_for @student do |f| %>
+
+<% if @student.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this Student from being saved:</h2>
+
+      <ul>
+      <% @student.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+ <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, :required => true %>
+  </div>
+
+  <br />
+  
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email, :required => true %>
+  </div>
+  
+  <br />
+  
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  
+  <br>
+  
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <br />
+  
+  <div>
+  Educational Level : <%= f.select  :educational_level, ['Undergraduate', 'graduate', 'phd'], {:prompt => 'Select Education Level'}, :required => true %>
+  </div>
+  
+  <br/>
+  
+  <div>
+  University: <%= f.select  :university, ['NCSU', 'ASU', 'NEU'], {:prompt => 'Select University'}, :required => true %>
+  </div>
+  <br>
+ 
+  <div class="action">
+    <%= f.submit "Sign Up" %>
+  </div>
+<%end %>

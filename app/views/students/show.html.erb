@@ -1,0 +1,31 @@
+<h1>Account Successfully Created</h1>
+<br>
+Account Details :
+<p>
+  <b>name:</b>
+  <%=@student.name %>
+</p>
+
+<p>
+  <b>email:</b>
+  <%=@student.email %>
+</p>
+
+<p>
+  <b>Educational level</b>
+  <%=@student.educational_level %>
+</p>
+
+<p>
+  <b>university</b>
+  <%= @student.university%>
+</p>
+
+<p>
+  <b>Maximum Book Limit</b>
+  <%= @student.maximum_book_limit%>
+</p>
+
+<h3><%= link_to 'Sign-In to access your account', root_path %></h3>
+
+

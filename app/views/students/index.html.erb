@@ -1,0 +1,13 @@
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
+  <a href="students/mybooks">My Books</a>
+  <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id])%></a>
+  <div class="topcorner"><a href="#Sign Out">Sign out</a></div>
+</div>
+<br><br><br>
+<a href="students/alllibs">List of all the libraries</a><br><br>
+<a href="students/viewbooks">View all books</a><br><br>
+<a href="students/bookmarks">My Book Bookmarks</a><br><br>
+<a href="students/fines">Overdue Fines</a><br><br>
+
+

@@ -1,0 +1,23 @@
+<%= form_with(model: @login, local: true) do |f| %>
+<%= params[:notice] %>
+<h1>Login To Library System</h1>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email , :required => true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, :required => true %>
+  </div>
+  <br>
+
+  <div class="actions">
+    <%= f.submit 'Sign In' %>
+  </div>
+  <br>
+
+  <div class="actions">
+    <h3><%= link_to 'SIGN-UP',controller: 'sign_up',action: "index" %></h3>
+     </div>
+<%end %>
