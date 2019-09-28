@@ -53,7 +53,24 @@ class StudentsController < ApplicationController
     end
    end
 
+ def update
+    @student = Student.find(params[:id])
+
+    respond_to do |format|
+      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
+      #, 
+      if @student.update_attributes(student_params)
+        format.html { redirect_to :controller => 'students', :action => 'index', notice: 'Student Info was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @student.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def edit
+    @student = Student.find(session[:student_id])
   end
 
   def mybooks
