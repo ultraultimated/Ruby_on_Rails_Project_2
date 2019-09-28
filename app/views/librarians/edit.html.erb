@@ -21,7 +21,7 @@
 
   <div class="field">
     <%= f.label :email %>
-    <%= f.email_field :email, :required => true %>
+    <%= f.email_field :email, :readonly => true %>
   </div>
 
   <br/>
@@ -40,12 +40,9 @@
 
   <br/>
 
-  <div>
-    Library: <%= f.select :library, Library.all.collect { |l| [l.name, l.id] }, {:prompt => 'Select Library'}, :required => true %>
-  </div>
   <br>
 
   <div class="action">
-    <%= f.submit "Sign Up" %>
+    <%= f.submit "Confirm Changes" %>
   </div>
 <% end %>
