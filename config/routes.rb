@@ -10,9 +10,18 @@ end
   resources :users
   resource :session
   resources :sign_up
+<<<<<<< HEAD
   resources :librarians
   resources :books
   resource :libraries
+=======
+  resources :librarians do
+    collection do
+      get 'editlib'
+    end
+  end
+  resources :books
+>>>>>>> 8f88be5ebf2bfe3cfe533ebbc2da953aae15707b
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'
   get 'students/viewbooks' => 'students#allbooks'

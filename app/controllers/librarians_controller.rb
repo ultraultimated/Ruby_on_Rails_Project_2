@@ -72,10 +72,13 @@ class LibrariansController < ApplicationController
   end
 
   def editlib
+<<<<<<< HEAD
     @library = Library.find_by_id(session[:library])
     puts @library[:university]
 
     @university = University.find_by_id(@library[:university])
+=======
+>>>>>>> 8f88be5ebf2bfe3cfe533ebbc2da953aae15707b
 
   end
 
