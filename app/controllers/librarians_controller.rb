@@ -68,7 +68,7 @@ class LibrariansController < ApplicationController
   end
 
   def add_book
-
+    redirect_to :controller => 'books', :action => 'new'
   end
 
 
