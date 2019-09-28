@@ -10,6 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 2019_09_28_001155) do
+
+  create_table "admins", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+=======
 ActiveRecord::Schema.define(version: 2019_09_28_011202) do
 
   create_table "books", force: :cascade do |t|
@@ -27,6 +34,7 @@ ActiveRecord::Schema.define(version: 2019_09_28_011202) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
+>>>>>>> ee79c6313e89dfa91b716b9e49d54356454df44e
   end
 
   create_table "librarians", force: :cascade do |t|
