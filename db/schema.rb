@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_28_011202) do
+ActiveRecord::Schema.define(version: 2019_09_28_234034) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_09_28_011202) do
     t.boolean "specialcollection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "copies", limit: 6
     t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
   end
 

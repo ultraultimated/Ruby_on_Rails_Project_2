@@ -2,11 +2,12 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).require(:ISBN, :title, :author, :language,
-                                  :published, :edition, :image_url, :subject,
-                                  :summary, :special_collection)
+    params.require(:book).permit(:ISBN, :title, :author, :language,
+                                  :published, :edition, :image, :subject,
+                                  :summary, :specialcollection, :library, :copies)
   end
 
+  public
   def show
     @book = Book.find(params[:id])
     respond_to do |format|
@@ -18,6 +19,7 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
+
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -25,18 +27,23 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.new
+    @book = Book.new(book_params)
+    puts book_params
     uploaded_to = params[:book][:image_url]
+    @book[:library] = session[:library]
+    params[:book][:specialcollection] = params[:specialcollection]
+
+    @book[:image] = "asofnow"
+
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book }
+        format.html { redirect_to :controller => 'librarians', :action => 'index' }
         flash[:notice] = "Book Added successfully"
+
       else
         flash[:notice] = "Book not added.. please try again!"
         format.html { render action: "new" }
       end
-
-
     end
   end
 end

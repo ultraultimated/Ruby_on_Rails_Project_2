@@ -1,0 +1,53 @@
+<%= form_for @library do |f| %>
+
+  <% if @library.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@library.errors.count, "error") %> prohibited this library from being edited:</h2>
+
+      <ul>
+        <% @library.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name,  :read_only=> true  %>
+  </div>
+
+  <br/>
+
+  <div class="field">
+    <%= f.label :university %>
+    <%= f.text_field :university, :readonly => true %>
+  </div>
+
+  <br/>
+
+  <div class="field">
+    <%= f.label :location %>
+    <%= f.text_field :location, :readonly => true%>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <%= f.label :fines %>
+    <%= f.text_field :fines, :required => true%>
+  </div>
+
+  <div class="field">
+    <%= f.label :max_days %>
+    <%= f.text_field :max_days, :required => true %>
+  </div>
+
+  <br/>
+
+  <br>
+
+  <div class="action">
+    <%= f.submit "Confirm Changes" %>
+  </div>
+<% end %>

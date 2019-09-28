@@ -11,6 +11,8 @@ end
   resource :session
   resources :sign_up
   resources :librarians
+  resources :books
+  resource :libraries
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'
   get 'students/viewbooks' => 'students#allbooks'
