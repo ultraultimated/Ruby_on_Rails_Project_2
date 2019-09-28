@@ -31,4 +31,14 @@ class LoginsController < ApplicationController
       end
     end
   end
+
+   def destroy
+    # Remove the user id from the session
+    if session[:student_id]
+      session[:student_id] = nil
+    elsif session[:librarian_id]
+      session[:librarian_id] = nil
+    end
+    redirect_to root_url
+  end
 end
