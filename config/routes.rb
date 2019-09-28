@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :libraries
+  resources :books
   get 'sessions/new'
   resources :logins
   resources :students do
@@ -10,7 +12,11 @@ end
   resources :users
   resource :session
   resources :sign_up
-  resources :librarians
+  resources :librarians do
+    collection do
+      post 'add_book'
+    end
+  end
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'
   get 'students/viewbooks' => 'students#allbooks'

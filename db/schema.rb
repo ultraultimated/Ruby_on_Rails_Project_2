@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_22_210258) do
+ActiveRecord::Schema.define(version: 2019_09_28_011202) do
+
+  create_table "books", force: :cascade do |t|
+    t.string "ISBN"
+    t.string "title", limit: 200
+    t.string "author", limit: 70
+    t.string "language", limit: 20
+    t.string "published", limit: 4
+    t.string "edition", limit: 4
+    t.string "library", limit: 10
+    t.string "image", limit: 500
+    t.string "subject", limit: 100
+    t.string "summary", limit: 1000
+    t.boolean "specialcollection"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
+  end
 
   create_table "librarians", force: :cascade do |t|
     t.string "email"
@@ -19,7 +36,18 @@ ActiveRecord::Schema.define(version: 2019_09_22_210258) do
     t.string "library"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_valid"
     t.index ["email"], name: "index_librarians_on_email", unique: true
+  end
+
+  create_table "libraries", force: :cascade do |t|
+    t.string "name", limit: 200
+    t.string "university", limit: 100
+    t.string "location", limit: 300
+    t.string "max_days", limit: 10
+    t.string "fines", limit: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "logins", force: :cascade do |t|
@@ -41,12 +69,20 @@ ActiveRecord::Schema.define(version: 2019_09_22_210258) do
     t.index ["email"], name: "index_students_on_email", unique: true
   end
 
+  create_table "universities", force: :cascade do |t|
+    t.string "name", limit: 100
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_universities_on_name", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_valid"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
