@@ -41,7 +41,14 @@
   <br/>
 
   <div>
-    Library: <%= f.select :library, Library.all.collect { |l| [l.name, l.id] }, {:prompt => 'Select Library'}, :required => true %>
+    <% @libraries = Library.all %>
+    <!--    <%#= f.label :lib %>
+    Library: <%#= select_tag :lib, options_from_collection_for_select(@library, "id", "name") %>-->
+    <select name="libr">
+      <%= @libraries.each do |lib| %>
+        <option value="<%= lib.id %>"><%= lib.name %></option>
+      <% end %>
+    </select>
   </div>
   <br>
 

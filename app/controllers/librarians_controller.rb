@@ -2,7 +2,7 @@ class LibrariansController < ApplicationController
   private
 
   def librarian_params
-    params.require(:librarian).permit(:name, :email, :password, :password_confirmation, :library)
+    params.require(:librarian).permit(:name, :email, :password, :password_confirmation, :libr, :library)
 
   end
 
@@ -14,26 +14,33 @@ class LibrariansController < ApplicationController
 
   def new
     @librarian = Librarian.new
-    @universities = University.all
+    @library = Library.all
     respond_to do |format|
       format.html
       format.json { render json: @librarian }
     end
   end
 
+
+  def show
+
+  end
   def create
     @librarian = Librarian.new(librarian_params)
-    ####to find if user is already student
-    puts librarian_params
+    @librarian[:library] = params[:libr]
+
     student = Student.find_by_email(@librarian[:email])
     if student == nil
             ######
+      respond_to do |format|
           if @librarian.save
-            redirect_to root_path, notice: "Librarian created successfully"
+            puts "*****"
+            format.html { redirect_to root_path, notice: "Librarian created successfully" }
           else
             render "librarians/new"
           end
-    else 
+      end
+    else
 
       redirect_to root_path, notice: "Account already created as Student"
     end
@@ -60,5 +67,6 @@ class LibrariansController < ApplicationController
   def add_book
 
   end
+
 
 end
