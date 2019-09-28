@@ -25,24 +25,27 @@ class LibrariansController < ApplicationController
   def show
 
   end
+
   def create
     @librarian = Librarian.new(librarian_params)
     @librarian[:library] = params[:libr]
 
     student = Student.find_by_email(@librarian[:email])
-    if student == nil
-            ######
-      respond_to do |format|
-          if @librarian.save
-            puts "*****"
-            format.html { redirect_to root_path, notice: "Librarian created successfully" }
-          else
-            render "librarians/new"
-          end
-      end
-    else
+    respond_to do |format|
+      if student == nil
+        ######
 
-      redirect_to root_path, notice: "Account already created as Student"
+        if @librarian.save
+          puts "*****"
+          format.html { redirect_to root_path, notice: "Librarian created successfully" }
+        else
+          render "librarians/new"
+        end
+
+      else
+
+        redirect_to root_path, notice: "Account already created as Student"
+      end
     end
   end
 
