@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   collection do
     get 'mybooks'
     get 'allbooks'
+    get 'logout'
   end
 end
   resources :users
