@@ -135,7 +135,6 @@ class StudentsController < ApplicationController
   end
 
   def logout
-    print ("***************")
     reset_session
     redirect_to root_url
   end

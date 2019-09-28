@@ -3,6 +3,7 @@
   <a><%= link_to "Home", :controller => "librarians", :action => "index" %></a>
   <a href="librarian/books">View Books</a>
   <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id])%></a>
+  <a><%= link_to "Add a Book", new_book_url%></a>
   <!-- TODO fetch data from student_books table and entries that contains request= true
    display in this page-->
 <!--  <a><%#= link_to "Requests", edit_student_path(session[:librarian_id])%></a>-->
@@ -18,8 +19,8 @@
 
   <div class="topcorner"><a href="#Sign Out">Sign out</a></div>
 </div>
-<!--<br><br><br>
-<a href="students/alllibs">List of all the libraries</a><br><br>
+<br><br><br>
+<a href="library/editlib">Edit library Attributes</a><br><br>
 <a href="students/viewbooks">View all books</a><br><br>
 <a href="students/bookmarks">My Book Bookmarks</a><br><br>
-<a href="students/fines">Overdue Fines</a><br><br>-->
+<a href="students/fines">Overdue Fines</a><br><br>

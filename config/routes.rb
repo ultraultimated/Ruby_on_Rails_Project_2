@@ -10,7 +10,12 @@ end
   resources :users
   resource :session
   resources :sign_up
-  resources :librarians
+  resources :librarians do
+    collection do
+      get 'editlib'
+    end
+  end
+  resources :books
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'
   get 'students/viewbooks' => 'students#allbooks'

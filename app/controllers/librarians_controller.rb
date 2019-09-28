@@ -71,5 +71,9 @@ class LibrariansController < ApplicationController
     redirect_to :controller => 'books', :action => 'new'
   end
 
+  def editlib
+
+  end
+
 
 end
