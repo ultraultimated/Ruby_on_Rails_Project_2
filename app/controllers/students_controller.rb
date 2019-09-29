@@ -19,7 +19,6 @@ class StudentsController < ApplicationController
       redirect_to root_url
     else
     @student = Student.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @student }
@@ -28,23 +27,23 @@ class StudentsController < ApplicationController
   end
 
   def new
-    if !session[:student_id]
-      flash[:notice] = "login to access Account "
-      redirect_to root_url
-    else
+    #if !session[:student_id]
+    #  flash[:notice] = "login to access Account "
+    #  redirect_to root_url
+    #else
     @student = Student.new
     respond_to do |format|
       format.html
       format.json{ render json: @student}
-    end
+    #end
   end
   end
 
   def create
-    if !session[:student_id]
-      flash[:notice] = "login to access Account "
-      redirect_to root_url
-    else
+    #if !session[:student_id]
+     # flash[:notice] = "login to access Account "
+     # redirect_to root_url
+    #else
   	@student = Student.new(student_params)
     ####to find if user is already librarian
     librarian = Librarian.find_by_email(@student[:email])
@@ -70,7 +69,7 @@ class StudentsController < ApplicationController
          flash[:notice] = "Account already created as librarian"
          redirect_to root_path
     end
-  end
+  #end
    end
 
  def update
@@ -117,6 +116,8 @@ class StudentsController < ApplicationController
     if !session[:student_id]
       flash[:notice] = "login to access Account "
       redirect_to root_url
+    else
+      redirect_to :controller => 'books', :action => 'index'
     end
   end
 

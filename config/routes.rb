@@ -1,19 +1,32 @@
 Rails.application.routes.draw do
+  resources :admins
   get 'sessions/new'
   resources :logins
   resources :students do
   collection do
     get 'mybooks'
     get 'allbooks'
+    get 'logout'
   end
 end
   resources :users
+  resource :session
   resources :sign_up
 
   resources :librarians
   resources :books
   resources :libraries
-  resources :books
+  resources :librarians do
+    collection do
+      get 'editlib'
+    end
+  end
+  resources :books do
+  collection do
+    get 'checkout'
+  end
+end
+
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'
   get 'students/viewbooks' => 'students#allbooks'

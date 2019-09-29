@@ -7,7 +7,7 @@ class LibrariesController < ApplicationController
 
   public
   def edit
-    @library = Library.find_by_id(session[:library])
+    @library = Library.find_by_library_id(session[:library])
     @university = University.find_by_university_id(@library[:university_id])
   end
 

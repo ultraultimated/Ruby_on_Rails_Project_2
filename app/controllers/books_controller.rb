@@ -6,8 +6,31 @@ class BooksController < ApplicationController
                                   :published, :edition, :image, :subject,
                                   :summary, :specialcollection, :library, :copies)
   end
-
   public
+
+  def index
+    @book = Book.all
+  end
+
+
+  def checkout
+    @stud = Student.find_by_id(session[:student_id])
+    @tran = Transaction.find_by_student_id(session[:student_id])
+    puts Transaction.where(student_id: @tran[:student_id])
+    m = Transaction.where(student_id: @tran[:student_id]).count
+    puts m
+    if @stud[:maximum_book_limit].to_i > m
+      puts "&&&&&&"
+      puts params[:ISBN]
+      puts "******"
+      @trn = Transaction.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
+      @trn.save
+      redirect_to :controller => 'students', :action => 'index'
+
+    end
+  end
+
+
   def show
     @book = Book.find(params[:id])
     respond_to do |format|

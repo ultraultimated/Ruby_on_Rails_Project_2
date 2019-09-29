@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_28_234034) do
+ActiveRecord::Schema.define(version: 2019_09_29_014318) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2019_09_28_234034) do
     t.string "language", limit: 20
     t.string "published", limit: 4
     t.string "edition", limit: 4
-    t.string "library", limit: 10
+    t.string "library_id", limit: 10
     t.string "image", limit: 500
     t.string "subject", limit: 100
     t.string "summary", limit: 1000
@@ -35,18 +35,18 @@ ActiveRecord::Schema.define(version: 2019_09_28_234034) do
     t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
   end
 
-  create_table "librarians", force: :cascade do |t|
+  create_table "librarians", primary_key: "librarian_id", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
     t.string "name"
-    t.string "library"
+    t.string "library_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_valid"
     t.index ["email"], name: "index_librarians_on_email", unique: true
   end
 
-  create_table "libraries", force: :cascade do |t|
+  create_table "libraries", primary_key: "library_id", force: :cascade do |t|
     t.string "name", limit: 200
     t.string "university_id", limit: 100
     t.string "location", limit: 300
@@ -73,6 +73,18 @@ ActiveRecord::Schema.define(version: 2019_09_28_234034) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_students_on_email", unique: true
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "ISBN"
+    t.string "bookname"
+    t.datetime "checkout_date"
+    t.datetime "expected_date"
+    t.datetime "return_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "universities", primary_key: "university_id", force: :cascade do |t|

@@ -27,7 +27,10 @@ td
     <td><%= bk.subject %></td>
     <td><%= bk.specialcollection %></td>
     <td><%= bk.summary %></td>&nbsp
+    <td><%= link_to 'Checkout',:controller => "books", :action => "checkout", :ISBN => bk.ISBN   %></td>
+    <br>
   </tr>
+
 <% end %>
 <% end %>
 </table>
