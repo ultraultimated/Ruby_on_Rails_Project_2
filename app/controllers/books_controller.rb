@@ -28,9 +28,8 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
-    puts book_params
     uploaded_to = params[:book][:image_url]
-    @book[:library] = session[:library]
+    @book[:library_id] = session[:library]
     params[:book][:specialcollection] = params[:specialcollection]
 
     @book[:image] = "asofnow"

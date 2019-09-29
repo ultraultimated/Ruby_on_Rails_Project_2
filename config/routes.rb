@@ -8,17 +8,11 @@ Rails.application.routes.draw do
   end
 end
   resources :users
-  resource :session
   resources :sign_up
 
   resources :librarians
   resources :books
-  resource :libraries
-  resources :librarians do
-    collection do
-      get 'editlib'
-    end
-  end
+  resources :libraries
   resources :books
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'

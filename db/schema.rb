@@ -12,8 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2019_09_28_234034) do
 
-
-
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -50,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_09_28_234034) do
 
   create_table "libraries", force: :cascade do |t|
     t.string "name", limit: 200
-    t.string "university", limit: 100
+    t.string "university_id", limit: 100
     t.string "location", limit: 300
     t.string "max_days", limit: 10
     t.string "fines", limit: 10
@@ -77,7 +75,7 @@ ActiveRecord::Schema.define(version: 2019_09_28_234034) do
     t.index ["email"], name: "index_students_on_email", unique: true
   end
 
-  create_table "universities", force: :cascade do |t|
+  create_table "universities", primary_key: "university_id", force: :cascade do |t|
     t.string "name", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -21,7 +21,7 @@
 
   <div class="field">
     <%= f.label :university %>
-    <%= f.text_field :university, :readonly => true %>
+    <%= f.text_field :university, :readonly => true, :value => @university[:name] %>
   </div>
 
   <br/>

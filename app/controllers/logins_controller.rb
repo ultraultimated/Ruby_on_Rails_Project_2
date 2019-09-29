@@ -24,7 +24,7 @@ class LoginsController < ApplicationController
         session[:librarian_id] = librarian.id
         session[:role] = "librarian"
 
-        session[:library] = librarian[:library]
+        session[:library] = librarian[:library_id]
         puts session[:library]
         redirect_to :controller => 'librarians', :action => 'index'
       else

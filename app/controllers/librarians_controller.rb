@@ -2,7 +2,7 @@ class LibrariansController < ApplicationController
   private
 
   def librarian_params
-    params.require(:librarian).permit(:name, :email, :password, :password_confirmation, :libr, :library)
+    params.require(:librarian).permit(:name, :email, :password, :password_confirmation, :libr, :library_id)
 
   end
 
@@ -27,17 +27,20 @@ class LibrariansController < ApplicationController
   end
 
   def create
-    @librarian = Librarian.new(librarian_params)
-    @librarian[:library] = params[:libr]
+
+    @library = Library.find_by_library_id(params[:libr])
+    params = librarian_params
+    params[:library_id] = @library.id
+    @librarian = Librarian.new(params)
 
     student = Student.find_by_email(@librarian[:email])
-    respond_to do |format|
+
       if student == nil
         ######
 
         if @librarian.save
           puts "*****"
-          format.html { redirect_to root_path, notice: "Librarian created successfully" }
+           redirect_to root_path, notice: "Librarian created successfully"
         else
           render "librarians/new"
         end
@@ -47,7 +50,6 @@ class LibrariansController < ApplicationController
         redirect_to root_path, notice: "Account already created as Student"
       end
     end
-  end
 
   def edit
     @librarian = Librarian.find(session[:librarian_id])
@@ -70,16 +72,5 @@ class LibrariansController < ApplicationController
   def add_book
     redirect_to :controller => 'books', :action => 'new'
   end
-
-  def editlib
-
-    @library = Library.find_by_id(session[:library])
-    puts @library[:university]
-
-    @university = University.find_by_id(@library[:university])
-
-
-  end
-
 
 end
