@@ -1,0 +1,16 @@
+<h1>Admins</h1>
+
+<% if !session[:admin_id] 
+  redirect_to root_url end%>
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "admin", :action => "index" %></a>
+  <a href="admin/display">Display</a>
+  <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id])%></a>
+
+  <a class="topcorner"><%= link_to "Sign Out", :controller => "admin", :action => "logout"%></a>
+  
+</div>
+<br><br><br>
+
+
+

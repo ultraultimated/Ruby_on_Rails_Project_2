@@ -1,0 +1,45 @@
+<h1> List of all the users on the system</h1>
+<h2>List of all students</h2>
+<br>
+<% Student.each do |student|%>
+<p>
+  <b>Name:</b>
+  <%=@student.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=@student.email %>
+</p>
+
+<p>
+  <b>Educational level:</b>
+  <%=@student.educational_level %>
+</p>
+
+<p>
+  <b>University:</b>
+  <%= @student.university%>
+</p>
+
+<p>
+  <b>Maximum Book Limit:</b>
+  <%= @student.maximum_book_limit%>
+</p>
+<% Librarian.each do |librarian|%>
+
+<p>
+  <b>Name:</b>
+  <%=@librarian.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=@librarian.email %>
+</p>
+
+<p>
+  <b>Library</b>
+  <%=@librarian.library %>
+</p>
+
