@@ -48,7 +48,7 @@ class BooksController < ApplicationController
         redirect_to :controller => 'students', :action => 'index'
       end
     else
-        @trn = Transaction.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
+        @trn = Transaction.new(:student_id => session[:student_id], :bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out")
         @trn.save
         redirect_to :controller => 'students', :action => 'index'
     end

@@ -19,29 +19,29 @@ class LoginsController < ApplicationController
       session[:role] = "student"
       session[:university_id] = student.university
       redirect_to :controller => 'students', :action => 'index'
-    else
-      librarian = Librarian.find_by_email(@login[:email])
-      if librarian&.authenticate(params[:login][:password])
-        session[:librarian_id] = librarian.id
-        session[:role] = "librarian"
+    elsif Librarian.find_by_email(@login[:email])
+        librarian = Librarian.find_by_email(@login[:email])
+        if librarian&.authenticate(params[:login][:password])
+          session[:librarian_id] = librarian.id
+          session[:role] = "librarian"
 
-        session[:library] = librarian[:library_id]
-        puts session[:library]
-        redirect_to :controller => 'librarians', :action => 'index'
-      else
-        flash[:notice] = "Invalid Credentials"
-        redirect_to root_path
-      end
-      admin = Admin.find_by_email(@login[:email])
-      if admin&.authenticate(params[:login][:password])
-        session[:admin] = admin.id
-        session[:role] = "admin"
-        redirect_to :controller => 'admins', :action => 'index'
-      else
-        flash[:notice] = "Invalid Credentials"
-        redirect_to root_path
-      end
-
+          session[:library] = librarian[:library_id]
+          puts session[:library]
+          redirect_to :controller => 'librarians', :action => 'index'
+        else
+          flash[:notice] = "Invalid Credentials"
+          redirect_to root_path
+        end
+      elsif Admin.find_by_email(@login[:email])
+        admin = Admin.find_by_email(@login[:email])
+        if admin&.authenticate(params[:login][:password])
+          session[:admin] = admin.id
+          session[:role] = "admin"
+          redirect_to :controller => 'admins', :action => 'index'
+        else
+          flash[:notice] = "Invalid Credentials"
+          redirect_to root_path
+        end
     end
   end
 
