@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :admins
   get 'sessions/new'
   resources :logins
   resources :students do
