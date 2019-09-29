@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   collection do
     get 'mybooks'
     get 'allbooks'
+    get 'logout'
   end
 end
   resources :users
@@ -15,7 +16,12 @@ end
       get 'editlib'
     end
   end
-  resources :books
+  resources :books do
+  collection do
+    get 'checkout'
+  end
+end
+
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'
   get 'students/viewbooks' => 'students#allbooks'

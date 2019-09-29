@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_28_211534) do
+ActiveRecord::Schema.define(version: 2019_09_29_004940) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -75,21 +75,23 @@ ActiveRecord::Schema.define(version: 2019_09_28_211534) do
     t.index ["email"], name: "index_students_on_email", unique: true
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "ISBN"
+    t.string "bookname"
+    t.datetime "checkout_date"
+    t.datetime "expected_date"
+    t.datetime "return_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "universities", force: :cascade do |t|
     t.string "name", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_universities_on_name", unique: true
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "is_valid"
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end

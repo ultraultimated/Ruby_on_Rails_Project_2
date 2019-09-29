@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  student_id: 
+  ISBN: 
+  bookname: 
+  checkout_date: 
+  expected_date: 
+  return_date: 
+  status: MyString
+
+two:
+  student_id: 
+  ISBN: 
+  bookname: 
+  checkout_date: 
+  expected_date: 
+  return_date: 
+  status: MyString

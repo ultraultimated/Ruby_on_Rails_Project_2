@@ -3,7 +3,6 @@ class LibrariansController < ApplicationController
 
   def librarian_params
     params.require(:librarian).permit(:name, :email, :password, :password_confirmation, :libr, :library)
-
   end
 
   public
