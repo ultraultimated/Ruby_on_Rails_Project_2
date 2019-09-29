@@ -21,6 +21,6 @@
 </div>
 <br><br><br>
 <a><%= link_to "Edit Library Attributes", :controller => "libraries", :action => "edit", :id => session[:library]%></a><br><br>
-<a href="students/viewbooks">View all books</a><br><br>
+<a><%= link_to "View All Books", :controller => "books", :action => "index" %></a><br><br>
 <a href="students/bookmarks">My Book Bookmarks</a><br><br>
 <a href="students/fines">Overdue Fines</a><br><br>

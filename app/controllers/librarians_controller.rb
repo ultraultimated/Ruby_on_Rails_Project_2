@@ -73,8 +73,5 @@ class LibrariansController < ApplicationController
     redirect_to :controller => 'books', :action => 'new'
   end
 
-  def view_all
-
-  end
 
 end

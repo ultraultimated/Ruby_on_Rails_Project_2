@@ -19,7 +19,10 @@ class BooksController < ApplicationController
       puts  @lib
       puts "$$$$"
       @book = Book.where(library_id: @lib[:library_id])
+    else
+      @book = Book.where("library_id = " + session[:library])
   end
+   
   end
 
 
@@ -51,9 +54,17 @@ class BooksController < ApplicationController
     end
   end
 
+  def destroy
+
+    @book = Book.find_by_id(params[:format])
+    puts @book[:id]
+    @book.destroy
+    redirect_to books_path
+  end
 
   def show
-    @book = Book.find(params[:id])
+    @book = Book.find_by_ISBN(params[:id])
+
     respond_to do |format|
       format.html
       format.json { render json: @book }
@@ -89,4 +100,25 @@ class BooksController < ApplicationController
       end
     end
   end
+
+  def edit
+    @book = Book.find_by_ISBN_and_library_id(params[:id], session[:library])
+
+  end
+  def update
+    @book = Book.find_by_id(params[:id])
+
+    respond_to do |format|
+      if @book.update_attributes(book_params)
+        format.html { redirect_to :controller => 'books', :action => 'index' }
+        flash[:notice] = "Book Info was successfully updated."
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
 end
