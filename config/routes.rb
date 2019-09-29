@@ -21,6 +21,7 @@ end
       get 'editlib'
     end
   end
+  get 'checkout' => "books#checkout"
   resources :books do
   collection do
     get 'checkout'

@@ -8,6 +8,6 @@
 
 
 Transaction.create!([{
-	student_id: 1,
-	ISBN: "123"
+	student_id: 5,
+	ISBN: "111"
 }])
