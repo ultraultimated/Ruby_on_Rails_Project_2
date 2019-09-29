@@ -31,6 +31,16 @@ class LoginsController < ApplicationController
         flash[:notice] = "Invalid Credentials"
         redirect_to root_path
       end
+      admin = Admin.find_by_email(@login[:email])
+      if admin&.authenticate(params[:login][:password])
+        session[:admin] = admin.id
+        session[:role] = "admin"
+        redirect_to :controller => 'admins', :action => 'index'
+      else
+        flash[:notice] = "Invalid Credentials"
+        redirect_to root_path
+      end
+
     end
   end
 
