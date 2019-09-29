@@ -16,6 +16,9 @@ td
 <th>Subject</th> 
 <th>Special Collection</th> 
 <th>Summary</th>
+  <%if session[:role] == 'librarian' %>
+    <th>Copies</th>
+   <% end %>
 <% if !@book.nil? then @book.each do |bk| %>
   <tr>
     <td><%= bk.ISBN %></td>
@@ -27,7 +30,16 @@ td
     <td><%= bk.subject %></td>
     <td><%= bk.specialcollection %></td>
     <td><%= bk.summary %></td>&nbsp
-    <td><%= link_to 'Checkout',:controller => "books", :action => "checkout", :ISBN => bk.ISBN   %></td>
+    <%if session[:role] == 'librarian' %>
+      <td><%=bk.copies %></td>
+      <td><%= link_to 'Edit',:controller => "books", :action => "edit", :id => bk.ISBN   %></td>
+<!--      <td><%#= link_to "Delete",:controller => "books", :action => "delete", :id => bk.ISBN%></td>-->
+      <td><%= link_to 'Destroy', destroy_path(bk),
+                  data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'View',:controller => "books", :action => "show", :id => bk.ISBN   %></td>
+      <% else %>
+      <td><%= link_to 'Checkout',:controller => "books", :action => "checkout", :ISBN => bk.ISBN   %></td>
+     <% end %>
     <br>
   </tr>
 

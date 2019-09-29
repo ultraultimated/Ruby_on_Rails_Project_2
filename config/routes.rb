@@ -21,11 +21,9 @@ end
       get 'editlib'
     end
   end
-  resources :books do
-  collection do
-    get 'checkout'
-  end
-end
+  get 'checkout' => 'books#checkout'
+  get 'destroy' => 'books#destroy'
+  resources :books
 
   root 'logins#new'
   get 'students/alllibs' => 'students#alllibs'
