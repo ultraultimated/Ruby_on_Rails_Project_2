@@ -15,18 +15,26 @@ class BooksController < ApplicationController
 
   def checkout
     @stud = Student.find_by_id(session[:student_id])
-    @tran = Transaction.find_by_student_id(session[:student_id])
-    puts Transaction.where(student_id: @tran[:student_id])
-    m = Transaction.where(student_id: @tran[:student_id]).count
-    puts m
-    if @stud[:maximum_book_limit].to_i > m
-      puts "&&&&&&"
-      puts params[:ISBN]
-      puts "******"
-      @trn = Transaction.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
-      @trn.save
-      redirect_to :controller => 'students', :action => 'index'
-
+    #puts session[:student_id]
+    #puts @stud
+    #puts "******"
+    if Transaction.find_by_student_id(session[:student_id])
+      @tran = Transaction.find_by_student_id(session[:student_id])
+      #puts Transaction.where(student_id: @tran[:student_id])
+      m = Transaction.where(student_id: @tran[:student_id]).count
+      #puts m
+      if @stud[:maximum_book_limit].to_i > m
+        #puts "&&&&&&"
+        puts params[:ISBN]
+        #puts "******"
+        @trn = Transaction.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
+        @trn.save
+        redirect_to :controller => 'students', :action => 'index'
+      end
+    else
+        @trn = Transaction.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
+        @trn.save
+        redirect_to :controller => 'students', :action => 'index'
     end
   end
 
