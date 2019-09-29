@@ -1,11 +1,22 @@
-<h1>This is just placeholder add book variable instead of librarian </h1>
+<style type="text/css">
+td
+{
+    padding:0 41px 0 30px;
+}
+</style>
+<h1>My Books</h1>
+
 <table>
-<% if !@librarian.nil? then @librarian.each do |recipe| %>
+<th>ISBN</th>
+<th>Title</th>
+<th>Status</th>
+<% if !@tran.nil? then @tran.each do |tra| %>
   <tr>
-    <td><%= recipe.name %></td>
-    <td><%= recipe.email %></td>
-    <td><%= recipe.library %></td>
-  </tr>s
+    <td><%= tra.ISBN %></td>
+    <td><%=tra.bookname%></td>
+    <td><%= tra.status %></td>
+    
+  </tr>
 <% end %>
 <% end %>
 </table>

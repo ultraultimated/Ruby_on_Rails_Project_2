@@ -55,6 +55,10 @@ class StudentsController < ApplicationController
             elsif params[:student][:educational_level]=="phd"
             	@student[:maximum_book_limit] = 6
             end
+            @student[:university] = params[:university].to_s
+            puts "&&&&HERE"
+            puts @student[:university]
+            puts "&&&&HERE"
             respond_to do |format|
               if @student.save
                 #redirect_to controller: 'session', action: 'create', email: @student[:email]
@@ -107,7 +111,7 @@ class StudentsController < ApplicationController
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-    @librarian = Librarian.all
+    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out")
   end
   end
 

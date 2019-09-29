@@ -2,7 +2,7 @@
 	redirect_to root_url end%>
 <div class="topnav">
   <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
-  <a href="students/mybooks">My Books</a>
+  <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
   <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id])%></a>
 
   <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout"%></a>

@@ -2,14 +2,24 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:ISBN, :title, :author, :language,
+    params.require(:book).permit(:ISBN, :title, :author, :language, :bookname,
                                   :published, :edition, :image, :subject,
                                   :summary, :specialcollection, :library, :copies)
   end
   public
 
   def index
-    @book = Book.all
+    if session[:role] == "student"
+      puts "#&&&&&"
+      puts session[:university_id]
+      puts "#&&&&&&"
+      @lib = Library.find_by_university_id(session[:university_id])
+      #@stud = Student.find_by_student_id(session[:student_id])
+      #puts @stud[:univer]
+      puts  @lib
+      puts "$$$$"
+      @book = Book.where(library_id: @lib[:library_id])
+  end
   end
 
 
@@ -27,8 +37,11 @@ class BooksController < ApplicationController
         #puts "&&&&&&"
         puts params[:ISBN]
         #puts "******"
-        @trn = Transaction.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
+        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out")
         @trn.save
+        redirect_to :controller => 'students', :action => 'index'
+      else
+        flash[:notice] = "Maximum books limit excedded"
         redirect_to :controller => 'students', :action => 'index'
       end
     else

@@ -47,7 +47,16 @@
   <br/>
   
   <div>
-  University: <%= f.select  :university, ['NCSU', 'ASU', 'NEU'], {:prompt => 'Select University'}, :required => true %>
+  University: 
+  <% @universities = University.all %>
+    <!--    <%#= f.label :lib %>
+    Library: <%#= select_tag :lib, options_from_collection_for_select(@library, "id", "name") %>-->
+    <select name="university" >
+      <%= @universities.each do |uni| %>
+       <% uni.university_id%>
+        <option value="<%= uni.id %>"><%= uni.name %></option>
+      <% end %>
+    </select>
   </div>
   <br>
  
