@@ -5,7 +5,7 @@ class LoginsController < ApplicationController
     params.require(:login).permit(:email, :password)
   end
 
-  public
+    public
 
   def new
     @login = Login.new
