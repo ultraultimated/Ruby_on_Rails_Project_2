@@ -36,10 +36,9 @@ class LibrariansController < ApplicationController
     student = Student.find_by_email(@librarian[:email])
 
       if student == nil
-        ######
+
 
         if @librarian.save
-          puts "*****"
            redirect_to root_path, notice: "Librarian created successfully"
         else
           render "librarians/new"

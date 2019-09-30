@@ -37,7 +37,7 @@ class AdminsController < ApplicationController
 
   
   def edit
-    if !session[:student_id]
+    if !session[:admin_id]
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
@@ -46,17 +46,29 @@ class AdminsController < ApplicationController
   end
 
   def update
-    @librarian = Librarian.find(params[:id])
+    if !session[:admin_id]
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    else
+    @admin = Admin.find(params[:id])
+
     respond_to do |format|
-      if @librarian.update_attributes(librarian_params)
-        format.html { redirect_to :controller => 'librarians', :action => 'index' }
-        flash[:notice] = "Librarian Info was successfully updated."
+      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
+      #, 
+      if @admin.update_attributes(admin_params)
+        format.html { redirect_to :controller => 'admins', :action => 'index', notice: 'Admin Info was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @librarian.errors, status: :unprocessable_entity }
+        format.json { render json: @admin.errors, status: :unprocessable_entity }
       end
     end
+  end
+  end
+
+  def logout
+    reset_session
+    redirect_to root_url
   end
 
   def add_book

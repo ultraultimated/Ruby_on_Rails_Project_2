@@ -6,11 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-<<<<<<< HEAD
-=======
+
 Admin.create!([{
 	name: "administrator",
 	email: "dshah11@ncsu.edu",
 	password_digest: "$2b$10$mm9uguS51L76GbEP4mn2wuA4FVoDil2BE7QFF3j4bhThIhwBR8IaC"
 }])
->>>>>>> Admin Login
