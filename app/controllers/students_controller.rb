@@ -112,7 +112,7 @@
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out")
+    @tran  = Transaction.where(student_id: session[:student_id])
   end
   end
 

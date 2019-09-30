@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_30_194717) do
+ActiveRecord::Schema.define(version: 2019_09_30_203303) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -38,11 +38,19 @@ ActiveRecord::Schema.define(version: 2019_09_30_194717) do
     t.string "image", limit: 500
     t.string "subject", limit: 100
     t.string "summary", limit: 1000
-    t.boolean "specialcollection"
+    t.string "specialcollection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "copies", limit: 6
     t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
+  end
+
+  create_table "holds", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "ISBN"
+    t.string "library_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "librarians", primary_key: "librarian_id", force: :cascade do |t|

@@ -30,7 +30,7 @@ class BooksController < ApplicationController
 
   end
 
-  def checkout
+ def checkout
     @student = Student.find_by_id(session[:student_id])
 
     if Transaction.find_by_student_id(session[:student_id])
@@ -39,33 +39,72 @@ class BooksController < ApplicationController
 
       if @student[:maximum_book_limit].to_i > m
         @book = Book.find_by_ISBN(params[:ISBN])
-        ####special request###
-       # if @book[:]
-        #####special request###
-        copies = @book[:copies]
+        
         now = Date.today
         max_day = Library.find_by_library_id(@book[:library_id].to_i)[:max_days]
         after = now + max_day.to_i
         
-        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id], :checkout_date => now, :expected_date => after)
-        @trn.save
-
-        @book.update_attribute(:copies, (copies.to_i-1).to_s)
-        redirect_to :controller => 'students', :action => 'index'
+        copies = @book[:copies]
+        if (copies.to_i > 0)
+          ####special request###
+            if @book[:specialcollection] == "yes"
+              @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "approval request", :library_id => @book[:library_id])
+              @trn.save
+              flash[:notice] = "Request sent to librarian for approval"
+              redirect_to :controller => 'students', :action => 'index'
+              #####special request###
+            else
+              @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id], :checkout_date => now, :expected_date => after)
+              @trn.save
+              @book.update_attribute(:copies, (copies.to_i-1).to_s)
+              flash[:notice] = "Book checked out successfully"
+              redirect_to :controller => 'students', :action => 'index'
+            end
+        else
+          ## when book is not available...... libid is string and studid is integer
+          @hld = Hold.new(:student_id => session[:student_id], :ISBN => params[:ISBN], :library_id => @book[:library_id])
+          @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "hold request", :library_id => @book[:library_id])
+          @hld.save
+          @trn.save
+          flash[:notice] = "Book not available. Hold request added"
+          redirect_to :controller => 'students', :action => 'index'
+        end
       else
         flash[:notice] = "Maximum books limit excedded"
         redirect_to :controller => 'students', :action => 'index'
       end
     else
-        @book = Book.find_by_ISBN(params[:ISBN])
-        copies = @book[:copies]
-        @trn = Transaction.new(:student_id => session[:student_id], :bookname => params[:bookname],
-                               :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id])
-        @trn.save
-        @book.update_attribute(:copies, (copies.to_i-1).to_s)
-        redirect_to :controller => 'students', :action => 'index'
-    end
-  end
+      ###first transaction
+      @book = Book.find_by_ISBN(params[:ISBN])
+      now = Date.today
+      max_day = Library.find_by_library_id(@book[:library_id].to_i)[:max_days]
+      after = now + max_day.to_i
+      copies = @book[:copies]
+        if (copies.to_i > 0)
+            if @book[:specialcollection] == "yes"
+                    @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "approval request", :library_id => @book[:library_id])
+                    @trn.save
+                    flash[:notice] = "Request sent to librarian for approval"
+                    redirect_to :controller => 'students', :action => 'index'
+                #####special request###
+            else
+                copies = @book[:copies]
+                @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id], :checkout_date => now, :expected_date => after)
+                @trn.save
+                @book.update_attribute(:copies, (copies.to_i-1).to_s)
+                flash[:notice] = "Book checked out successfully"
+                redirect_to :controller => 'students', :action => 'index'
+            end
+        else
+            @hld = Hold.new(:student_id => session[:student_id], :ISBN => params[:ISBN], :library_id => @book[:library_id])
+            @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "hold request", :library_id => @book[:library_id])
+            @hld.save
+            @trn.save
+            flash[:notice] = "Book not available. Hold request added"
+            redirect_to :controller => 'students', :action => 'index'
+        end
+   end
+ end
 
   def destroy
 
