@@ -4,8 +4,6 @@ class StudentsController < ApplicationController
     params.require(:student).permit(:name, :email, :password, :password_confirmation,
                                     :educational_level, :university_id, :maximum_book_limit)
   end
-#<% if !session[:student_id] 
-#  redirect_to root_url end%>
 
   def index
     if !session[:student_id]
@@ -128,10 +126,15 @@ class StudentsController < ApplicationController
     end
   end
 
-  def bookmark
+  def viewbookmark
     if !session[:student_id]
       flash[:notice] = "login to access Account "
       redirect_to root_url
+    else
+      @bookmark = Bookmark.where(:student_id => session[:student_id])
+      puts "$$$$$$$$$$$"
+      #print(bookmark[:ISBN])
+      #@detail = Book.find_by_ISBN(@bookmark[:ISBN])
     end
   end 
 

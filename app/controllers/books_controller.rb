@@ -18,7 +18,14 @@ class BooksController < ApplicationController
   end
 
 
-  def bookmark
+  def book_bookmark
+    @bookmark = Bookmark.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
+    if !Bookmark.find_by_student_id_and_ISBN(session[:student_id],params[:ISBN])
+      @bookmark.save
+    end
+    puts "yey"
+    flash[:notice] = "Bookmarked !!!"
+    redirect_to :controller => 'students', :action => 'index'
 
   end
 

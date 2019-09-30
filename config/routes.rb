@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'mybooks'
     get 'allbooks'
     get 'logout'
+    get 'viewbookmark'
   end
 end
   resources :users
@@ -16,7 +17,7 @@ end
   resources :librarians
   resources :books do
     collection do
-      get 'bookmark'
+      get 'book_bookmark'
     end
   end
   resources :libraries
