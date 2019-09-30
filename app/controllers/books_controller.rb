@@ -1,3 +1,4 @@
+require 'date'
 class BooksController < ApplicationController
   private
 
@@ -14,10 +15,20 @@ class BooksController < ApplicationController
       @book = Book.where(library_id: @library[:library_id])
     else
       @book = Book.where("library_id = " + session[:library])
-  end
-   
+  end 
   end
 
+
+  def book_bookmark
+    @bookmark = Bookmark.new(:student_id => session[:student_id], :ISBN => params[:ISBN])
+    if !Bookmark.find_by_student_id_and_ISBN(session[:student_id],params[:ISBN])
+      @bookmark.save
+    end
+    puts "yey"
+    flash[:notice] = "Bookmarked !!!"
+    redirect_to :controller => 'students', :action => 'index'
+
+  end
 
   def checkout
     @student = Student.find_by_id(session[:student_id])
@@ -27,11 +38,16 @@ class BooksController < ApplicationController
       m = Transaction.where(student_id: @tran[:student_id]).count
 
       if @student[:maximum_book_limit].to_i > m
-
         @book = Book.find_by_ISBN(params[:ISBN])
+        ####special request###
+       # if @book[:]
+        #####special request###
         copies = @book[:copies]
-        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname],
-                               :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id])
+        now = Date.today
+        max_day = Library.find_by_library_id(@book[:library_id].to_i)[:max_days]
+        after = now + max_day.to_i
+        
+        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id], :checkout_date => now, :expected_date => after)
         @trn.save
 
         @book.update_attribute(:copies, (copies.to_i-1).to_s)
@@ -82,8 +98,10 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     uploaded_to = params[:book][:image_url]
     @book[:library_id] = session[:library]
-    params[:book][:specialcollection] = params[:specialcollection]
-
+    @book[:specialcollection] = params[:specialcollection]
+    puts "cccccccccccccccc$$$$$$$$"
+    puts @book[:specialcollection]
+    puts "#^^^^^^^^^^^666"
     @book[:image] = "asofnow"
 
     respond_to do |format|

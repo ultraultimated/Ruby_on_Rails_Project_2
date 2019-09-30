@@ -9,7 +9,10 @@ class AdminsController < ApplicationController
   public
 
   def index
-
+    if !session[:admin_id]
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    end
   end
 
   def new
@@ -34,7 +37,12 @@ class AdminsController < ApplicationController
 
   
   def edit
+    if !session[:student_id]
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    else
     @admin = Admin.find(session[:admin_id])
+    end
   end
 
   def update

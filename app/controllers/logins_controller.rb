@@ -5,7 +5,7 @@ class LoginsController < ApplicationController
     params.require(:login).permit(:email, :password)
   end
 
-  public
+    public
 
   def new
     @login = Login.new
@@ -35,8 +35,7 @@ class LoginsController < ApplicationController
       elsif Admin.find_by_email(@login[:email])
         admin = Admin.find_by_email(@login[:email])
         if admin&.authenticate(params[:login][:password])
-          session[:admin] = admin.id
-
+          session[:admin_id] = admin.id
           session[:role] = "admin"
           redirect_to :controller => 'admins', :action => 'index'
         else

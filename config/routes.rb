@@ -7,13 +7,18 @@ Rails.application.routes.draw do
     get 'mybooks'
     get 'allbooks'
     get 'logout'
+    get 'viewbookmark'
   end
 end
   resources :users
   resources :sign_up
 
   resources :librarians
-  resources :books
+  resources :books do
+    collection do
+      get 'book_bookmark'
+    end
+  end
   resources :libraries
   get 'approval_requests' => 'librarians#approval_requests'
   resources :librarians
