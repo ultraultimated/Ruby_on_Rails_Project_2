@@ -9,7 +9,10 @@ class AdminsController < ApplicationController
   public
 
   def index
-
+    if !session[:admin_id]
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    end
   end
 
   def new
