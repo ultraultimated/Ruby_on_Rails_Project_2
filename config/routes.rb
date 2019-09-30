@@ -14,7 +14,11 @@ end
   resources :sign_up
 
   resources :librarians
-  resources :books
+  resources :books do
+    collection do
+      get 'bookmark'
+    end
+  end
   resources :libraries
   resources :librarians do
     collection do

@@ -21,10 +21,13 @@ class BooksController < ApplicationController
       @book = Book.where(library_id: @lib[:library_id])
     else
       @book = Book.where("library_id = " + session[:library])
-  end
-   
+  end 
   end
 
+
+  def bookmark
+
+  end
 
   def checkout
     @stud = Student.find_by_id(session[:student_id])

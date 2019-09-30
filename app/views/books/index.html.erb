@@ -38,7 +38,8 @@ td
                   data: { confirm: 'Are you sure?' } %></td>
       <td><%= link_to 'View',:controller => "books", :action => "show", :id => bk.ISBN   %></td>
       <% else %>
-      <td><%= link_to 'Checkout',:controller => "books", :action => "checkout", :ISBN => bk.ISBN , :bookname => bk.title  %></td>
+      <td><%= link_to 'Checkout',:controller => "books", :action => "checkout", :ISBN => bk.ISBN , :library_id => bk.library_id :bookname => bk.title  %></td>
+      <td><%= link_to 'Bookmark',:controller => "books", :action => "bookmark", :ISBN => bk.ISBN , :library_id => bk.library_id :bookname => bk.title  %></td>
      <% end %>
     <br>
   </tr>
