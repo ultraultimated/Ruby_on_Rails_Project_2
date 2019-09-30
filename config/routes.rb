@@ -10,17 +10,13 @@ Rails.application.routes.draw do
   end
 end
   resources :users
-  resource :session
   resources :sign_up
 
   resources :librarians
   resources :books
   resources :libraries
-  resources :librarians do
-    collection do
-      get 'editlib'
-    end
-  end
+  get 'approval_requests' => 'librarians#approval_requests'
+  resources :librarians
   get 'checkout' => 'books#checkout'
   get 'destroy' => 'books#destroy'
   resources :books

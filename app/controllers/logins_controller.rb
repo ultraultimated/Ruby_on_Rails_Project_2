@@ -36,6 +36,7 @@ class LoginsController < ApplicationController
         admin = Admin.find_by_email(@login[:email])
         if admin&.authenticate(params[:login][:password])
           session[:admin] = admin.id
+
           session[:role] = "admin"
           redirect_to :controller => 'admins', :action => 'index'
         else

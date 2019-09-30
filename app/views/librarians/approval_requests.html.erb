@@ -1,0 +1,38 @@
+<style type="text/css">
+  td
+  {
+    padding:0 41px 0 30px;
+  }
+</style>
+<%if session[:role] != 'librarian' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+<% end %>
+
+<h1>List of Approval Requests</h1>
+<table>
+  <th>StudentID</th>
+  <th>Student Name</th>
+  <th>Book Name</th>
+  <% if !@holds.nil? then @holds.each do |hold| %>
+      <tr>
+
+        <td><%= hold.student_id %></td>
+        <%@student = Student.find_by_id(hold.student_id) %>
+        <td><%= @student[:name] %></td>
+        <%@book = Book.find_by_ISBN(hold.ISBN) %>
+        <td><%= @book[:name] %></td>
+
+
+          <td><%= link_to 'Approve',:controller => "librarians", :action => "update_approval", :id => hold.id   %></td>
+          <!--      <td><%#= link_to "Delete",:controller => "books", :action => "delete", :id => bk.ISBN%></td>-->
+          <td><%= link_to 'Destroy', destroy_path(bk),
+                          data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'View',:controller => "books", :action => "show", :id => bk.ISBN   %></td>
+
+
+        <br>
+      </tr>
+
+    <% end %>
+  <% end %>
+</table>
