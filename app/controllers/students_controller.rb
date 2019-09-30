@@ -1,4 +1,4 @@
-class StudentsController < ApplicationController
+ class StudentsController < ApplicationController
   
   def student_params
     params.require(:student).permit(:name, :email, :password, :password_confirmation,
