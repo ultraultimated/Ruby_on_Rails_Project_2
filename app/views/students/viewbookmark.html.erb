@@ -1,0 +1,52 @@
+<% if !session[:student_id] 
+  redirect_to root_url end%>
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
+  <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
+  <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id])%></a>
+
+  <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout"%></a>
+  
+</div>
+
+<h1>Book Details</h1>
+<style type="text/css">
+  td
+  {
+    padding:0 41px 0 30px;
+  }
+</style>
+
+<table>
+  <th>ISBN</th>
+  <th>title</th>
+  <th>author</th>
+  <th>Language</th>
+  <th>Published</th>
+  <th>Edition</th>
+  <th>Subject</th>
+  <th>Special Collection</th>
+  <th>Summary</th>
+  <%if session[:role] == 'librarian' %>
+    <th>Copies</th>
+  <% end %>
+<% if !@bookmark.nil? then @bookmark.each do |bk| %>
+    <% @detail = Book.where(:ISBN => bk.ISBN)%>
+    <% if !@detail.nil? then @detail.each do |det| %>
+      <tr>
+      <td><%= det.ISBN %></td>
+      <td><%= det.title %></td>
+      <td><%= det.author %></td>
+      <td><%= det.language %></td>
+      <td><%= det.published %></td>
+      <td><%= det.edition %></td>
+      <td><%= det.subject %></td>
+      <td><%= det.specialcollection %></td>
+      <td><%= det.summary %></td>&nbsp
+      </tr>
+    <%end%>
+    <%end%>
+<% end %>
+<% end %>
+  
+</table>

@@ -72,5 +72,15 @@ class LibrariansController < ApplicationController
     redirect_to :controller => 'books', :action => 'new'
   end
 
+  def approval_requests
+    @holds = Transaction.where(["status = ? and library_id = ?", "hold request", session[:library]])
+    puts @holds.count
+  end
+
+  def update_approval
+    @hold = Transaction.find_by_id(params[:id])
+
+  end
+
 
 end

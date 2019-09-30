@@ -9,13 +9,16 @@ td
 <table>
 <th>ISBN</th>
 <th>Title</th>
+<th>Checkout Date</th>
+<th>Expected Date</th>
 <th>Status</th>
 <% if !@tran.nil? then @tran.each do |tra| %>
   <tr>
-    <td><%= tra.ISBN %></td>
+    <td><%=tra.ISBN %></td>
     <td><%=tra.bookname%></td>
+    <td><%=tra.checkout_date%></td>
+    <td><%=tra.expected_date%></td>
     <td><%= tra.status %></td>
-    
   </tr>
 <% end %>
 <% end %>

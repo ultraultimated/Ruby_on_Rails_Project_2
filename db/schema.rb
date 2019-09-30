@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_29_014318) do
+ActiveRecord::Schema.define(version: 2019_09_30_194717) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -18,6 +18,16 @@ ActiveRecord::Schema.define(version: 2019_09_29_014318) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+<<<<<<< HEAD
+=======
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "ISBN"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+>>>>>>> 57209b57c0c88c54f1a24be2b2134c0e483ecdc6
   end
 
   create_table "books", force: :cascade do |t|
@@ -78,8 +88,18 @@ ActiveRecord::Schema.define(version: 2019_09_29_014318) do
     t.index ["email"], name: "index_students_on_email", unique: true
   end
 
-# Could not dump table "transactions" because of following StandardError
-#   Unknown type '' for column 'library_id'
+  create_table "transactions", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "ISBN"
+    t.string "bookname"
+    t.datetime "checkout_date"
+    t.datetime "expected_date"
+    t.datetime "return_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "library_id"
+  end
 
   create_table "universities", primary_key: "university_id", force: :cascade do |t|
     t.string "name", limit: 100

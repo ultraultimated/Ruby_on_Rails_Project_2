@@ -65,8 +65,12 @@
 </div>
 
 <div>
-  Special Collection
-   <%= f.select :specialcollection, ['Yes', 'No'], {:prompt => 'Is special Collection?'}, :required => true %>
+Is sepcial Collection:
+     <select name="specialcollection" >
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+  
 </div>
 
   <div class="field">

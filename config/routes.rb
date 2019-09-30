@@ -12,20 +12,21 @@ end
     get 'mybooks'
     get 'allbooks'
     get 'logout'
+    get 'viewbookmark'
   end
 end
   resources :users
-  resource :session
   resources :sign_up
 
   resources :librarians
-  resources :books
-  resources :libraries
-  resources :librarians do
+  resources :books do
     collection do
-      get 'editlib'
+      get 'book_bookmark'
     end
   end
+  resources :libraries
+  get 'approval_requests' => 'librarians#approval_requests'
+  resources :librarians
   get 'checkout' => 'books#checkout'
   get 'destroy' => 'books#destroy'
   resources :books
