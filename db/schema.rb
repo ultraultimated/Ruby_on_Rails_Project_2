@@ -18,8 +18,6 @@ ActiveRecord::Schema.define(version: 2019_09_30_203303) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
-<<<<<<< HEAD
-=======
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -27,7 +25,6 @@ ActiveRecord::Schema.define(version: 2019_09_30_203303) do
     t.string "ISBN"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
->>>>>>> 57209b57c0c88c54f1a24be2b2134c0e483ecdc6
   end
 
   create_table "books", force: :cascade do |t|
