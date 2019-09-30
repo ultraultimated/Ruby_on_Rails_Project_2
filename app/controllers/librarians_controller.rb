@@ -36,10 +36,13 @@ class LibrariansController < ApplicationController
     student = Student.find_by_email(@librarian[:email])
 
       if student == nil
-
-
         if @librarian.save
-           redirect_to root_path, notice: "Librarian created successfully"
+          puts session[:admin_id]
+          if(session[:admin_id] != nil)
+                  redirect_to :controller => "admins", :action =>"index"
+          else
+            redirect_to root_path, notice: "Librarian created successfully"
+          end
         else
           render "librarians/new"
         end
@@ -48,7 +51,7 @@ class LibrariansController < ApplicationController
 
         redirect_to root_path, notice: "Account already created as Student"
       end
-    end
+  end
 
   def edit
     @librarian = Librarian.find(session[:librarian_id])

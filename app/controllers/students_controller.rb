@@ -58,7 +58,8 @@
             respond_to do |format|
               if @student.save
                 if(session[:admin_id] != nil)
-                  redirect_to admin_path
+                  format.html {redirect_to :controller => "admins", :action => "index"}
+                 
                 else
                 #redirect_to controller: 'session', action: 'create', email: @student[:email]
                   format.html { redirect_to @student }
