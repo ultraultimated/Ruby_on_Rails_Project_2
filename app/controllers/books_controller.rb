@@ -4,21 +4,14 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:ISBN, :title, :author, :language, :bookname,
                                   :published, :edition, :image, :subject,
-                                  :summary, :specialcollection, :library, :copies)
+                                  :summary, :specialcollection, :library_id, :copies)
   end
   public
 
   def index
     if session[:role] == "student"
-      puts "#&&&&&"
-      puts session[:university_id]
-      puts "#&&&&&&"
-      @lib = Library.find_by_university_id(session[:university_id])
-      #@stud = Student.find_by_student_id(session[:student_id])
-      #puts @stud[:univer]
-      puts  @lib
-      puts "$$$$"
-      @book = Book.where(library_id: @lib[:library_id])
+      @library = Library.find_by_university_id(session[:university_id])
+      @book = Book.where(library_id: @library[:library_id])
     else
       @book = Book.where("library_id = " + session[:library])
   end 
@@ -30,29 +23,33 @@ class BooksController < ApplicationController
   end
 
   def checkout
-    @stud = Student.find_by_id(session[:student_id])
-    #puts session[:student_id]
-    #puts @stud
-    #puts "******"
+    @student = Student.find_by_id(session[:student_id])
+
     if Transaction.find_by_student_id(session[:student_id])
       @tran = Transaction.find_by_student_id(session[:student_id])
-      #puts Transaction.where(student_id: @tran[:student_id])
       m = Transaction.where(student_id: @tran[:student_id]).count
-      #puts m
-      if @stud[:maximum_book_limit].to_i > m
-        #puts "&&&&&&"
-        puts params[:ISBN]
-        #puts "******"
-        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out")
+
+      if @student[:maximum_book_limit].to_i > m
+
+        @book = Book.find_by_ISBN(params[:ISBN])
+        copies = @book[:copies]
+        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname],
+                               :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id])
         @trn.save
+
+        @book.update_attribute(:copies, (copies.to_i-1).to_s)
         redirect_to :controller => 'students', :action => 'index'
       else
         flash[:notice] = "Maximum books limit excedded"
         redirect_to :controller => 'students', :action => 'index'
       end
     else
-        @trn = Transaction.new(:student_id => session[:student_id], :bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out")
+        @book = Book.find_by_ISBN(params[:ISBN])
+        copies = @book[:copies]
+        @trn = Transaction.new(:student_id => session[:student_id], :bookname => params[:bookname],
+                               :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id])
         @trn.save
+        @book.update_attribute(:copies, (copies.to_i-1).to_s)
         redirect_to :controller => 'students', :action => 'index'
     end
   end

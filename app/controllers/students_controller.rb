@@ -1,7 +1,8 @@
 class StudentsController < ApplicationController
   
   def student_params
-    params.require(:student).permit(:name, :email, :password, :password_confirmation, :educational_level, :university, :maximum_book_limit)
+    params.require(:student).permit(:name, :email, :password, :password_confirmation,
+                                    :educational_level, :university_id, :maximum_book_limit)
   end
 #<% if !session[:student_id] 
 #  redirect_to root_url end%>
@@ -45,6 +46,7 @@ class StudentsController < ApplicationController
      # redirect_to root_url
     #else
   	@student = Student.new(student_params)
+    puts params[:university_id]
     ####to find if user is already librarian
     librarian = Librarian.find_by_email(@student[:email])
     if librarian == nil
@@ -55,9 +57,10 @@ class StudentsController < ApplicationController
             elsif params[:student][:educational_level]=="phd"
             	@student[:maximum_book_limit] = 6
             end
-            @student[:university] = params[:university].to_s
+            @student[:university_id] = params[:university_id].to_s
             puts "&&&&HERE"
-            puts @student[:university]
+            puts @student[:university_id]
+
             puts "&&&&HERE"
             respond_to do |format|
               if @student.save
