@@ -51,6 +51,8 @@ class LoginsController < ApplicationController
       session[:student_id] = nil
     elsif session[:librarian_id]
       session[:librarian_id] = nil
+    elsif session[:admin_id]
+      session[:admin_id]=nil
     end
     redirect_to root_url
   end

@@ -44,7 +44,6 @@
      # redirect_to root_url
     #else
   	@student = Student.new(student_params)
-    puts params[:university_id]
     ####to find if user is already librarian
     librarian = Librarian.find_by_email(@student[:email])
     if librarian == nil
@@ -56,25 +55,26 @@
             	@student[:maximum_book_limit] = 6
             end
             @student[:university_id] = params[:university_id].to_s
-            puts "&&&&HERE"
-            puts @student[:university_id]
-
-            puts "&&&&HERE"
             respond_to do |format|
               if @student.save
+                if(session[:admin_id] != nil)
+                  format.html {redirect_to :controller => "admins", :action => "index"}
+                 
+                else
                 #redirect_to controller: 'session', action: 'create', email: @student[:email]
-                format.html { redirect_to @student }
-                format.json { render json: @student, status: :created, location: @student }
+                  format.html { redirect_to @student }
+                  format.json { render json: @student, status: :created, location: @student }
+                end
               else
                 format.html { render action: "new" }
                 format.json { render json: @student.errors, status: :unprocessable_entity }
+              
               end
             end
     else
          flash[:notice] = "Account already created as librarian"
          redirect_to root_path
     end
-  #end
    end
 
  def update
@@ -112,7 +112,7 @@
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out")
+    @tran  = Transaction.where(student_id: session[:student_id])
   end
   end
 

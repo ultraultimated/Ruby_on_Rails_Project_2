@@ -35,20 +35,22 @@ class LibrariansController < ApplicationController
 
     student = Student.find_by_email(@librarian[:email])
 
-    if student == nil
-      ######
+      if student == nil
+        if @librarian.save
+          puts session[:admin_id]
+          if(session[:admin_id] != nil)
+                  redirect_to :controller => "admins", :action =>"index"
+          else
+            redirect_to root_path, notice: "Librarian created successfully"
+          end
+        else
+          render "librarians/new"
+        end
 
-      if @librarian.save
-        puts "*****"
-        redirect_to root_path, notice: "Librarian created successfully"
       else
-        render "librarians/new"
+
+        redirect_to root_path, notice: "Account already created as Student"
       end
-
-    else
-
-      redirect_to root_path, notice: "Account already created as Student"
-    end
   end
 
   def edit
@@ -74,30 +76,14 @@ class LibrariansController < ApplicationController
   end
 
   def approval_requests
-    @holds = Transaction.where(["status = ? and library_id = ?", "approval request", session[:library]])
+    @holds = Transaction.where(["status = ? and library_id = ?", "hold request", session[:library]])
     puts @holds.count
   end
 
   def update_approval
     @hold = Transaction.find_by_id(params[:id])
-    @type = params[:request]
-    if @type == 'approve'
-      @hold.update_attribute(:status, "checked out")
-      @book = Book.find_by_ISBN(@hold[:ISBN])
-      copies = @book[:copies]
-      @book.update_attribute(:copies, (copies.to_i - 1).to_s)
-    else
-      @hold.update_attribute(:status, "rejected")
-
-    end
-    redirect_to :controller => 'librarians', :action => 'approval_requests'
 
   end
 
-  def checked_out_books
-    @holds = Transaction.where(
-        ["status = ? and library_id = ?", "checked out", session[:library]])
-    puts "***********"
-    puts @holds[1].inspect
-  end
+
 end

@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  resources :admins
+  resources :admins do
+   collection do
+    get 'logout'
+    get 'createstudent'
+  end
+end
+
   get 'sessions/new'
   resources :logins
   resources :students do
