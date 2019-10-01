@@ -20,16 +20,9 @@
         <%@student = Student.find_by_id(hold.student_id) %>
         <td><%= @student[:name] %></td>
         <%@book = Book.find_by_ISBN(hold.ISBN) %>
-        <td><%= @book[:name] %></td>
-
-
-          <td><%= link_to 'Approve',:controller => "librarians", :action => "update_approval", :id => hold.id   %></td>
-          <!--      <td><%#= link_to "Delete",:controller => "books", :action => "delete", :id => bk.ISBN%></td>-->
-          <td><%= link_to 'Destroy', destroy_path(bk),
-                          data: { confirm: 'Are you sure?' } %></td>
-          <td><%= link_to 'View',:controller => "books", :action => "show", :id => bk.ISBN   %></td>
-
-
+        <td><%= @book[:title] %></td>
+          <td><%= link_to 'Approve',:controller => "librarians", :action => "update_approval", :id => hold.id, :request => "approve" %></td>
+          <td><%= link_to 'Reject',:controller => "librarians", :action => "update_approval", :id => hold.id, :request => "reject" %></td>
         <br>
       </tr>
 

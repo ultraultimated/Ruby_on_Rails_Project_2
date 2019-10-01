@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_194717) do
     t.string "image", limit: 500
     t.string "subject", limit: 100
     t.string "summary", limit: 1000
-    t.boolean "specialcollection"
+    t.string "specialcollection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "copies", limit: 6

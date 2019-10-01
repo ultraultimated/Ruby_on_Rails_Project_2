@@ -39,15 +39,15 @@ class BooksController < ApplicationController
 
       if @student[:maximum_book_limit].to_i > m
         @book = Book.find_by_ISBN(params[:ISBN])
-        ####special request###
-       # if @book[:]
-        #####special request###
+
         copies = @book[:copies]
         now = Date.today
         max_day = Library.find_by_library_id(@book[:library_id].to_i)[:max_days]
         after = now + max_day.to_i
         
-        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname], :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id], :checkout_date => now, :expected_date => after)
+        @trn = Transaction.new(:student_id => session[:student_id],:bookname => params[:bookname],
+                               :ISBN => params[:ISBN], :status => "checked out", :library_id => @book[:library_id],
+                               :checkout_date => now, :expected_date => after)
         @trn.save
 
         @book.update_attribute(:copies, (copies.to_i-1).to_s)
