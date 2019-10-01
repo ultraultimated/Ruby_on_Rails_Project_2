@@ -1,0 +1,29 @@
+<style type="text/css">
+  td {
+    padding: 0 41px 0 30px;
+  }
+</style>
+<% if session[:role] != 'librarian' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+<% end %>
+<h1>List of Checked out Items</h1>
+<table>
+  <th>ISBN</th>
+  <th>Student Name</th>
+  <th>Book Name</th>
+  <th>Checked Out Date</th>
+  <th>Expected Return Date</th>
+
+  <% if !@holds.nil? then
+       @holds.each do |hold| %>
+      <tr>
+        <td><%= hold.ISBN %></td>
+        <% @student = Student.find_by_id(hold.student_id) %>
+        <td><%= @student[:name]%></td>
+        <td><%= hold.bookname%></td>
+<!--        <td><%#= hold.checkout_date.to_date%></td>-->
+<!--        <td><%#= hold.expected_date.to_date%></td>-->
+      </tr>
+    <% end %>
+  <% end %>
+</table>
