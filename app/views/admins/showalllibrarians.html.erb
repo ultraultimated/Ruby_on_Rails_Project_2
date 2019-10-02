@@ -17,13 +17,14 @@ th
 <table>
   <th>Name:</th>
   <th>Email:</th>
-  <th>Library Id:</th>
+  <th>Librarian University:</th>
+  <th>Librarian Library:</th>
 <% @librarian.each do |librarian| %>
   <tr>
     <td><%=librarian.name %></td>
     <td><%=librarian.email %></td>
-    <td> <%=librarian.library_id[:university]%></td>
-    <td><%= link_to "Update", edit_student_path([:student_id]) %><td>
+    <td> <%=librarian.library_id%></td>
+    <td><%= link_to "Update", :controller => "admins", :action => "editlibrarian" , :librarian_id => librarian.librarian_id %><td>
   </tr>
 <%end %>
 </table>

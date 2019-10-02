@@ -8,5 +8,7 @@ def user_is_logged_in?
 	else
 		return true
   end
+
+
 end
 end
