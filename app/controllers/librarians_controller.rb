@@ -118,6 +118,7 @@ end
   end
 
   def update_approval
+    puts session[:role]
     if session[:role] != 'librarian'
       flash[:notice] = "login to access Account "
       redirect_to root_url
@@ -126,6 +127,10 @@ end
       @type = params[:request]
       if @type == 'approve'
         @hold.update_attribute(:status, "checked out")
+        @hold.update_attribute(:checkout_date, Date.today)
+        @library = Library.find_by_library_id(@hold[:library_id])
+        @hold.update_attribute(:expected_date, Date.today +
+            @library[:max_days].to_i.days)
         @book = Book.find_by_ISBN(@hold[:ISBN])
         copies = @book[:copies]
         @book.update_attribute(:copies, (copies.to_i - 1).to_s)
@@ -162,12 +167,15 @@ end
       @returned = Transaction.where(["status = ? and library_id = ?",
                                      "returned", session[:library]])
       @library = Library.find_by_library_id(session[:library])
+      @rejected = Transaction.where(["status = ? and library_id = ?",
+                                     "rejected", session[:library]])
       @fine = @library[:fines]
     else
       @checked_out = Transaction.where(
           :status => "checked out")
       @overdue = Transaction.where(:status => "overdue")
       @returned = Transaction.where(:status => "returned")
+      @rejected = Transaction.where(:status => "rejected")
     end
   end
 

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'all_books' => 'admins#all_books'
   get 'approve_librarian' => 'admins#approve_librarian'
-  get 'update_approval' => 'admins#update_approval'
+  get 'update_approval_librarian' => 'admins#update_approval_librarian'
   get 'deletestudent' => 'admins#deletestudent'
   resources :admins do
    collection do

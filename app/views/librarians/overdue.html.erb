@@ -6,7 +6,9 @@
 <% if session[:role] != 'librarian' and session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
 <% else %>
-  <%=render 'header' %>
+  <% if session[:role] == 'librarian' %>
+    <%= render 'header' %>
+  <% end %>
   <table border="1px">
     <h3>Overdue Books</h3>
     <th>ISBN</th>
@@ -34,8 +36,8 @@
           <% if session[:role] == 'admin' %>
 
             <td><%= @library[:name] %></td>
-            <%@university = University.find_by_university_id(@library[:university_id]) %>
-            <td><%=@university[:name] %></td>
+            <% @university = University.find_by_university_id(@library[:university_id]) %>
+            <td><%= @university[:name] %></td>
           <% end %>
 
           <td><%= overdue.checkout_date %></td>
@@ -43,7 +45,7 @@
           <td><%= overdue.return_date %></td>
           <% @days = (Date.parse(overdue.return_date.to_s) -
               Date.parse(overdue.expected_date.to_s)).to_i %>
-         <% @fine = @library[:fines] %>
+          <% @fine = @library[:fines] %>
           <td><%= @days * @fine.to_f %></td>
         </tr>
       <% end %>

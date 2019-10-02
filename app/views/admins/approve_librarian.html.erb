@@ -15,9 +15,9 @@
           <td><%=request.name %></td>
           <%@library = Library.find_by_library_id(request.library_id) %>
           <td><%=@library[:name] %></td>
-          <td><%= link_to 'Approve',:controller => "admins", :action => "update_approval",
+          <td><%= link_to 'Approve',:controller => "admins", :action => "update_approval_librarian",
                           :id => request.librarian_id, :request => "approve" %></td>
-          <td><%= link_to 'Deny',:controller => "admins", :action => "update_approval",
+          <td><%= link_to 'Deny',:controller => "admins", :action => "update_approval_librarian",
                           :id => request.librarian_id, :request => "deny" %></td>
 
         </tr>

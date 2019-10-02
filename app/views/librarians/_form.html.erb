@@ -44,7 +44,7 @@
     <% @libraries = Library.all %>
     <!--    <%#= f.label :lib %>
     Library: <%#= select_tag :lib, options_from_collection_for_select(@library, "id", "name") %>-->
-    <select name="libr">
+    Library: <select name="libr">
       <%= @libraries.each do |lib| %>
         <option value="<%= lib.id %>"><%= lib.name %></option>
       <% end %>

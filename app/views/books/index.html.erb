@@ -11,10 +11,10 @@
 <% if session[:role] == 'librarian' %>
   <div class="topnav">
     <a><%= link_to "Home", :controller => "librarians", :action => "index" %></a>
-    <a><%= link_to "Approval Requests", :controller =>"librarians", :action => "approval_requests"%></a>
-    <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id])%></a>
-    <a><%= link_to "Add a Book", new_book_url%></a>
-    <a><%= link_to "Sign out", :controller => "librarians", :action => "signout"%></a>
+    <a><%= link_to "Approval Requests", :controller => "librarians", :action => "approval_requests" %></a>
+    <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id]) %></a>
+    <a><%= link_to "Add a Book", new_book_url %></a>
+    <a><%= link_to "Sign out", :controller => "librarians", :action => "signout" %></a>
   </div>
 <% end %>
 
@@ -28,16 +28,17 @@
 <h1>List of Books</h1>
 <br/><br/>
 
-
-<form action="books/search">
-  By Subject: &nbsp
-  <input type="text" name="subject">
-  By author:
-  <input type="text" name="author">
-  By Title:
-  <input type="text" name="title">
-  <input type="submit" value="Submit">
-</form>
+<% if session[:role] == 'student' %>
+  <form action="books/search">
+    By Subject: &nbsp
+    <input type="text" name="subject">
+    By author:
+    <input type="text" name="author">
+    By Title:
+    <input type="text" name="title">
+    <input type="submit" value="Submit">
+  </form>
+<% end %>
 
 
 
@@ -68,10 +69,9 @@
         <td><%= bk.specialcollection %></td>
         <td><%= bk.summary %></td>
         &nbsp
-        <% if session[:role] == 'librarian' %>
+        <% if session[:role] == 'librarian' or session[:role] == 'admin' %>
           <td><%= bk.copies %></td>
           <td><%= link_to 'Edit', :controller => "books", :action => "edit", :id => bk.ISBN %></td>
-          <!--      <td><%#= link_to "Delete",:controller => "books", :action => "delete", :id => bk.ISBN%></td>-->
           <td><%= link_to 'Destroy', destroy_path(bk),
                           data: {confirm: 'Are you sure?'} %></td>
           <td><%= link_to 'View', :controller => "books", :action => "show", :id => bk.ISBN %></td>

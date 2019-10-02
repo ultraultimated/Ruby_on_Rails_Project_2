@@ -1,13 +1,17 @@
-<% if session[:role] != 'librarian' %>
+<% if session[:role] != 'librarian' and session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
+  <% if session[:role] == 'librarian' %>
+    <div class="topnav">
+      <a><%= link_to "Home", :controller => "librarians", :action => "index" %></a>
+      <a><%= link_to "Approval Requests", :controller => "librarians", :action => "approval_requests" %></a>
+      <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id]) %></a>
+      <a><%= link_to "Add a Book", new_book_url %></a>
+      <a><%= link_to "Sign out", :controller => "librarians", :action => "signout" %></a>
+    </div>
+  <% else %>
+    <!-- admin header here -->
+  <% end %>
 <% else %>
-  <div class="topnav">
-    <a><%= link_to "Home", :controller => "librarians", :action => "index" %></a>
-    <a><%= link_to "Approval Requests", :controller =>"librarians", :action => "approval_requests"%></a>
-    <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id])%></a>
-    <a><%= link_to "Add a Book", new_book_url%></a>
-    <a><%= link_to "Sign out", :controller => "librarians", :action => "signout"%></a>
-  </div>
   <h1>Enter Book Details</h1>
   <%= form_for @book do |f| %>
     <div id="error_explanation">
@@ -68,27 +72,40 @@
       <%= f.label :subject %>
       <%= f.text_field :subject, :required => true %>
     </div>
-
+<br>
     <div class="field">
       <%= f.label :summary %>
       <%= f.text_field :summary, :required => true %>
     </div>
-
+<br>
     <div>
-      Is sepcial Collection:
+      Is special Collection:
       <select name="specialcollection">
         <option value="yes">Yes</option>
         <option value="no">No</option>
       </select>
 
     </div>
-
+<br>
     <div class="field">
       <%= f.label :copies %>
       <%= f.text_field :copies, :required => true %>
     </div>
+<br>
+    <% if session[:role] == 'admin' %>
+      <div>
+        <% @libraries = Library.all %>
+        <!--    <%#= f.label :lib %>
+    Library: <%#= select_tag :lib, options_from_collection_for_select(@library, "id", "name") %>-->
+        Library: <select name="library_id">
+        <%= @libraries.each do |lib| %>
+          <option value="<%= lib.id %>"><%= lib.name %></option>
+        <% end %>
+      </select>
+      </div>
+    <% end %>
 
-
+<br>
     <div class="action">
       <%= f.submit "Add Book" %>
     </div>

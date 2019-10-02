@@ -6,7 +6,9 @@
 <% if session[:role] != 'librarian' and session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
 <% else %>
-  <%=render 'header' %>
+  <% if session[:role] == 'librarian' %>
+    <%= render 'header' %>
+  <% end %>
 
   <h1>History of books</h1>
   <table border="1px">
@@ -118,6 +120,35 @@
       <% end %>
     <% end %>
 
+  </table>
+
+  <table border="1px">
+    <h3>Rejected  Requests</h3>
+    <th>ISBN</th>
+    <th>Student Name</th>
+    <th>Book Name</th>
+    <% if session[:role] == 'admin' %>
+      <th>Library Name</th>
+      <th>University Name</th>
+    <% end %>
+    <% if !@rejected.nil? then
+         @rejected.each do |reject| %>
+
+        <tr>
+          <td><%= reject.ISBN %></td>
+          <% @student = Student.find_by_id(reject.student_id) %>
+          <td><%= @student[:name] %></td>
+          <% @book = Book.find_by_ISBN(reject.ISBN) %>
+          <td><%= @book[:title] %></td>
+          <% if session[:role] == 'admin' %>
+            <% @library = Library.find_by_library_id(@book[:library_id]) %>
+            <td><%= @library[:name] %></td>
+            <% @university = University.find_by_university_id(@library[:university_id]) %>
+            <td><%= @university[:name] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
   </table>
 <% end %>
 
