@@ -14,6 +14,7 @@ end
     get 'allbooks'
     get 'logout'
     get 'viewbookmark'
+    get 'alllibs'
   end
 end
   resources :users
@@ -23,6 +24,7 @@ end
   resources :books do
     collection do
       get 'book_bookmark'
+      get 'search'
     end
   end
   resources :libraries
@@ -33,6 +35,7 @@ end
   resources :librarians
   get 'checkout' => 'books#checkout'
   get 'destroy' => 'books#destroy'
+
   resources :books
 
   root 'logins#new'

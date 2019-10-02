@@ -8,6 +8,11 @@ class LibrariesController < ApplicationController
 
   public
 
+  def index
+    @library = Library.where(university_id:  session[:university_id])
+  end
+
+
   def edit
     if session[:role] != 'librarian'
       flash[:notice] = "login to access Account "

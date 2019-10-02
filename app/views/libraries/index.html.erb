@@ -1,0 +1,34 @@
+<% if !session[:student_id] 
+  redirect_to root_url end%>
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
+  <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
+  <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id])%></a>
+
+  <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout"%></a>
+  
+</div>
+<style type="text/css">
+td
+{
+    padding:0 41px 0 30px;
+}
+</style>
+
+<h1>List of Libraries</h1>
+<table>
+<th>Name</th> 
+<th>location</th> 
+<th>Max Days you can borrow</th> 
+<th>Fine per day for late Return</th> 
+
+<% if !@library.nil? then @library.each do |lib| %>
+  <tr>
+    <td><%= lib.name %></td>
+    <td><%= lib.location %></td>
+    <td><%= lib.max_days %></td>
+    <td><%= lib.fines %></td>
+  </tr>
+<% end %>
+<% end %>
+</table>
