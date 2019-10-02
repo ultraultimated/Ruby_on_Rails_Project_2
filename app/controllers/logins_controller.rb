@@ -25,24 +25,26 @@ class LoginsController < ApplicationController
       if librarian&.authenticate(params[:login][:password])
         session[:librarian_id] = librarian.id
         session[:role] = "librarian"
-
-        session[:library] = librarian[:library_id]
-        puts session[:library]
-        redirect_to :controller => 'librarians', :action => 'index'
+          session[:library] = librarian[:library_id]
+          puts session[:library]
+          redirect_to :controller => 'librarians', :action => 'index'
+        else
+          flash[:notice] = "Invalid Credentials"
+          redirect_to root_path
+        end
+      elsif Admin.find_by_email(@login[:email])
+        admin = Admin.find_by_email(@login[:email])
+        if admin&.authenticate(params[:login][:password])
+          session[:admin_id] = admin.id
+          session[:role] = "admin"
+          redirect_to :controller => 'admins', :action => 'index'
+        else
+          flash[:notice] = "Invalid Credentials"
+          redirect_to root_path
+        end
       else
         flash[:notice] = "Invalid Credentials"
-        redirect_to root_path
-      end
-    elsif Admin.find_by_email(@login[:email])
-      admin = Admin.find_by_email(@login[:email])
-      if admin&.authenticate(params[:login][:password])
-        session[:admin_id] = admin.id
-        session[:role] = "admin"
-        redirect_to :controller => 'admins', :action => 'index'
-      else
-        flash[:notice] = "Invalid Credentials"
-        redirect_to root_path
-      end
+          redirect_to root_path
     end
   end
 
