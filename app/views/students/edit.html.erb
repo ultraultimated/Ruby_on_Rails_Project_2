@@ -1,3 +1,9 @@
+<% if session[:role] != 'student' %>
+  <% redirect_to root_url%>
+  <% else %>
+
 <h1>Editing Student Information</h1>
 
 <%= render 'editf' %>
+
+<% end %>
