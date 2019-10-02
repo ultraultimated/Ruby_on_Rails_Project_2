@@ -42,6 +42,9 @@ class LoginsController < ApplicationController
           flash[:notice] = "Invalid Credentials"
           redirect_to root_path
         end
+      else
+        flash[:notice] = "Invalid Credentials"
+          redirect_to root_path
     end
   end
 
