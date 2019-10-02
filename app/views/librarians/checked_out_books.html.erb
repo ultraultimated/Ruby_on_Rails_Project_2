@@ -3,28 +3,38 @@
     padding: 0 41px 0 30px;
   }
 </style>
-<% if session[:role] != 'librarian' %>
+<% if session[:role] != 'librarian' and session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
-<%else %>
-<h1>List of Checked out Items</h1>
-<table>
-  <th>ISBN</th>
-  <th>Student Name</th>
-  <th>Book Name</th>
-  <th>Checked Out Date</th>
-  <th>Expected Return Date</th>
-
-  <% if !@holds.nil? then
-       @holds.each do |hold| %>
-      <tr>
-        <td><%= hold.ISBN %></td>
-        <% @student = Student.find_by_id(hold.student_id) %>
-        <td><%= @student[:name]%></td>
-        <td><%= hold.bookname%></td>
-        <td><%= hold.checkout_date%></td>
-        <td><%= hold.expected_date%></td>
-      </tr>
+<% else %>
+  <h1>List of Checked out Items</h1>
+  <table border="1px">
+    <th>ISBN</th>
+    <th>Student Name</th>
+    <th>Book Name</th>
+    <th>Checked Out Date</th>
+    <th>Expected Return Date</th>
+    <% if session[:role] == 'admin' %>
+      <th>Library Name</th>
+      <th>University Name</th>
     <% end %>
-  <% end %>
+
+    <% if !@holds.nil? then
+         @holds.each do |hold| %>
+        <tr>
+          <td><%= hold.ISBN %></td>
+          <% @student = Student.find_by_id(hold.student_id) %>
+          <td><%= @student[:name] %></td>
+          <td><%= hold.bookname %></td>
+          <td><%= hold.checkout_date %></td>
+          <td><%= hold.expected_date %></td>
+          <% if session[:role] == 'admin' %>
+            <%@library = Library.find_by_library_id(hold.library_id) %>
+            <td><%=@library[:name] %></td>
+            <%@university = University.find_by_university_id(@library[:university_id]) %>
+            <td><%=@university[:name] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
 <% end %>
 </table>
