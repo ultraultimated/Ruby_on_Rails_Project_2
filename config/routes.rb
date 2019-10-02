@@ -6,10 +6,8 @@ Rails.application.routes.draw do
     get 'createstudent'
     get 'showallstudents'
     get 'showalllibrarians'
-    get 'updatestudent'
-    get 'updatelibrary'
     get 'editstudent'
-    get 'editlibrary'
+    get 'editlibrarian'
   end
 end
 

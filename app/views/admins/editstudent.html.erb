@@ -1,3 +1,6 @@
+<% if session[:role] != 'admin' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+  <% else %>
 <%= form_for @student do |f| %>
 
 <% if @student.errors.any? %>
@@ -12,6 +15,14 @@
     </div>
  <% end %>
 
+  
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email, :readonly => true %>
+  </div>
+  
+  <br />
+
   <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -19,12 +30,6 @@
 
   <br />
   
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email, :required => true %>
-  </div>
-  
-  <br />
   
   <div class="field">
     <%= f.label :EducationalLevel %>
@@ -35,12 +40,12 @@
   
   <div class="field">
     <%= f.label :UniversityID %>
-    <%= f.password_field :university_id[:name] %>
+    <%= f.text_field :university_id %>
   </div>
 
 <div class="field">
     <%= f.label :MaximumBookLimit %>
-    <%= f.password_field :maximum_book_limit %>
+    <%= f.text_field :maximum_book_limit %>
   </div>
   
   
@@ -49,3 +54,4 @@
     <%= f.submit "Confirm Edit" %>
   </div>
 <%end %>
+<% end %>

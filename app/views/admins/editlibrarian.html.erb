@@ -1,0 +1,43 @@
+<% if session[:role] != 'admin' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+  <% else %>
+<%= form_for @librarian do |f| %>
+
+  <% if @librarian.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@librarian.errors.count, "error") %> prohibited this librarian from being saved:</h2>
+
+      <ul>
+        <% @librarian.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email, :readonly => true %>
+  </div>
+
+  
+
+  <br/>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <br/>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :library_id %>
+  </div>
+
+  <br/>
+
+  <div class="action">
+    <%= f.submit "Confirm Changes" %>
+  </div>
+<% end %>
+<% end %>

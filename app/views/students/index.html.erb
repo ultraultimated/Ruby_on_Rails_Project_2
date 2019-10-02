@@ -6,13 +6,11 @@
   <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id])%></a>
 
   <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout"%></a>
-  
-</div>
-<br><br><br>
+ </div>
 <a href="students/alllibs"></a><br><br>
 <%= link_to "List of all the libraries", :controller => "students", :action => "alllibs"%><br><br>
 <%= link_to "View all books", :controller => "students", :action => "allbooks"%><br><br>
 <%= link_to "My Bookmarks", :controller => "students", :action => "viewbookmark"%><br><br>
-<a href="students/fines">Overdue Fines</a><br><br>
+<a href="students/fines">Overdue Fines</a>
 
 
