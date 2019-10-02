@@ -79,6 +79,13 @@ class AdminsController < ApplicationController
 
   end
 
+  def all_books
+    @books = Book.all
+    puts @books.inspect
+  end
+
+
+
 end
 
   

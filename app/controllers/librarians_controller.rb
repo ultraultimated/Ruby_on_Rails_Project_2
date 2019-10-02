@@ -128,22 +128,23 @@ class LibrariansController < ApplicationController
   end
 
   def checked_out_books
-    if session[:role] != 'librarian'
+    if session[:role] != 'librarian' and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url
-    else
+    elsif session[:role] == 'librarian'
       @holds = Transaction.where(
           ["status = ? and library_id = ?", "checked out", session[:library]])
-      puts "*********** in else ************"
-      puts @holds.inspect
+    else
+      @holds = Transaction.where(:status => "checked out")
+
     end
   end
 
   def book_history
-    if session[:role] != 'librarian'
+    if session[:role] != 'librarian' and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url
-    else
+    elsif session[:role] == 'librarian'
       @checked_out = Transaction.where(
           ["status = ? and library_id = ?", "checked out", session[:library]])
       @overdue = Transaction.where(["status = ? and library_id = ?",
@@ -152,7 +153,37 @@ class LibrariansController < ApplicationController
                                      "returned", session[:library]])
       @library = Library.find_by_library_id(session[:library])
       @fine = @library[:fines]
+    else
+      @checked_out = Transaction.where(
+          :status =>  "checked out")
+      @overdue = Transaction.where(:status => "overdue")
+      @returned = Transaction.where(:status => "returned")
     end
+  end
+
+  def view_hold_requests
+    if session[:role] != 'librarian' and session[:role] != 'admin'
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    elsif session[:role] =='admin'
+      @holds = Hold.all
+    else
+      @holds = Hold.where(:library_id => session[:library])
+    end
+  end
+
+  def overdue
+    if session[:role] != 'librarian' and session[:role] != 'admin'
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    elsif session[:role] =='admin'
+      @overdue = Transaction.where(:status => 'overdue')
+    else
+      @overdue = Transaction.where(["status = ? and library_id = ?",
+                                    "overdue", session[:library]])
+
+    end
+
   end
 
 end

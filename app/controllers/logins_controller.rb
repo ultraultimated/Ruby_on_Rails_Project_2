@@ -21,8 +21,6 @@ class LoginsController < ApplicationController
       session[:university_id] = student.university_id
       redirect_to :controller => 'students', :action => 'index'
     elsif Librarian.find_by_email(@login[:email])
-      puts "***********"
-      puts "in librarian"
       librarian = Librarian.find_by_email(@login[:email])
       if librarian&.authenticate(params[:login][:password])
         session[:librarian_id] = librarian.id

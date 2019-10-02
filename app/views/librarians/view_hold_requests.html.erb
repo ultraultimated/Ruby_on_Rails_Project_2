@@ -1,0 +1,35 @@
+<style type="text/css">
+  td {
+    padding: 0 41px 0 30px;
+  }
+</style>
+<% if session[:role] != 'librarian' and session[:role] != 'admin' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+<% else %>
+  <h1>List of All Books</h1>
+  <table border="1px">
+    <th>ISBN</th>
+    <th>Title</th>
+    <th>Student Name</th>
+    <th>Library Name</th>
+    <th>University Name</th>
+    <% if !@holds.nil? then
+         @holds.each do |hold| %>
+        <tr>
+          <td><%=hold.ISBN %></td>
+          <%@book = Book.find_by_ISBN(hold.ISBN) %>
+          <td><%=@book[:title] %></td>
+          <% @student = Student.find_by_id(hold.student_id)%>
+          <td><%=@student[:name] %></td>
+          <%@library = Library.find_by_library_id(hold.library_id) %>
+          <td><%=@library[:name] %></td>
+          <%@university = University.find_by_university_id(@library[:university_id]) %>
+          <td><%=@university[:name]%></td>
+        </tr>
+
+      <% end %>
+    <% end %>
+
+
+<% end %>
+</table>
