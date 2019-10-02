@@ -2,26 +2,7 @@
   <h1 color="red">You are not authorized to view this page</h1>
 <% else %>
 <h1><%= session[:role] %></h1>
-<div class="topnav">
-  <a><%= link_to "Home", :controller => "librarians", :action => "index" %></a>
-  <a><%= link_to "Approval Requests", :controller =>"librarians", :action => "approval_requests"%></a>
-  <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id])%></a>
-  <a><%= link_to "Add a Book", new_book_url%></a>
-  <!-- TODO fetch data from student_books table and entries that contains request= true
-   display in this page-->
-<!--  <a><%#= link_to "Requests", edit_student_path(session[:librarian_id])%></a>-->
-  <!-- TODO create library model add some library and store library id in session
-  variable and pass it to this function -->
-  <!--<a><%#= link_to "Edit Library", edit_library_path(session[:librarian_id])%></a>-->
-  <!-- TODO View borrowing history, Fetch all entries in student_books table with a
-   particular university-->
-<!--  <a><%#= link_to "Borrowing history", edit_student_path(session[:librarian_id])%></a>-->
-  <!-- TODO View Overdues, Fetch all entries in student_books table with a
-     particular university-->
-  <!--  <a><%#= link_to "Overdues", edit_student_path(session[:librarian_id])%></a>-->
-
-  <div class="topcorner"><a href="#Sign Out">Sign out</a></div>
-</div>
+<%=render 'header' %>
 <br><br><br>
 <a><%= link_to "Edit Library Attributes", :controller => "libraries", :action => "edit", :id => session[:library]%></a><br><br>
 <a><%= link_to "View All Books", :controller => "books", :action => "index" %></a><br><br>

@@ -23,28 +23,33 @@ class LoginsController < ApplicationController
     elsif Librarian.find_by_email(@login[:email])
       librarian = Librarian.find_by_email(@login[:email])
       if librarian&.authenticate(params[:login][:password])
-        session[:librarian_id] = librarian.id
-        session[:role] = "librarian"
+        if librarian.is_valid == 'requested'
+          flash[:notice] = "Your request is still in queue"
+          redirect_to root_path
+        else
+          session[:librarian_id] = librarian.id
+          session[:role] = "librarian"
           session[:library] = librarian[:library_id]
-          puts session[:library]
+          session[:status] = librarian.is_valid
           redirect_to :controller => 'librarians', :action => 'index'
-        else
-          flash[:notice] = "Invalid Credentials"
-          redirect_to root_path
-        end
-      elsif Admin.find_by_email(@login[:email])
-        admin = Admin.find_by_email(@login[:email])
-        if admin&.authenticate(params[:login][:password])
-          session[:admin_id] = admin.id
-          session[:role] = "admin"
-          redirect_to :controller => 'admins', :action => 'index'
-        else
-          flash[:notice] = "Invalid Credentials"
-          redirect_to root_path
         end
       else
         flash[:notice] = "Invalid Credentials"
-          redirect_to root_path
+        redirect_to root_path
+      end
+    elsif Admin.find_by_email(@login[:email])
+      admin = Admin.find_by_email(@login[:email])
+      if admin&.authenticate(params[:login][:password])
+        session[:admin_id] = admin.id
+        session[:role] = "admin"
+        redirect_to :controller => 'admins', :action => 'index'
+      else
+        flash[:notice] = "Invalid Credentials"
+        redirect_to root_path
+      end
+    else
+      flash[:notice] = "Invalid Credentials"
+      redirect_to root_path
     end
   end
 

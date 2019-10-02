@@ -1,8 +1,9 @@
 <h1>Admin Home-Page</h1>
 
 
-<% if !session[:admin_id] 
-  redirect_to root_url end%>
+<% if !session[:admin_id] %>
+  redirect_to root_url
+   <%end%>
 <div class="topnav">
   <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
 
@@ -16,6 +17,7 @@
 <a><%= link_to "View All Checked Out Books", :controller => 'librarians', :action => "checked_out_books" %></a><br><br>
 <a><%= link_to "View Overdues", :controller => 'librarians', :action => "overdue" %></a><br><br>
 <a><%= link_to "View Book history", :controller => 'librarians', :action => "book_history" %></a><br><br>
+<a><%= link_to "View Approval Requests", :controller => 'admins', :action => "approve_librarian" %></a><br><br>
 <br><br><br>
 
 <a href="students/alllibs">List of all the libraries</a>

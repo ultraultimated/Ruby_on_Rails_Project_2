@@ -6,6 +6,7 @@
 <% if session[:role] != 'librarian' and session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
 <% else %>
+  <%=render 'header' %>
   <table border="1px">
     <h3>Overdue Books</h3>
     <th>ISBN</th>

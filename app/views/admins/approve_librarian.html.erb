@@ -1,0 +1,27 @@
+<style type="text/css">
+  td {
+    padding: 0 41px 0 30px;
+  }
+</style>
+<% if session[:role] != 'admin' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+<% else %>
+  <table>
+    <th>Librarian Name</th>
+    <th>Library ID</th>
+    <% if !@requests.nil? then
+         @requests.each do |request| %>
+        <tr>
+          <td><%=request.name %></td>
+          <%@library = Library.find_by_library_id(request.library_id) %>
+          <td><%=@library[:name] %></td>
+          <td><%= link_to 'Approve',:controller => "admins", :action => "update_approval",
+                          :id => request.librarian_id, :request => "approve" %></td>
+          <td><%= link_to 'Deny',:controller => "admins", :action => "update_approval",
+                          :id => request.librarian_id, :request => "deny" %></td>
+
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+<% end %>
