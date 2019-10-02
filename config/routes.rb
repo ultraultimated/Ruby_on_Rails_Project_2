@@ -29,6 +29,7 @@ end
   get 'approval_requests' => 'librarians#approval_requests'
   get 'update_approval' => 'librarians#update_approval'
   get 'checked_out_books' => 'librarians#checked_out_books'
+  get 'book_history' => 'librarians#book_history'
   resources :librarians
   get 'checkout' => 'books#checkout'
   get 'destroy' => 'books#destroy'

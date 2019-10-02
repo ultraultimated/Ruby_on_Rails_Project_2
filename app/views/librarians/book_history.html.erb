@@ -1,0 +1,90 @@
+<style type="text/css">
+  td {
+    padding: 0 41px 0 30px;
+  }
+</style>
+<% if session[:role] != 'librarian' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+<%else %>
+
+<h1>History of books</h1>
+<table>
+  <h3>Checked Out Books</h3>
+  <th>ISBN</th>
+  <th>Student Name</th>
+  <th>Book Name</th>
+  <th>Checkout Date</th>
+  <th>Expected Date</th>
+  <% if !@checked_out.nil? then
+       @checked_out.each do |hold| %>
+      <tr>
+        <td><%= hold.ISBN %></td>
+        <% @student = Student.find_by_id(hold.student_id) %>
+        <td><%= @student[:name] %></td>
+        <% @book = Book.find_by_ISBN(hold.ISBN) %>
+        <td><%= @book[:title] %></td>
+        <td><%= hold.checkout_date %></td>
+        <td><%= hold.expected_date %></td>
+        <br>
+      </tr>
+
+    <% end %>
+  <% end %>
+</table>
+<table>
+  <h3>Returned Books</h3>
+  <th>ISBN</th>
+  <th>Student Name</th>
+  <th>Book Name</th>
+  <th>Checkout Date</th>
+  <th>Expected Date</th>
+  <th>Return Date</th>
+  <% if !@returned.nil? then
+       @returned.each do |returned| %>
+
+      <tr>
+        <td><%= returned.ISBN %></td>
+        <% @student = Student.find_by_id(returned.student_id) %>
+        <td><%= @student[:name] %></td>
+        <% @book = Book.find_by_ISBN(returned.ISBN) %>
+        <td><%= @book[:title] %></td>
+        <td><%= returned.checkout_date %></td>
+        <td><%= returned.expected_date %></td>
+        <td><%= returned.return_date %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<table>
+  <h3>Overdue Books</h3>
+  <th>ISBN</th>
+  <th>Student Name</th>
+  <th>Book Name</th>
+  <th>Checkout Date</th>
+  <th>Expected Date</th>
+  <th>Return Date</th>
+  <th>Fine</th>
+  <% if !@overdue.nil? then
+       @overdue.each do |overdue| %>
+
+      <tr>
+        <td><%= overdue.ISBN %></td>
+        <% @student = Student.find_by_id(overdue.student_id) %>
+        <td><%= @student[:name] %></td>
+        <% @book = Book.find_by_ISBN(overdue.ISBN) %>
+        <td><%= @book[:title] %></td>
+        <td><%= overdue.checkout_date %></td>
+        <td><%= overdue.expected_date %></td>
+        <td><%= overdue.return_date %></td>
+        <% @days = (Date.parse(overdue.return_date.to_s) -
+            Date.parse(overdue.expected_date.to_s)).to_i %>
+        <td><%= @days * @fine.to_f %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+</table>
+<%end %>
+

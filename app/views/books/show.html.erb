@@ -1,36 +1,41 @@
-<h1>Book Details</h1>
-<style type="text/css">
-  td
-  {
-    padding:0 41px 0 30px;
-  }
-</style>
-<table>
-  <th>ISBN</th>
-  <th>title</th>
-  <th>author</th>
-  <th>Language</th>
-  <th>Published</th>
-  <th>Edition</th>
-  <th>Subject</th>
-  <th>Special Collection</th>
-  <th>Summary</th>
-  <%if session[:role] == 'librarian' %>
-    <th>Copies</th>
-  <% end %>
+<% if session[:role] != 'librarian' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+<% else %>
+  <h1>Book Details</h1>
+  <style type="text/css">
+    td {
+      padding: 0 41px 0 30px;
+    }
+  </style>
+  <table>
+    <th>ISBN</th>
+    <th>title</th>
+    <th>author</th>
+    <th>Language</th>
+    <th>Published</th>
+    <th>Edition</th>
+    <th>Subject</th>
+    <th>Special Collection</th>
+    <th>Summary</th>
+    <% if session[:role] == 'librarian' %>
+      <th>Copies</th>
+    <% end %>
 
-      <tr>
-        <td><%= @book.ISBN %></td>
-        <td><%= @book.title %></td>
-        <td><%= @book.author %></td>
-        <td><%= @book.language %></td>
-        <td><%= @book.published %></td>
-        <td><%= @book.edition %></td>
-        <td><%= @book.subject %></td>
-        <td><%= @book.specialcollection %></td>
-        <td><%= @book.summary %></td>&nbsp
-        <td><%= @book.copies %></td>&nbsp
-        <br>
-      </tr>
-  
-</table>
+    <tr>
+      <td><%= @book.ISBN %></td>
+      <td><%= @book.title %></td>
+      <td><%= @book.author %></td>
+      <td><%= @book.language %></td>
+      <td><%= @book.published %></td>
+      <td><%= @book.edition %></td>
+      <td><%= @book.subject %></td>
+      <td><%= @book.specialcollection %></td>
+      <td><%= @book.summary %></td>
+      &nbsp
+      <td><%= @book.copies %></td>
+      &nbsp
+      <br>
+    </tr>
+
+  </table>
+<% end %>

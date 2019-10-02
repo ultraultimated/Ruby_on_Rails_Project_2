@@ -1,3 +1,6 @@
+<% if session[:role] != 'librarian' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+  <% else %>
 <%= form_for @librarian do |f| %>
 
   <% if @librarian.errors.any? %>
@@ -45,4 +48,5 @@
   <div class="action">
     <%= f.submit "Confirm Changes" %>
   </div>
+<% end %>
 <% end %>
