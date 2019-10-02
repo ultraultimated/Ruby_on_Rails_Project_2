@@ -59,7 +59,7 @@
               if @student.save
                 if(session[:admin_id] != nil)
                   format.html {redirect_to :controller => "admins", :action => "index"}
-                 
+                  format.json { render json: @student, status: :created, location: @student }
                 else
                 #redirect_to controller: 'session', action: 'create', email: @student[:email]
                   format.html { redirect_to @student }
@@ -112,7 +112,7 @@
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-    @tran  = Transaction.where(student_id: session[:student_id])
+    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out")
   end
   end
 
@@ -132,7 +132,6 @@
       redirect_to root_url
     else
       @bookmark = Bookmark.where(:student_id => session[:student_id])
-      puts "$$$$$$$$$$$"
       #print(bookmark[:ISBN])
       #@detail = Book.find_by_ISBN(@bookmark[:ISBN])
     end

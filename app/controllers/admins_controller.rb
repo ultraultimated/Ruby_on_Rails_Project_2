@@ -2,8 +2,7 @@ class AdminsController < ApplicationController
    private
 
   def admin_params
-    params.require(:admin).permit(:name, :email, :password, :password_confirmation)
-
+    params.require(:admin).permit(:name, :email, :password, :password_confirmation, :educational_level, :university_id, :maximum_book_limit )
   end
 
   public
@@ -15,25 +14,24 @@ class AdminsController < ApplicationController
     end
   end
 
-  def new
-    @librarian = Librarian.new
-    @library = Library.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @librarian }
-      format.json {render json: @student}
+  
+  def showallstudents
+    if !session[:admin_id]
+      flash[:notice] = "Login to access Account "
+      redirect_to root_url
+    else
+      @student=Student.all
     end
-  end
-
-
-  def show
-    @student=Student.all
-    @library=Library.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @librarian }
+end
+  
+   def showalllibrarians
+    if !session[:admin_id]
+      flash[:notice] = "Login to access Account "
+      redirect_to root_url
+    else
+      @librarian=Librarian.all
     end
-  end
+end
 
   
   def edit
@@ -51,7 +49,6 @@ class AdminsController < ApplicationController
       redirect_to root_url
     else
     @admin = Admin.find(params[:id])
-
     respond_to do |format|
       #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
       #, 
@@ -66,19 +63,46 @@ class AdminsController < ApplicationController
   end
   end
 
+  def updatestudent
+    if !session[:admin_id]
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    else
+      @student = Student.find(params[:id])
+
+    respond_to do |format|
+      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
+      #, 
+      if @student.update_attributes(student_params)
+        format.html { redirect_to :controller => 'admins', :action => 'showallstudents', notice: 'Student Info was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @student.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  end
+
+  def editstudent
+    if !session[:admin_id]
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+  else
+    @student = Student.find([:student_id])
+      end
+  end
+
+  def editlibrary
+  end
+
+  def updatelibrary
+  end
+
   def logout
     reset_session
     redirect_to root_url
   end
-
-  def add_book
-    redirect_to :controller => 'books', :action => 'new'
-  end
-
-  def view_all
-
-  end
-
 end
 
   

@@ -1,0 +1,31 @@
+<%= link_to "Admin_HomePage", :controller => "admins", :action => "index" %>
+<style type="text/css">
+td
+{
+    padding:0 1px 0 0px;
+}
+th
+{
+  text-align: left;
+  padding:0 10px 5px 0px;
+}
+</style>
+<h2>List of all students</h2>
+<table>
+  <th>Name:</th>
+  <th>Email:</th>
+  <th>Educational Level:</th>
+  <th>University:</th>
+  <th>Maximum Book Limit:</th>
+  <% @student.each do |student| %>
+  <tr>
+    <td><%=student.name %></td>
+    <td><%=student.email %></td>
+    <td> <%=student.educational_level%></td>
+    <td><%=student.university[:name]%></td>
+    <td><%=student.maximum_book_limit%></td>
+    <td><%= link_to "Update", :controller => "admins", :action => "editstudent" %><td>
+  </tr>
+<%end %>
+</table>
+

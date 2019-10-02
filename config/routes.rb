@@ -3,6 +3,12 @@ Rails.application.routes.draw do
    collection do
     get 'logout'
     get 'createstudent'
+    get 'showallstudents'
+    get 'showalllibrarians'
+    get 'updatestudent'
+    get 'updatelibrary'
+    get 'editstudent'
+    get 'editlibrary'
   end
 end
 
