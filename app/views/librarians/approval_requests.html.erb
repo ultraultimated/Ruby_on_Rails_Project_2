@@ -4,9 +4,9 @@
     padding:0 41px 0 30px;
   }
 </style>
-<%if session[:role] != 'librarian' %>
+<% if session[:role] != 'librarian' %>
   <h1 color="red">You are not authorized to view this page</h1>
-<% end %>
+<%else %>
 
 <h1>List of Approval Requests</h1>
 <table>
@@ -27,5 +27,6 @@
       </tr>
 
     <% end %>
+  <% end %>
   <% end %>
 </table>

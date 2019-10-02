@@ -1,86 +1,90 @@
-<h1>Enter Book Details</h1>
-<%= form_for @book do |f| %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+<% if session[:role] != 'librarian' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+<% else %>
+  <h1>Enter Book Details</h1>
+  <%= form_for @book do |f| %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
 
-    <ul>
-      <% @book.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-
-
-<div class="field">
-  <%= f.label :ISBN %>
-  <%= f.text_field :ISBN, :required => true %>
-</div>
-
-<br/>
-
-<div class="field">
-  <%= f.label :title %>
-  <%= f.text_field :title, :required => true %>
-</div>
-
-<br/>
-
-<div class="field">
-  <%= f.label :author %>
-  <%= f.text_field :author, :required => true %>
-</div>
-
-<br/>
-
-<div class="field">
-  <%= f.label :langauge %>
-  <%= f.text_field :language, :required => true %>
-</div>
-
-<br/>
-
-<div class="field">
-  <%= f.label :published %>
-  <%= f.text_field :published, :required => true %>
-</div>
-
-<br/>
-
-<div class="field">
-  <%= f.label :edition %>
-  <%= f.text_field :edition, :required => true %>
-</div>
-
-<br/>
+      <ul>
+        <% @book.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
 
 
-<div class="field">
-  <%= f.label :subject %>
-  <%= f.text_field :subject, :required => true %>
-</div>
+    <div class="field">
+      <%= f.label :ISBN %>
+      <%= f.text_field :ISBN, :required => true %>
+    </div>
 
-<div class="field">
-  <%= f.label :summary %>
-  <%= f.text_field :summary, :required => true %>
-</div>
+    <br/>
 
-<div>
-Is sepcial Collection:
-     <select name="specialcollection" >
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, :required => true %>
+    </div>
+
+    <br/>
+
+    <div class="field">
+      <%= f.label :author %>
+      <%= f.text_field :author, :required => true %>
+    </div>
+
+    <br/>
+
+    <div class="field">
+      <%= f.label :langauge %>
+      <%= f.text_field :language, :required => true %>
+    </div>
+
+    <br/>
+
+    <div class="field">
+      <%= f.label :published %>
+      <%= f.text_field :published, :required => true %>
+    </div>
+
+    <br/>
+
+    <div class="field">
+      <%= f.label :edition %>
+      <%= f.text_field :edition, :required => true %>
+    </div>
+
+    <br/>
+
+
+    <div class="field">
+      <%= f.label :subject %>
+      <%= f.text_field :subject, :required => true %>
+    </div>
+
+    <div class="field">
+      <%= f.label :summary %>
+      <%= f.text_field :summary, :required => true %>
+    </div>
+
+    <div>
+      Is sepcial Collection:
+      <select name="specialcollection">
         <option value="yes">Yes</option>
         <option value="no">No</option>
-    </select>
-  
-</div>
+      </select>
 
-  <div class="field">
-    <%= f.label :copies %>
-    <%= f.text_field :copies, :required => true %>
-  </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :copies %>
+      <%= f.text_field :copies, :required => true %>
+    </div>
 
 
-<div class="action">
-  <%= f.submit "Add Book" %>
-</div>
+    <div class="action">
+      <%= f.submit "Add Book" %>
+    </div>
 
+  <% end %>
 <% end %>

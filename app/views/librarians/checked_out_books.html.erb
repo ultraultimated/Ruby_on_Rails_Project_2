@@ -5,7 +5,7 @@
 </style>
 <% if session[:role] != 'librarian' %>
   <h1 color="red">You are not authorized to view this page</h1>
-<% end %>
+<%else %>
 <h1>List of Checked out Items</h1>
 <table>
   <th>ISBN</th>
@@ -21,9 +21,10 @@
         <% @student = Student.find_by_id(hold.student_id) %>
         <td><%= @student[:name]%></td>
         <td><%= hold.bookname%></td>
-<!--        <td><%#= hold.checkout_date.to_date%></td>-->
-<!--        <td><%#= hold.expected_date.to_date%></td>-->
+        <td><%= hold.checkout_date%></td>
+        <td><%= hold.expected_date%></td>
       </tr>
     <% end %>
   <% end %>
+<% end %>
 </table>
