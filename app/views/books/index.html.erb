@@ -1,3 +1,14 @@
+<% if session[:student_id] %>
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
+  <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
+  <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id])%></a>
+
+  <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout"%></a>
+  
+</div>
+<% end %>
+
 <style type="text/css">
 td
 {
@@ -5,7 +16,24 @@ td
 }
 </style>
 
+
 <h1>List of Books</h1>
+ <br/><br/>
+
+
+ <form action="books/search">
+  By Subject: &nbsp 
+  <input type="text" name="subject" >
+  By author:  
+  <input type="text" name="author" >
+  By Title:
+  <input type="text" name="title" >
+  <input type="submit" value="Submit">
+</form> 
+
+
+
+
 <table>
 <th>ISBN</th> 
 <th>title</th> 

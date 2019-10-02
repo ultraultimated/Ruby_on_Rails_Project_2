@@ -106,6 +106,62 @@ class BooksController < ApplicationController
    end
  end
 
+=begin
+def bsearch
+    if params[:subject] != nil
+        if params[:title] != nil
+                if params[:author] != nil
+                  @book = Book.where(subject: params[:search][:subject],title: params[:search][:title],author: params[:search][:author])
+                else
+                  @book = Book.where(subject: params[:search][:subject],title: params[:search][:title])
+                end
+        elsif params[:search][:author] != nil
+                @book = Book.where(author: params[:search][:author])
+        else
+             @book = Book.where(title: params[:search][:title])
+        end
+  elsif params[:title] != nil
+        if params[:search][:author] != nil
+                  @book = Book.where(title: params[:search][:title],author: params[:search][:author])
+        else
+                  @book = Book.where(title: params[:search][:title])
+        end
+  elsif params[:author] != nil
+         @book = Book.where(author: params[:search][:author])
+  end
+       
+  puts "***********88"
+  puts "I am done"
+  puts "***************" 
+end
+=end
+def search
+  if params[:subject] != ""
+        if params[:title] != ""
+                if params[:author] != ""
+                  @book = Book.where(subject: params[:subject],title: params[:title],author: params[:author])
+                else
+                  @book = Book.where(subject: params[:subject],title: params[:title])
+                end
+        elsif params[:author] != ""
+                @book = Book.where(subject: params[:subject],author: params[:author])
+        else
+             @book = Book.where(subject: params[:subject])
+        end
+  elsif params[:title] != ""
+        if params[:author] != ""
+                  @book = Book.where(title: params[:title],author: params[:author])
+        else
+                  @book = Book.where(title: params[:title])
+        end
+  elsif params[:author] != ""
+         @book = Book.where(author: params[:author])
+  end
+       
+  
+end
+
+
   def destroy
 
     @book = Book.find_by_id(params[:format])

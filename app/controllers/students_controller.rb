@@ -137,6 +137,11 @@
     end
   end 
 
+
+  def alllibs
+    redirect_to :controller => 'libraries', :action => 'index'
+  end
+    
   def fines
     if !session[:student_id]
       flash[:notice] = "login to access Account "

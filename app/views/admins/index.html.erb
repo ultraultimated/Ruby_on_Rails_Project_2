@@ -10,6 +10,13 @@
 
   <a class="topcorner"><%= link_to "Sign Out", :controller => "admins", :action => "logout"%></a>
   
+</div>
+<a><%= link_to "View All Books", :controller => 'admins', :action => "all_books" %></a><br><br>
+<a><%= link_to "View All Hold Request", :controller => 'librarians', :action => "view_hold_requests" %></a><br><br>
+<a><%= link_to "View All Checked Out Books", :controller => 'librarians', :action => "checked_out_books" %></a><br><br>
+<a><%= link_to "View Overdues", :controller => 'librarians', :action => "overdue" %></a><br><br>
+<a><%= link_to "View Book history", :controller => 'librarians', :action => "book_history" %></a><br><br>
+<br><br><br>
 
 <a href="students/alllibs">List of all the libraries</a>
 <%= link_to "Create Student Account", :controller => "students", :action => "new"%>

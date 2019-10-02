@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'all_books' => 'admins#all_books'
   resources :admins do
    collection do
     get 'logout'
@@ -20,6 +21,7 @@ end
     get 'allbooks'
     get 'logout'
     get 'viewbookmark'
+    get 'alllibs'
   end
 end
   resources :users
@@ -29,13 +31,20 @@ end
   resources :books do
     collection do
       get 'book_bookmark'
+      get 'search'
     end
   end
   resources :libraries
   get 'approval_requests' => 'librarians#approval_requests'
+  get 'update_approval' => 'librarians#update_approval'
+  get 'checked_out_books' => 'librarians#checked_out_books'
+  get 'book_history' => 'librarians#book_history'
+  get 'view_hold_requests' => 'librarians#view_hold_requests'
+  get 'overdue' => 'librarians#overdue'
   resources :librarians
   get 'checkout' => 'books#checkout'
   get 'destroy' => 'books#destroy'
+
   resources :books
 
   root 'logins#new'

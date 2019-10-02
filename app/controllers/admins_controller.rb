@@ -103,6 +103,13 @@ end
     reset_session
     redirect_to root_url
   end
+  def all_books
+    @books = Book.all
+    puts @books.inspect
+  end
+
+
+
 end
 
   

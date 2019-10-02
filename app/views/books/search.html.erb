@@ -1,0 +1,31 @@
+<style type="text/css">
+td
+{
+    padding:0 41px 0 30px;
+}
+</style>
+<h1>Some Books we found :- </h1>
+
+<table>
+<th>ISBN</th>
+<th>title</th>
+<th>author</th>
+<th>Language</th>
+<th>Published</th>
+<th>Edition</th>
+<th>Subject</th>
+<th>Special Collection</th>
+<% if !@book.nil? then @book.each do |bk| %>
+  <tr>
+    <td><%= bk.ISBN %></td>
+    <td><%= bk.title %></td>
+    <td><%= bk.author %></td>
+    <td><%= bk.language %></td>
+    <td><%= bk.published %></td>
+    <td><%= bk.edition %></td>
+    <td><%= bk.subject %></td>
+    <td><%= bk.specialcollection %></td>
+  </tr>
+<% end %>
+<% end %>
+</table>
