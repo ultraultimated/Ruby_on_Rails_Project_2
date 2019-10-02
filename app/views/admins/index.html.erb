@@ -1,23 +1,15 @@
 <h1>Admin Home-Page</h1>
 
 
-<% if !session[:admin_id] 
-  redirect_to root_url end%>
+<% if !session[:admin_id] %>
+  redirect_to root_url
+   <%end%>
 <div class="topnav">
   <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
 
   <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id])%></a>
 
   <a class="topcorner"><%= link_to "Sign Out", :controller => "admins", :action => "logout"%></a>
-  <br><br><br>
-
-<a href="students/alllibs">List of all the libraries</a><br><br>
-<%= link_to "Create Student Account", :controller => "students", :action => "new"%><br><br>
-<%= link_to "Create Librarian Account", :controller => "librarians", :action => "new"%><br><br>
-<%= link_to "Update Student Account", :controller => "students", :action => "new"%><br><br>
-<%= link_to "Update Librarian Account", :controller => "librarians", :action => "new"%><br><br>
-<a href="students/bookmarks">My Book Bookmarks</a><br><br>
-<a href="students/fines">Overdue Fines</a><br><br>
   
 </div>
 <a><%= link_to "View All Books", :controller => 'admins', :action => "all_books" %></a><br><br>
@@ -25,7 +17,14 @@
 <a><%= link_to "View All Checked Out Books", :controller => 'librarians', :action => "checked_out_books" %></a><br><br>
 <a><%= link_to "View Overdues", :controller => 'librarians', :action => "overdue" %></a><br><br>
 <a><%= link_to "View Book history", :controller => 'librarians', :action => "book_history" %></a><br><br>
+<a><%= link_to "View Approval Requests", :controller => 'admins', :action => "approve_librarian" %></a><br><br>
 <br><br><br>
 
+<a href="students/alllibs">List of all the libraries</a>
+<%= link_to "Create Student Account", :controller => "students", :action => "new"%>
+<%= link_to "Create Librarian Account", :controller => "librarians", :action => "new"%>
+</div>
 
 
+<a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a>
+<a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>

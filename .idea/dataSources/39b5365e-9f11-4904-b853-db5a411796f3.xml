@@ -167,7 +167,7 @@
     </column>
     <column id="51" parent="9" name="specialcollection">
       <Position>12</Position>
-      <DataType>boolean|0s</DataType>
+      <DataType>varchar|0s</DataType>
     </column>
     <column id="52" parent="9" name="created_at">
       <Position>13</Position>
@@ -258,7 +258,8 @@
     </column>
     <column id="71" parent="11" name="is_valid">
       <Position>8</Position>
-      <DataType>boolean|0s</DataType>
+      <DataType>varchar|0s</DataType>
+      <DefaultExpression>&quot;requested&quot;</DefaultExpression>
     </column>
     <index id="72" parent="11" name="index_librarians_on_email">
       <ColNames>email</ColNames>

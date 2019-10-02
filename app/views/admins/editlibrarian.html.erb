@@ -1,7 +1,6 @@
-<% if session[:role] != 'librarian' %>
+<% if session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
   <% else %>
-  <%=render 'header' %>
 <%= form_for @librarian do |f| %>
 
   <% if @librarian.errors.any? %>
@@ -17,34 +16,25 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name, :required => true %>
-  </div>
-
-  <br/>
-
-  <div class="field">
     <%= f.label :email %>
     <%= f.email_field :email, :readonly => true %>
   </div>
 
+  
+
+  <br/>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
   <br/>
 
   <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
-
-  <br>
-
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.label :email %>
+    <%= f.text_field :library_id %>
   </div>
 
   <br/>
-
-  <br>
 
   <div class="action">
     <%= f.submit "Confirm Changes" %>

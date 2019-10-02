@@ -1,32 +1,34 @@
 <style type="text/css">
-  td
-  {
-    padding:0 41px 0 30px;
+  td {
+    padding: 0 41px 0 30px;
   }
 </style>
 <% if session[:role] != 'librarian' %>
   <h1 color="red">You are not authorized to view this page</h1>
-<%else %>
+<% else %>
 
-<h1>List of Approval Requests</h1>
-<table>
-  <th>StudentID</th>
-  <th>Student Name</th>
-  <th>Book Name</th>
-  <% if !@holds.nil? then @holds.each do |hold| %>
-      <tr>
 
-        <td><%= hold.student_id %></td>
-        <%@student = Student.find_by_id(hold.student_id) %>
-        <td><%= @student[:name] %></td>
-        <%@book = Book.find_by_ISBN(hold.ISBN) %>
-        <td><%= @book[:title] %></td>
-          <td><%= link_to 'Approve',:controller => "librarians", :action => "update_approval", :id => hold.id, :request => "approve" %></td>
-          <td><%= link_to 'Reject',:controller => "librarians", :action => "update_approval", :id => hold.id, :request => "reject" %></td>
-        <br>
-      </tr>
+  <h1>List of Approval Requests</h1>
+  <%= render 'header' %>
+  <table>
+    <th>StudentID</th>
+    <th>Student Name</th>
+    <th>Book Name</th>
+    <% if !@holds.nil? then
+         @holds.each do |hold| %>
+        <tr>
 
+          <td><%= hold.student_id %></td>
+          <% @student = Student.find_by_id(hold.student_id) %>
+          <td><%= @student[:name] %></td>
+          <% @book = Book.find_by_ISBN(hold.ISBN) %>
+          <td><%= @book[:title] %></td>
+          <td><%= link_to 'Approve', :controller => "librarians", :action => "update_approval", :id => hold.id, :request => "approve" %></td>
+          <td><%= link_to 'Reject', :controller => "librarians", :action => "update_approval", :id => hold.id, :request => "reject" %></td>
+          <br>
+        </tr>
+
+      <% end %>
     <% end %>
-  <% end %>
-  <% end %>
+<% end %>
 </table>

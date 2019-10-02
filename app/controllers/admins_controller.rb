@@ -1,82 +1,95 @@
 class AdminsController < ApplicationController
-   private
+  private
 
   def admin_params
-    params.require(:admin).permit(:name, :email, :password, :password_confirmation)
-
+    params.require(:admin).permit(:name, :email, :password, :password_confirmation, :educational_level, :university_id, :maximum_book_limit, :libr, :library_id )
   end
 
   public
-
+#Home Page
   def index
     if !session[:admin_id]
-      flash[:notice] = "login to access Account "
+      flash[:notice] = "Login to access Account "
       redirect_to root_url
     end
   end
 
-  def new
-    @librarian = Librarian.new
-    @library = Library.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @librarian }
-      format.json {render json: @student}
+  # To show the list of students
+  def showallstudents
+    if !session[:admin_id]
+      flash[:notice] = "Login to access Account "
+      redirect_to root_url
+    else
+      @student = Student.all
     end
-  end
-
-
-  def show
-    @student=Student.all
-    @library=Library.all
-    respond_to do |format|
-      format.html
-      format.json { render json: @librarian }
-    end
-  end
-
+end
   
+  #To show the list of all librarians
+   def showalllibrarians
+    if !session[:admin_id]
+      flash[:notice] = "Login to access Account "
+      redirect_to root_url
+    else
+      @librarian = Librarian.all
+    end
+  end
+
+
+# To edit admin info  
   def edit
     if !session[:admin_id]
-      flash[:notice] = "login to access Account "
+      flash[:notice] = "Login to access Account "
       redirect_to root_url
     else
-    @admin = Admin.find(session[:admin_id])
+      @admin = Admin.find(session[:admin_id])
     end
   end
 
+  #To reflect the edited changes in the database
   def update
     if !session[:admin_id]
-      flash[:notice] = "login to access Account "
+      flash[:notice] = "Login to access Account "
       redirect_to root_url
     else
-    @admin = Admin.find(params[:id])
-
-    respond_to do |format|
-      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
-      #, 
-      if @admin.update_attributes(admin_params)
-        format.html { redirect_to :controller => 'admins', :action => 'index', notice: 'Admin Info was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @admin.errors, status: :unprocessable_entity }
+      @admin = Admin.find(params[:id])
+      respond_to do |format|
+        #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
+        #,
+        if @admin.update_attributes(admin_params)
+          format.html { redirect_to :controller => 'admins', :action => 'index', notice: 'Admin Info was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @admin.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
+
+
+#To update student in the database
+  def editstudent
+    if !session[:admin_id]
+      flash[:notice] = "Login to access Account "
+      redirect_to root_url
+  else
+    @student = Student.find_by_id(params[:student_id])
+    end
   end
+
+  def editlibrarian
+      if !session[:admin_id]
+      flash[:notice] = "Login to access Account "
+      redirect_to root_url
+  else
+    @librarian = Librarian.find_by(params[:librarian_id])
+    end
+  end
+
 
   def logout
     reset_session
     redirect_to root_url
-  end
-
-  def add_book
-    redirect_to :controller => 'books', :action => 'new'
-  end
-
-  def view_all
-
   end
 
   def all_books
@@ -84,6 +97,32 @@ class AdminsController < ApplicationController
     puts @books.inspect
   end
 
+  def approve_librarian
+    @requests = Librarian.where(:is_valid => "requested")
+  end
+
+  def update_approval
+    if session[:role] != 'admin'
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    else
+      @librarian = Librarian.find_by_librarian_id(params[:id])
+      @type = params[:request]
+      if @type == 'approve'
+        @librarian.update_attribute(:is_valid, "approved")
+
+      else
+        @librarian.delete
+      end
+      redirect_to :controller => "admins", :action => "approve_librarian"
+    end
+  end
+
+  def deletestudent
+    @student = Student.find_by_id(params[:id])
+    @student.delete
+    redirect_to :controller => "admins", :action => "showallstudents"
+  end
 
 
 end

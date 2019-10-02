@@ -1,0 +1,57 @@
+<% if session[:role] != 'admin' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+  <% else %>
+<%= form_for @student do |f| %>
+
+<% if @student.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this Student from being saved:</h2>
+
+      <ul>
+      <% @student.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+ <% end %>
+
+  
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email, :readonly => true %>
+  </div>
+  
+  <br />
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <br />
+  
+  
+  <div class="field">
+    <%= f.label :EducationalLevel %>
+    <%= f.text_field :educational_level %>
+  </div>
+  
+  <br>
+  
+  <div class="field">
+    <%= f.label :UniversityID %>
+    <%= f.text_field :university_id %>
+  </div>
+
+<div class="field">
+    <%= f.label :MaximumBookLimit %>
+    <%= f.text_field :maximum_book_limit %>
+  </div>
+  
+  
+ 
+  <div class="action">
+    <%= f.submit "Confirm Edit" %>
+  </div>
+<%end %>
+<% end %>

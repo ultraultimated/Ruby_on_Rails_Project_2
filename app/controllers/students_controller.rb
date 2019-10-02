@@ -62,7 +62,7 @@ require 'Date'
               if @student.save
                 if(session[:admin_id] != nil)
                   format.html {redirect_to :controller => "admins", :action => "index"}
-                 
+                  format.json { render json: @student, status: :created, location: @student }
                 else
                 #redirect_to controller: 'session', action: 'create', email: @student[:email]
                   format.html { redirect_to @student }
@@ -81,6 +81,22 @@ require 'Date'
    end
 
  def update
+    if session[:admin_id] != nil
+      @student = Student.find(params[:id])
+
+    respond_to do |format|
+      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
+      #, 
+      if @student.update_attributes(student_params)
+        format.html { redirect_to :controller => 'admins', :action => 'showallstudents', notice: 'Student Info was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @student.errors, status: :unprocessable_entity }
+      end
+    end
+   else 
+
     if !session[:student_id]
       flash[:notice] = "login to access Account "
       redirect_to root_url
@@ -99,6 +115,7 @@ require 'Date'
       end
     end
   end
+end
   end
 
   def edit
@@ -115,7 +132,7 @@ require 'Date'
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-    @tran  = Transaction.where(student_id: session[:student_id])
+    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out")
   end
   end
 
@@ -135,7 +152,6 @@ require 'Date'
       redirect_to root_url
     else
       @bookmark = Bookmark.where(:student_id => session[:student_id])
-      puts "$$$$$$$$$$$"
       #print(bookmark[:ISBN])
       #@detail = Book.find_by_ISBN(@bookmark[:ISBN])
     end

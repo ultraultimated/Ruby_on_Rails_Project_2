@@ -2,7 +2,7 @@ class LibrariansController < ApplicationController
   private
 
   def librarian_params
-    params.require(:librarian).permit(:name, :email, :password, :password_confirmation, :libr, :library_id)
+    params.require(:librarian).permit(:name, :email, :password, :password_confirmation, :libr, :library_id, :is_valid)
 
   end
 
@@ -16,48 +16,41 @@ class LibrariansController < ApplicationController
   end
 
   def new
-    if session[:role] != 'librarian'
-      flash[:notice] = "login to access Account "
-      redirect_to root_url
-    else
-      @librarian = Librarian.new
-      @library = Library.all
-      respond_to do |format|
-        format.html
-        format.json { render json: @librarian }
-      end
+
+    @librarian = Librarian.new
+    @library = Library.all
+    respond_to do |format|
+      format.html
+      format.json { render json: @librarian }
     end
+
   end
 
 
   def create
-    if session[:role] != 'librarian'
-      flash[:notice] = "login to access Account "
-      redirect_to root_url
-    else
-      @library = Library.find_by_library_id(params[:libr])
-      params = librarian_params
-      params[:library_id] = @library.id
-      @librarian = Librarian.new(params)
 
-      student = Student.find_by_email(@librarian[:email])
+    @library = Library.find_by_library_id(params[:libr])
+    params = librarian_params
+    params[:library_id] = @library.id
+    @librarian = Librarian.new(params)
+    @librarian[:is_valid] = "requested"
 
-      if student == nil
-        if @librarian.save
-          puts session[:admin_id]
-          if (session[:admin_id] != nil)
-            redirect_to :controller => "admins", :action => "index"
-          else
-            redirect_to root_path, notice: "Librarian created successfully"
-          end
+    student = Student.find_by_email(@librarian[:email])
+
+    if student == nil
+      if @librarian.save
+        if (session[:admin_id] != nil)
+          redirect_to :controller => "admins", :action => "index"
         else
-          render "librarians/new"
+          redirect_to root_path, notice: "Librarian created successfully"
         end
-
       else
-
-        redirect_to root_path, notice: "Account already created as Student"
+        render "librarians/new"
       end
+
+    else
+
+      redirect_to root_path, notice: "Account already created as Student"
     end
   end
 
@@ -71,6 +64,22 @@ class LibrariansController < ApplicationController
   end
 
   def update
+     if session[:admin_id] != nil
+      @librarian = Librarian.find(params[:id])
+
+    respond_to do |format|
+      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
+      #, 
+      if @librarian.update_attributes(librarian_params)
+        format.html { redirect_to :controller => 'admins', :action => 'showalllibrarians', notice: 'Librarian Info was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @librarian.errors, status: :unprocessable_entity }
+      end
+    end
+   else 
+
     if session[:role] != 'librarian'
       flash[:notice] = "login to access Account "
       redirect_to root_url
@@ -88,6 +97,7 @@ class LibrariansController < ApplicationController
       end
     end
   end
+end
 
   def add_book
     if session[:role] != 'librarian'
@@ -155,7 +165,7 @@ class LibrariansController < ApplicationController
       @fine = @library[:fines]
     else
       @checked_out = Transaction.where(
-          :status =>  "checked out")
+          :status => "checked out")
       @overdue = Transaction.where(:status => "overdue")
       @returned = Transaction.where(:status => "returned")
     end
@@ -165,7 +175,7 @@ class LibrariansController < ApplicationController
     if session[:role] != 'librarian' and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url
-    elsif session[:role] =='admin'
+    elsif session[:role] == 'admin'
       @holds = Hold.all
     else
       @holds = Hold.where(:library_id => session[:library])
@@ -176,7 +186,7 @@ class LibrariansController < ApplicationController
     if session[:role] != 'librarian' and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url
-    elsif session[:role] =='admin'
+    elsif session[:role] == 'admin'
       @overdue = Transaction.where(:status => 'overdue')
     else
       @overdue = Transaction.where(["status = ? and library_id = ?",
@@ -184,6 +194,11 @@ class LibrariansController < ApplicationController
 
     end
 
+  end
+  def signout
+    flash[:notice] = "Logged out successfully"
+    reset_session
+    redirect_to root_path
   end
 
 end
