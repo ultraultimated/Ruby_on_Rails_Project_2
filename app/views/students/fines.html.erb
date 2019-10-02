@@ -8,12 +8,6 @@
   <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout"%></a>
   
 </div>
-<style type="text/css">
-td
-{
-    padding:0 41px 0 30px;
-}
-</style>
 
 <style type="text/css">
 td
@@ -21,24 +15,29 @@ td
     padding:0 41px 0 30px;
 }
 </style>
-<h1>My Books</h1>
+
+<h1>Overdue Fines</h1>
 
 <table>
 <th>ISBN</th>
 <th>Title</th>
 <th>Checkout Date</th>
 <th>Expected Date</th>
+<th>Return Date</th>
 <th>Status</th>
-<% if !@tran.nil? then @tran.each do |tra| %>
+<th>Fine</th>
+<% if !@fines.nil? then @fines.each do |fin| %>
   <tr>
-    <td><%=tra.ISBN %></td>
-    <td><%=tra.bookname%></td>
-    <td><%=tra.checkout_date%></td>
-    <td><%=tra.expected_date%></td>
-    <td><%= tra.status %></td>
-    <% if tra.status == "checked out" %>
-    	<td><%= link_to "Return", :controller => "students", :action => "returns", :id => tra.id , :ISBN => tra.ISBN %><br><br></td>
-    <%end%>
+    <td><%=fin.ISBN %></td>
+    <td><%=fin.bookname%></td>
+    <td><%=fin.checkout_date%></td>
+    <td><%=fin.expected_date%></td>
+    <td><%=fin.return_date%></td>
+    <td><%=fin.status%></td>
+    <%  @bk = Book.find_by_ISBN(fin.ISBN) %>
+    <%  @lib = Library.find_by_library_id(@bk[:library_id])  %>
+    <% fine = (fin.return_date.to_date - fin.expected_date.to_date).to_i*@lib[:fines].to_f%>
+    <td><%=fine%></td>
   </tr>
 <% end %>
 <% end %>

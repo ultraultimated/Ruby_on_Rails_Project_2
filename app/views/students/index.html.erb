@@ -1,5 +1,6 @@
 <% if !session[:student_id] 
 	redirect_to root_url end%>
+<h1><%= session[:role] %></h1>
 <div class="topnav">
   <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
   <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
@@ -11,6 +12,6 @@
 <%= link_to "List of all the libraries", :controller => "students", :action => "alllibs"%><br><br>
 <%= link_to "View all books", :controller => "students", :action => "allbooks"%><br><br>
 <%= link_to "My Bookmarks", :controller => "students", :action => "viewbookmark"%><br><br>
-<a href="students/fines">Overdue Fines</a>
+<%= link_to "Overdue Fines", :controller => "students", :action => "fines"%><br><br>
 
 

@@ -23,6 +23,8 @@ end
     get 'logout'
     get 'viewbookmark'
     get 'alllibs'
+    get 'fines'
+    get 'returns'
   end
 end
   resources :sign_up

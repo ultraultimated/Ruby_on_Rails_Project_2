@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_190938) do
     t.string "image", limit: 500
     t.string "subject", limit: 100
     t.string "summary", limit: 1000
-    t.string "specialcollection"
+    t.boolean "specialcollection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "copies", limit: 6
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_190938) do
     t.string "library_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "is_valid", default: "requested"
+    t.boolean "is_valid"
     t.index ["email"], name: "index_librarians_on_email", unique: true
   end
 
