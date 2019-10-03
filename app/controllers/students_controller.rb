@@ -119,12 +119,18 @@ end
   end
 
   def edit
-    if !session[:student_id]
+    if !session[:student_id] and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url
-  else
-    @student = Student.find(session[:student_id])
+    else
+      if session[:role] == 'admin'
+        @student = Student.find(params[:id])
+      else
+        @student = Student.find(session[:student_id])
+
       end
+    end
+
   end
 
   def mybooks

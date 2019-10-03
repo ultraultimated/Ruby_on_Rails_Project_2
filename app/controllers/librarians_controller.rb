@@ -152,6 +152,7 @@ end
     else
       @holds = Transaction.where(:status => "checked out")
 
+
     end
   end
 

@@ -72,18 +72,20 @@ end
     if !session[:admin_id]
       flash[:notice] = "Login to access Account "
       redirect_to root_url
-  else
+    else
+    puts params[:student_id]
     @student = Student.find_by_id(params[:student_id])
     end
   end
 
   def editlibrarian
       if !session[:admin_id]
-      flash[:notice] = "Login to access Account "
-      redirect_to root_url
-  else
-    @librarian = Librarian.find_by(params[:librarian_id])
-    end
+        flash[:notice] = "Login to access Account "
+        redirect_to root_url
+      else
+        @librarian = Librarian.find_by(params[:librarian_id])
+        puts @librarian.inspect
+      end
   end
 
 
@@ -119,7 +121,7 @@ end
   end
 
   def deletestudent
-    @student = Student.find_by_id(params[:id])
+    @student = Student.find_by_id(params[:student_id])
     @student.delete
     redirect_to :controller => "admins", :action => "showallstudents"
   end

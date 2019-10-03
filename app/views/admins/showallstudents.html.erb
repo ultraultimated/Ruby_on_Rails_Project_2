@@ -24,8 +24,8 @@ th
     <td> <%=student.educational_level%></td>
     <td><%=student.university[:name]%></td>
     <td><%=student.maximum_book_limit%></td>
-    <td><%= link_to "Update", :controller => "admins", :action => "editstudent" %><td>
-    <td><%= link_to "Delete", :controller => "admins", :action => "deletestudent", :id => student.id %><td>
+    <td><%= link_to "Update", :controller => "admins", :action => "editstudent", :student_id => student.id %><td>
+    <td><%= link_to "Delete", :controller => "admins", :action => "deletestudent", :student_id => student.id %><td>
   </tr>
 <%end %>
 </table>

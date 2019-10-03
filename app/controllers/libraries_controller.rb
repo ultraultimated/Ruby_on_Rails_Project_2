@@ -2,7 +2,7 @@ class LibrariesController < ApplicationController
   private
 
   def library_params
-    params.require(:library).permit(:name, :location, :fines, :max_days, :university)
+    params.require(:library).permit(:name, :location, :fines, :max_days, :university_id)
 
   end
 
@@ -20,6 +20,7 @@ class LibrariesController < ApplicationController
     else
       @library = Library.find_by_library_id(session[:library])
       @university = University.find_by_university_id(@library[:university_id])
+      puts @university.inspect
     end
   end
 
@@ -29,14 +30,11 @@ class LibrariesController < ApplicationController
       redirect_to root_url
     else
       @library = Library.find(params[:id])
-      params = library_params
-      puts params.inspect
-      params[:university_id] = library_params[:university]
-
+      @library[:university_id] = params[:university]
 
       respond_to do |format|
 
-        if @library.update_attributes(params)
+        if @library.update_attributes(library_params)
           format.html { redirect_to :controller => 'librarians', :action => 'index' }
           flash[:notice] = "Library Info was successfully updated."
           format.json { head :no_content }

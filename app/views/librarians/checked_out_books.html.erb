@@ -26,15 +26,17 @@
         <tr>
           <td><%= hold.ISBN %></td>
           <% @student = Student.find_by_id(hold.student_id) %>
-          <td><%= @student[:name] %></td>
+          <% if !@student.nil? %>
+            <td><%= @student[:name] %></td>
+          <% end %>
           <td><%= hold.bookname %></td>
           <td><%= hold.checkout_date %></td>
           <td><%= hold.expected_date %></td>
           <% if session[:role] == 'admin' %>
-            <%@library = Library.find_by_library_id(hold.library_id) %>
-            <td><%=@library[:name] %></td>
-            <%@university = University.find_by_university_id(@library[:university_id]) %>
-            <td><%=@university[:name] %></td>
+            <% @library = Library.find_by_library_id(hold.library_id) %>
+            <td><%= @library[:name] %></td>
+            <% @university = University.find_by_university_id(@library[:university_id]) %>
+            <td><%= @university[:name] %></td>
           <% end %>
         </tr>
       <% end %>

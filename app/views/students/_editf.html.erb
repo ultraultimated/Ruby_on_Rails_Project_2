@@ -1,61 +1,67 @@
-<% if !session[:student_id] 
-  redirect_to root_url end%>
-<div class="topnav">
-  <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
-  <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
-  <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id])%></a>
+<% if session[:role] != 'student' and session[:role] != 'admin' %>
+  <h1 color="red">You are not authorized to view this page</h1>
+  <% if session[:role] == 'admin' %>
+    <div class="topnav">
+      <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
+      <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
+      <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id]) %></a>
 
-  <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout"%></a>
-  
-</div>
-<style type="text/css">
+      <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout" %></a>
 
-</style>
-
-<%= form_for @student do |f| %>
-
-<% if @student.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@student.errors.count, "error") %> prohibited this Student from being saved:</h2>
-
-      <ul>
-      <% @student.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
     </div>
- <% end %>
+  <% end %>
+<% else %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name, :required => true %>
-  </div>
+  <style type="text/css">
 
-  <br />
-  
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email, :required => true %>
-  </div>
-  
-  <br />
-  
-  <div class="field">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
-  
-  <br>
-  
-  <div class="field">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
+  </style>
 
-  <br />
-  
- 
-  <div class="action">
-    <%= f.submit "Confirm Edit" %>
-  </div>
-<%end %>
+  <%= form_for @student do |f| %>
+
+    <% if @student.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@student.errors.count, "error") %> prohibited this Student from being saved:</h2>
+
+        <ul>
+          <% @student.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, :required => true %>
+    </div>
+
+    <br/>
+
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.email_field :email, :required => true %>
+    </div>
+
+    <br/>
+    <% if session[:role] == 'student' %>
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </div>
+
+      <br>
+
+      <div class="field">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+
+      <br/>
+    <% end %>
+
+
+    <div class="action">
+      <%= f.submit "Confirm Edit" %>
+    </div>
+  <% end %>
+<% end %>
