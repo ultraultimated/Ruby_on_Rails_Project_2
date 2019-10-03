@@ -39,7 +39,7 @@ class LibrariansController < ApplicationController
 
     if student == nil
       if @librarian.save
-        if (session[:admin_id] != nil)
+        if session[:admin_id] != nil
           redirect_to :controller => "admins", :action => "index"
         else
           redirect_to root_path, notice: "Librarian created successfully"

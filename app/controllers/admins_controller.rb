@@ -101,7 +101,7 @@ end
     @requests = Librarian.where(:is_valid => "requested")
   end
 
-  def update_approval
+  def update_approval_librarian
     if session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url

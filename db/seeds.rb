@@ -7,8 +7,28 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-Admin.create!([{
-	name: "administrator",
-	email: "dshah11@ncsu.edu",
-	password_digest: "$2b$10$mm9uguS51L76GbEP4mn2wuA4FVoDil2BE7QFF3j4bhThIhwBR8IaC"
-}])
+
+University.create!([{
+    university_id: "8",
+		name: "North Carolina State University"
+                    }])
+
+University.create!([{
+												university_id: "9",
+												name: "University of North Carolina at Charlotte"
+										}])
+
+University.create!([{
+												university_id: "10",
+												name: "Duke University"
+										}])
+
+University.create!([{
+												university_id: "11",
+												name: "University of North Carolina at Chapel Hill"
+										}])
+
+University.create!([{
+												university_id: "12",
+												name: "East Carolina University"
+										}])

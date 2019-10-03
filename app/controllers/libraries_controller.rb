@@ -2,7 +2,7 @@ class LibrariesController < ApplicationController
   private
 
   def library_params
-    params.require(:library).permit(:name, :university, :location, :fines, :max_days)
+    params.require(:library).permit(:name, :location, :fines, :max_days, :university)
 
   end
 
@@ -29,9 +29,9 @@ class LibrariesController < ApplicationController
       redirect_to root_url
     else
       @library = Library.find(params[:id])
-      @university = University.find_by_name(library_params[:university])
       params = library_params
-      params[:university] = @university
+      puts params.inspect
+      params[:university_id] = library_params[:university]
 
 
       respond_to do |format|
@@ -44,6 +44,26 @@ class LibrariesController < ApplicationController
           format.html { render action: "edit" }
           format.json { render json: @library.errors, status: :unprocessable_entity }
         end
+      end
+    end
+  end
+
+  def new
+    @library = Library.new
+  end
+
+  def create
+    if session[:role] != 'admin'
+      flash[:notice] = "login to access Account "
+      redirect_to root_url
+    else
+      @library = Library.new(library_params)
+      @library[:university_id] = params[:university]
+      if @library.save
+        flash[:notice] = "Library created successfully"
+        redirect_to :controller => "admins", :action => "index"
+      else
+        render 'libraries/new'
       end
     end
   end

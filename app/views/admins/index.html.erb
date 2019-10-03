@@ -8,8 +8,10 @@
   <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
 
   <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id])%></a>
+  <a><%= link_to "Create new Library", :controller => "libraries", :action => "new"%></a>
 
   <a class="topcorner"><%= link_to "Sign Out", :controller => "admins", :action => "logout"%></a>
+
   
 </div>
 <a><%= link_to "View All Books", :controller => 'books', :action => "index" %></a><br><br>
@@ -27,5 +29,4 @@
 
 <a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a><br><br>
 <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a><br><br>
-<a><%= link_to "Add a book", :controller => "books", :action => "new" %></a><br><br>
 <a><%= link_to "Add a book", :controller => "books", :action => "new" %></a><br><br>

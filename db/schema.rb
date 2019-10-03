@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_02_190938) do
+ActiveRecord::Schema.define(version: 2019_10_03_084300) do
 
   create_table "admins", force: :cascade do |t|
+    t.string "name", limit: 200
+    t.string "email", limit: 200
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_190938) do
     t.string "image", limit: 500
     t.string "subject", limit: 100
     t.string "summary", limit: 1000
-    t.boolean "specialcollection"
+    t.string "specialcollection"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "copies", limit: 6
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2019_10_02_190938) do
     t.string "library_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_valid"
+    t.string "is_valid", default: "requested"
     t.index ["email"], name: "index_librarians_on_email", unique: true
   end
 
@@ -93,8 +93,18 @@ ActiveRecord::Schema.define(version: 2019_10_02_190938) do
     t.index ["email"], name: "index_students_on_email", unique: true
   end
 
-# Could not dump table "transactions" because of following StandardError
-#   Unknown type '' for column 'library_id'
+  create_table "transactions", force: :cascade do |t|
+    t.integer "student_id"
+    t.string "ISBN"
+    t.string "bookname"
+    t.datetime "checkout_date"
+    t.datetime "expected_date"
+    t.datetime "return_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "library_id"
+  end
 
   create_table "universities", primary_key: "university_id", force: :cascade do |t|
     t.string "name", limit: 100

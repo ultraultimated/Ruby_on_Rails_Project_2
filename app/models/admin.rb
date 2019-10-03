@@ -1,6 +1,9 @@
 class Admin < ApplicationRecord
   has_secure_password
-  validates :email, :presence => true, :uniqueness => true
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates :name, :presence => true
+  def self.up
+    Admin.create(:email => "admin@admin.com", :name => "Admin", :password_digest => "123456789")
+  end
+  def self.down
+    Admin.delete_all
+  end
 end
