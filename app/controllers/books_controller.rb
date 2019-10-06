@@ -41,7 +41,7 @@ class BooksController < ApplicationController
 
     if Transaction.find_by_student_id(session[:student_id])
       @tran = Transaction.find_by_student_id(session[:student_id])
-      m = Transaction.where(student_id: @tran[:student_id]).count
+      m = (Transaction.where(student_id: @tran[:student_id], status: "checked out").or(Transaction.where(student_id: @tran[:student_id], status: "hold request")).or(Transaction.where(student_id: @tran[:student_id], status: "approval request"))).count
 
       if @student[:maximum_book_limit].to_i > m
         @book = Book.find_by_ISBN(params[:ISBN])

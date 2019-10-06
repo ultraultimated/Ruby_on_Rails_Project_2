@@ -26,6 +26,8 @@ end
     get 'alllibs'
     get 'fines'
     get 'returns'
+    get 'approval_requests'
+    get 'cancelrequest'
   end
 end
   resources :sign_up
