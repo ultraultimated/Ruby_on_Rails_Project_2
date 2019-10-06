@@ -138,7 +138,9 @@ end
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out")
+    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out").or(Transaction.where(student_id: session[:student_id], status: "approval request"))
+    #@tran  = Transaction.where{(student_id = session[:student_id]) & ((status =  "checked out" | status =  "approval request" ))}
+    #@tran.inspect
   end
   end
 
@@ -184,9 +186,20 @@ end
     #a = params[:id].to_i+1
     #Transaction.find(a).destroy
     @bk = Book.find_by_ISBN(params[:ISBN])
+
+    ### give to another
+    @hld = Hold.find_by_ISBN(params[:ISBN])
+
+    ###
     copies = @bk[:copies]
     @bk.update_attribute(:copies, (copies.to_i+1).to_s)
     flash[:notice] = "Book returned"
+    redirect_to :controller => 'students', :action => 'index'
+  end
+
+  def cancelrequest
+    Transaction.find(params[:id]).destroy
+    flash[:notice] = "Book Request cancelled"
     redirect_to :controller => 'students', :action => 'index'
   end
 
