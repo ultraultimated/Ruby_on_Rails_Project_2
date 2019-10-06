@@ -84,6 +84,8 @@
     if session[:admin_id] != nil
       @student = Student.find(params[:id])
 
+      puts @student[:university_id]
+    puts  @student.inspect
     respond_to do |format|
       #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
       #, 
@@ -132,7 +134,7 @@ end
     end
 
   end
-
+  
   def mybooks
     if !session[:student_id]
       flash[:notice] = "login to access Account "

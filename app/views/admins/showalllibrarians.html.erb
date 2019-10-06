@@ -25,8 +25,9 @@ th
     <td><%=librarian.email %></td>
     <td> <%=librarian.library_id%></td>
     <td><%= librarian.librarian_id %></td>
-    <td><%= link_to "Update", :controller => "admins", :action => "editlibrarian" ,
-                    :librarian_id => librarian.librarian_id%><td>
+   <td><%= link_to "Update", :controller => "admins", :action => "editlibrarian" , :librarian_id => librarian.librarian_id %><td>
+    <td><%= link_to "Delete", :controller => "admins", :action => "deletelibrarian", :librarian_id => librarian.librarian_id %><td>
+
   </tr>
 <%end %>
 </table>
