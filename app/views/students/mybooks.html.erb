@@ -39,6 +39,9 @@ td
     <% if tra.status == "checked out" %>
     	<td><%= link_to "Return", :controller => "students", :action => "returns", :id => tra.id , :ISBN => tra.ISBN %><br><br></td>
     <%end%>
+    <% if tra.status == "approval request" %>
+      <td><%= link_to "Cancel Request", :controller => "students", :action => "cancelrequest", :id => tra.id , :ISBN => tra.ISBN %><br><br></td>
+    <%end%>
   </tr>
 <% end %>
 <% end %>
