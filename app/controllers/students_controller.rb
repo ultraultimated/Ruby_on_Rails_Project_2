@@ -1,5 +1,5 @@
 
- require 'Date'
+# require 'Date'
  class StudentsController < ApplicationController
   
   def student_params
@@ -140,9 +140,7 @@ end
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out").or(Transaction.where(student_id: session[:student_id], status: "approval request"))
-    #@tran  = Transaction.where{(student_id = session[:student_id]) & ((status =  "checked out" | status =  "approval request" ))}
-    #@tran.inspect
+    @tran  = Transaction.where(student_id: session[:student_id], status: "checked out")
   end
   end
 
@@ -184,37 +182,13 @@ end
   def returns
     @t = Transaction.find_by_id(params[:id])
     @t.update_attribute(:status, "returned")
-    @t.update_attribute(:return_date, Date.today)
+     @t.update_attribute(:return_date, Date.today)
     #a = params[:id].to_i+1
     #Transaction.find(a).destroy
     @bk = Book.find_by_ISBN(params[:ISBN])
-
-    ### give to another
-    @hld = Hold.find_by_ISBN(params[:ISBN])
-    if @hld != nil
-      now = Date.today
-      max_day = Library.find_by_library_id(@bk[:library_id].to_i)[:max_days]
-      after = now + max_day.to_i
-    
-      @tt = Transaction.find_by_student_id(@hld[:student_id])
-      @tt.update_attribute(:checkout_date, now)
-      @tt.update_attribute(:expected_date, after)
-      @tt.update_attribute(:status, "checked out")
-      Hold.find(@hld[:id]).destroy
-      flash[:notice] = "Book returned and assigned to next student"
-      redirect_to :controller => 'students', :action => 'index'
-    ###
-    else
-      copies = @bk[:copies]
-      @bk.update_attribute(:copies, (copies.to_i+1).to_s)
-      flash[:notice] = "Book returned"
-      redirect_to :controller => 'students', :action => 'index'
-    end
-    end
-
-  def cancelrequest
-    Transaction.find(params[:id]).destroy
-    flash[:notice] = "Book Request cancelled"
+    copies = @bk[:copies]
+    @bk.update_attribute(:copies, (copies.to_i+1).to_s)
+    flash[:notice] = "Book returned"
     redirect_to :controller => 'students', :action => 'index'
   end
 
