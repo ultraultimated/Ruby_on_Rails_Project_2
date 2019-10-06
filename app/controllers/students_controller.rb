@@ -8,7 +8,7 @@
   end
 
   def index
-    if !session[:student_id]
+    if session[:role] != "student"
       flash[:notice] = "login to access Account "
       redirect_to root_url
     end
@@ -16,7 +16,7 @@
   end
 
   def show
-    if !session[:student_id]
+    if session[:role] != "student"
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
@@ -42,10 +42,6 @@
   end
 
   def create
-    #if !session[:student_id]
-     # flash[:notice] = "login to access Account "
-     # redirect_to root_url
-    #else
   	@student = Student.new(student_params)
     ####to find if user is already librarian
     librarian = Librarian.find_by_email(@student[:email])
@@ -81,45 +77,40 @@
    end
 
  def update
-    if session[:admin_id] != nil
-      @student = Student.find(params[:id])
 
-    respond_to do |format|
-      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
-      #, 
-      if @student.update_attributes(student_params)
-        format.html { redirect_to :controller => 'admins', :action => 'showallstudents', notice: 'Student Info was successfully updated.' }
-        format.json { head :no_content }
+    if session[:role] == "student"
+            @student = Student.find(params[:id])
+            respond_to do |format|
+                    if @student.update_attributes(student_params)
+                      format.html { redirect_to :controller => 'students', :action => 'index', notice: 'Student Info was successfully updated.' }
+                      format.json { head :no_content }
+                    else
+                      format.html { render action: "edit" }
+                      format.json { render json: @student.errors, status: :unprocessable_entity }
+                    end
+            end
+
+      elsif session[:role] == "admin"
+            @student = Student.find(params[:id])
+            respond_to do |format|
+                    if @student.update_attributes(student_params)
+                      format.html { redirect_to :controller => 'admins', :action => 'showallstudents', notice: 'Student Info was successfully updated.' }
+                      format.json { head :no_content }
+                    else
+                      format.html { render action: "edit" }
+                      format.json { render json: @student.errors, status: :unprocessable_entity }
+                    end
+            end
+
       else
-        format.html { render action: "edit" }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+            flash[:notice] = "login to access Account "
+            redirect_to root_url
+    
       end
-    end
-   else 
-
-    if !session[:student_id]
-      flash[:notice] = "login to access Account "
-      redirect_to root_url
-    else
-    @student = Student.find(params[:id])
-
-    respond_to do |format|
-      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
-      #, 
-      if @student.update_attributes(student_params)
-        format.html { redirect_to :controller => 'students', :action => 'index', notice: 'Student Info was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-end
   end
 
   def edit
-    if !session[:student_id] and session[:role] != 'admin'
+    if session[:role] != "student" and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
@@ -134,7 +125,7 @@ end
   end
 
   def mybooks
-    if !session[:student_id]
+    if session[:role] != "student"
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
@@ -146,7 +137,7 @@ end
 
 
   def allbooks
-    if !session[:student_id]
+    if session[:role] != "student"
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
@@ -155,7 +146,7 @@ end
   end
 
   def viewbookmark
-    if !session[:student_id]
+    if session[:role] != "student"
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
@@ -171,7 +162,7 @@ end
   end
     
   def fines
-    if !session[:student_id]
+     if session[:role] != "student"
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else

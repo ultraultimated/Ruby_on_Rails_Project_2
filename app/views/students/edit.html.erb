@@ -1,10 +1,15 @@
-<% if session[:role] != 'librarian' and session[:role] != 'admin' %>
-  <h1 color="red">You are not authorized to view this page</h1>
-  <% else %>
+<% if session[:role] == "student" or session[:role] == 'admin' %>
+    <% if session[:role] == "student" %>
+			    <div class="topnav">
+			          <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
+			          <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
+			          <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id]) %></a>
 
-
-<h1>Editing Student Information</h1>
-
-<%= render 'editf' %>
-
+			          <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout" %></a>
+			        </div>
+	<% end %>
+	<h1>Editing Student Information</h1>
+	<%= render 'editf' %>
+<% else %>
+	<h1 color="red">You are not authorized to view this page</h1>
 <% end %>
