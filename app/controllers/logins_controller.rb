@@ -12,7 +12,6 @@ class LoginsController < ApplicationController
   end
 
   def create
-
     @login = Login.new(login_params)
     student = Student.find_by_email(@login[:email])
     if student&.authenticate(params[:login][:password])

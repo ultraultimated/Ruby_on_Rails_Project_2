@@ -123,10 +123,13 @@ end
   def deletestudent
     @student = Student.find_by_id(params[:student_id])
     @student.delete
+    Transaction.where('student_id = '+params[:student_id]).delete_all
+    Hold.where('student_id = '+params[:student_id]).delete_all
+    Bookmark.where('student_id = '+params[:student_id]).delete_all
     redirect_to :controller => "admins", :action => "showallstudents"
   end
 
 
 end
 
-  
+  # bookmARK, hold, transaction

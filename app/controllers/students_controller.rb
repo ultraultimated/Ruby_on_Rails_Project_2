@@ -58,7 +58,6 @@
             	@student[:maximum_book_limit] = 6
             end
             @student[:university_id] = params[:university_id].to_s
-            @student[:used] = 0
             respond_to do |format|
               if @student.save
                 if(session[:admin_id] != nil)
