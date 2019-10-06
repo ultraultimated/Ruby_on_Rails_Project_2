@@ -1,4 +1,4 @@
-<% if !session[:admin_id] 
+<% if session[:role] != 'admin' 
   redirect_to root_url end%>
 
 <div class="topnav">
