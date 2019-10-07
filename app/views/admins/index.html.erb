@@ -1,6 +1,5 @@
 <h1>Admin Home-Page</h1>
 
-
 <% if !session[:admin_id] %>
   redirect_to root_url
    <%end%>
@@ -11,7 +10,7 @@
   <a><%= link_to "Create new Library", :controller => "libraries", :action => "new"%></a>
     <a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a>
   <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>
-  <a><%= link_to "Sign Out", :controller => "admins", :action => "logout"%></a>
+  <a><%= link_to "Sign Out", :controller => "admins", :action => "destroy"%></a>
 </div>
 <br>
 <br>

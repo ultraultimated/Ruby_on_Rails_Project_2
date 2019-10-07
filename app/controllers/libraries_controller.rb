@@ -2,7 +2,7 @@ class LibrariesController < ApplicationController
   private
 
   def library_params
-    params.require(:library).permit(:name, :location, :fines, :max_days, :university_id)
+    params.require(:library).permit(:name, :location, :fines, :max_days, :university_id, :university)
 
   end
 
@@ -31,6 +31,7 @@ class LibrariesController < ApplicationController
     else
       @library = Library.find(params[:id])
       @library[:university_id] = params[:id]
+      puts params.inspect
       puts @library.inspect
 
       respond_to do |format|
@@ -66,5 +67,6 @@ class LibrariesController < ApplicationController
       end
     end
   end
+
 
 end

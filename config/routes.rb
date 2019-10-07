@@ -2,15 +2,16 @@ Rails.application.routes.draw do
   get 'all_books' => 'admins#all_books'
   get 'approve_librarian' => 'admins#approve_librarian'
   get 'update_approval_librarian' => 'admins#update_approval_librarian'
-  get 'deletestudent' => 'admins#deletestudent'
   resources :admins do
    collection do
-    get 'logout'
+    get 'destroy'
     get 'createstudent'
     get 'showallstudents'
     get 'showalllibrarians'
     get 'editstudent'
     get 'editlibrarian'
+    get 'deletestudent'
+    get 'deletelibrarian'
   end
 end
 
@@ -37,6 +38,7 @@ end
     end
   end
   resources :libraries
+
   get 'approval_requests' => 'librarians#approval_requests'
   get 'update_approval' => 'librarians#update_approval'
   get 'checked_out_books' => 'librarians#checked_out_books'

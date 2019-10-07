@@ -8,7 +8,4 @@ class Book < ApplicationRecord
   validates :subject, :presence => true
   validates :title, :presence => true
   validates :specialcollection, :presence => true
-
-
-
 end

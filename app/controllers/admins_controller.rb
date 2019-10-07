@@ -73,8 +73,8 @@ end
       flash[:notice] = "Login to access Account "
       redirect_to root_url
     else
-    puts params[:student_id]
-    @student = Student.find_by_id(params[:student_id])
+      puts params[:student_id]
+      @student = Student.find_by_id(params[:student_id])
     end
   end
 
@@ -89,19 +89,31 @@ end
   end
 
 
-  def logout
+  def destroy
+
     reset_session
     redirect_to root_url
+    flash[:notice]="Logged out successfully."
   end
 
   def all_books
-    @books = Book.all
-    puts @books.inspect
+    if session[:role] != 'admin'
+      redirect_to root_url
+      flash[:notice] = "Login to access Account "
+    else
+      @books = Book.all
+      puts @books.inspect
+    end
   end
 
   def approve_librarian
-    @requests = Librarian.where(:is_valid => "requested")
-  end
+    if session[:role] != 'admin'
+      redirect_to root_url
+      flash[:notice] = "Login to access Account "
+    else
+      @requests = Librarian.where(:is_valid => "requested")
+    end
+  end  
 
   def update_approval_librarian
     if session[:role] != 'admin'
@@ -123,10 +135,22 @@ end
   def deletestudent
     @student = Student.find_by_id(params[:student_id])
     @student.delete
+    Transaction.where('student_id = '+params[:student_id]).delete_all
+    Hold.where('student_id = '+params[:student_id]).delete_all
+    Bookmark.where('student_id = '+params[:student_id]).delete_all
     redirect_to :controller => "admins", :action => "showallstudents"
   end
 
+  def deletelibrarian
+    @librarian = Librarian.find(params[:librarian_id])
+    @librarian.delete
+    flash[:notice]="Librarian account was successfully deleted."
+    redirect_to :controller => "admins", :action => "showalllibrarians"
+  end
 
-end
 
-  
+<<<<<<< HEAD
+end  
+=======
+  # bookmARK, hold, transaction
+>>>>>>> 10c69796a672bf134d7d200eebb7c920a736c531

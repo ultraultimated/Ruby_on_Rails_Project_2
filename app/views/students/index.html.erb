@@ -1,6 +1,6 @@
-<% if !session[:student_id] 
-	redirect_to root_url end%>
-<h1><%= session[:role] %></h1>
+<% if session[:role] != "student" 
+   redirect_to root_url end %>
+<h1>Welcome Student</h1>
 <div class="topnav">
   <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
   <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>

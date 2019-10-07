@@ -64,6 +64,22 @@ class LibrariansController < ApplicationController
   end
 
   def update
+    if session[:admin_id] != nil
+      @librarian = Librarian.find(params[:id])
+
+    respond_to do |format|
+      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
+      #, 
+      if @librarian.update_attributes(librarian_params)
+        format.html { redirect_to :controller => 'admins', :action => 'showalllibrarians' }
+        flash[:notice]="Librarian info was successfully updated."
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @librarian.errors, status: :unprocessable_entity }
+      end
+    end
+    else 
      if session[:admin_id] != nil
       @librarian = Librarian.find(params[:id])
 
@@ -210,4 +226,5 @@ end
     redirect_to root_path
   end
 
+end
 end
