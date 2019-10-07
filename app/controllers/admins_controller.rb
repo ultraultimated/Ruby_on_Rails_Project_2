@@ -147,5 +147,4 @@ end
     flash[:notice]="Librarian account was successfully deleted."
     redirect_to :controller => "admins", :action => "showalllibrarians"
   end
-
 end

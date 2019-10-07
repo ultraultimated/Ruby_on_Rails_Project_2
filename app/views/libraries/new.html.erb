@@ -1,6 +1,8 @@
 <% if session[:role] != 'admin' %>
   <h1>You are not authorized to view this page</h1>
 <% else %>
+  <h1>Library Sign-Up </h1>
+  <br>
   <%= form_for @library do |f| %>
 
     <% if @library.errors.any? %>
@@ -55,7 +57,7 @@
     <br>
 
     <div class="action">
-      <%= f.submit "create" %>
+      <%= f.submit "classreate" %>
     </div>
   <% end %>
 <% end %>
