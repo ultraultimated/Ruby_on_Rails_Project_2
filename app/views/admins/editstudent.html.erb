@@ -1,6 +1,6 @@
 <% if session[:role] != 'admin' %>
   <h1 color="red">You are not authorized to view this page</h1>
-  <% else %>
+<% else %>
 <%= form_for @student do |f| %>
 
 <% if @student.errors.any? %>
