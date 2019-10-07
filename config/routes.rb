@@ -47,9 +47,10 @@ end
   get 'overdue' => 'librarians#overdue'
   get 'signout' => 'librarians#signout'
   resources :librarians
+
+
   get 'checkout' => 'books#checkout'
   get 'destroy' => 'books#destroy'
-
   resources :books
 
   root 'logins#new'
