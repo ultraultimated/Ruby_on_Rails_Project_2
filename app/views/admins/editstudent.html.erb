@@ -32,8 +32,7 @@
   
   
   <div class="field">
-    <%= f.label :EducationalLevel %>
-    <%= f.text_field :educational_level %>
+    Educational Level : <%= f.select  :educational_level, ['Undergraduate', 'Graduate', 'Phd'], {:prompt => 'Select Education Level'}%>
   </div>
   
   <br>
