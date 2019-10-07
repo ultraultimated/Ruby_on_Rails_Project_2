@@ -81,8 +81,8 @@
    end
 
  def update
-    if session[:admin_id] != nil
-      @student = Student.find(params[:id])
+    if session[:role] == 'admin'
+      @student = Student.find(params[:id]) 
 
       puts @student[:university_id]
     puts  @student.inspect
@@ -99,11 +99,12 @@
     end
    else 
 
-    if !session[:student_id]
+    if session[:role]=='student'
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
     @student = Student.find(params[:id])
+
 
     respond_to do |format|
       #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
