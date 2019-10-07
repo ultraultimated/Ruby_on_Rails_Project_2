@@ -1,11 +1,12 @@
-<% if session[:student_id] %>
+
+
+<% if session[:role] == "student" %>
   <div class="topnav">
     <a><%= link_to "Home", :controller => "students", :action => "index" %></a>
     <a><%= link_to "My Books", :controller => "students", :action => "mybooks" %></a>
     <a><%= link_to "Edit My Profile", edit_student_path(session[:student_id]) %></a>
 
     <a class="topcorner"><%= link_to "Sign Out", :controller => "students", :action => "logout" %></a>
-
   </div>
 <% end %>
 <% if session[:role] == 'librarian' %>
@@ -42,8 +43,6 @@
 <% end %>
 
 
-
-
 <table>
   <th>ISBN</th>
   <th>title</th>
@@ -76,7 +75,7 @@
           <td><%= link_to 'Destroy', destroy_path(bk),
                           data: {confirm: 'Are you sure?'} %></td>
           <td><%= link_to 'View', :controller => "books", :action => "show", :id => bk.ISBN %></td>
-        <% else %>
+        <% elsif  session[:role] == "student" %>
           <td><%= link_to 'Checkout', :controller => "books", :action => "checkout", :ISBN => bk.ISBN, :library_id => bk.library_id, :bookname => bk.title %></td>
           <td><%= link_to 'Bookmark', :controller => "books", :action => "book_bookmark", :ISBN => bk.ISBN, :library_id => bk.library_id, :bookname => bk.title %></td>
         <% end %>
