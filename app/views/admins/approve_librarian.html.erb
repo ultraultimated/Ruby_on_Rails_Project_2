@@ -8,7 +8,7 @@
   <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>
   <a><%= link_to "Create Student Account", :controller => "students", :action => "new"%></a>
   <a><%= link_to "Create Librarian Account", :controller => "librarians", :action => "new"%></a>
-  <a><%= link_to "Sign Out", :controller => "admins", :action => "logout"%></a>
+  <a><%= link_to "Sign Out", :controller => "admins", :action => "destroy"%></a>
  </div>
 
 <style type="text/css">
@@ -20,6 +20,7 @@
   <h1 color="red">You are not authorized to view this page</h1>
 <% else %>
   <table>
+    <table border="1px">
     <th>Librarian Name</th>
     <th>Library ID</th>
     <% if !@requests.nil? then
