@@ -19,8 +19,8 @@ class LibrariesController < ApplicationController
       redirect_to root_url
     else
       @library = Library.find_by_library_id(session[:library])
-      @university = University.find_by_university_id(@library[:university_id])
-      puts @university.inspect
+      @university = University.find_by_university_id(@library[params[:id]])
+
     end
   end
 
@@ -30,7 +30,8 @@ class LibrariesController < ApplicationController
       redirect_to root_url
     else
       @library = Library.find(params[:id])
-      @library[:university_id] = params[:university]
+      @library[:university_id] = params[:id]
+      puts @library.inspect
 
       respond_to do |format|
 
@@ -56,7 +57,7 @@ class LibrariesController < ApplicationController
       redirect_to root_url
     else
       @library = Library.new(library_params)
-      @library[:university_id] = params[:university]
+      @library[:university_id] = params[:university_id]
       if @library.save
         flash[:notice] = "Library created successfully"
         redirect_to :controller => "admins", :action => "index"

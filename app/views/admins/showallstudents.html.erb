@@ -2,12 +2,13 @@
 <style type="text/css">
 td
 {
-    padding:0 1px 0 0px;
+    padding:0 41px 0 0px;
+  text-align: center;
 }
 th
 {
   text-align: left;
-  padding:0 10px 5px 0px;
+  padding:0 20px 5px 0px;
 }
 </style>
 <h2>List of all students</h2>
@@ -24,8 +25,8 @@ th
     <td> <%=student.educational_level%></td>
     <td><%=student.university[:name]%></td>
     <td><%=student.maximum_book_limit%></td>
-    <td><%= link_to "Update", :controller => "admins", :action => "editstudent", :student_id => student.id %><td>
-    <td><%= link_to "Delete", :controller => "admins", :action => "deletestudent", :student_id => student.id %><td>
+    <td><%= link_to "Update", :controller => "admins", :action => "editstudent", :student_id => student.id %></td>
+    <td><%= link_to "Delete", :controller => "admins", :action => "deletestudent", :student_id => student.id %></td>
   </tr>
 <%end %>
 </table>

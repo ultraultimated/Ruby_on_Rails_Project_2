@@ -8,6 +8,7 @@
 
 
 
+=begin
 University.create!([{
     university_id: "8",
 		name: "North Carolina State University"
@@ -32,3 +33,9 @@ University.create!([{
 												university_id: "12",
 												name: "East Carolina University"
 										}])
+=end
+Admin.create!([{
+    										name: "admin",
+                        email: "admin@lib.com",
+                        password: "$2a$10$pO76oucPrpONo8zL7t9v8eyaCCbEs9/C7Kljk9aPWzxBYj7ERvWNS"
+               }])
