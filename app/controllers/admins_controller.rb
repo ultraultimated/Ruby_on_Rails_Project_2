@@ -148,9 +148,4 @@ end
     redirect_to :controller => "admins", :action => "showalllibrarians"
   end
 
-
-<<<<<<< HEAD
-end  
-=======
-  # bookmARK, hold, transaction
->>>>>>> 10c69796a672bf134d7d200eebb7c920a736c531
+end
