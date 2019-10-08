@@ -134,6 +134,7 @@ end
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
+      puts "***************MEEEEEEELELELELEL"
       @holds = Transaction.where(["status = ? and library_id = ?", "approval request", session[:library]])
       puts @holds.inspect
     end
@@ -165,6 +166,7 @@ end
   end
 
   def checked_out_books
+    puts "INCHECKED OUT BOOKS"
     if session[:role] != 'librarian' and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url

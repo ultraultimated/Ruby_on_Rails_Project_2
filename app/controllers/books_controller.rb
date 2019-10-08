@@ -17,7 +17,7 @@ class BooksController < ApplicationController
       @book = Book.where(library_id: @library[:library_id])
     else
       if session[:role] == 'librarian'
-        @book = Book.where("library_id = " + session[:library])
+        @book = Book.where(library_id: session[:library])
       else
         @book = Book.all
       end
@@ -142,6 +142,12 @@ class BooksController < ApplicationController
   def destroy
 
     @book = Book.find_by_id(params[:format])
+    @transaction = Transaction.where(ISBN: @book[:ISBN])
+    @holds = Hold.where(ISBN: @book[:ISBN])
+    @bookmark = Bookmark.where(ISBN: @book[:ISBN])
+    Transaction.where('ISBN =' + @book[:ISBN]).delete_all
+    Hold.where('ISBN =' + @book[:ISBN]).delete_all
+    Bookmark.where('ISBN =' + @book[:ISBN]).delete_all
     @book.destroy
     redirect_to books_path
   end
