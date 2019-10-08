@@ -135,6 +135,7 @@ end
       redirect_to root_url
     else
       @holds = Transaction.where(["status = ? and library_id = ?", "approval request", session[:library]])
+      puts @holds.inspect
     end
   end
 

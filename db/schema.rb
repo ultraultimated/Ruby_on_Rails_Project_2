@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_06_203623) do
+ActiveRecord::Schema.define(version: 2019_10_07_053443) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name", limit: 200
