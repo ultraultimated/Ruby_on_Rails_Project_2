@@ -13,8 +13,18 @@ class BooksController < ApplicationController
 
   def index
     if session[:role] == "student"
-      @library = Library.find_by_university_id(session[:university_id])
-      @book = Book.where(library_id: @library[:library_id])
+      # puts session[:university_id]
+      @library = Library.where(university_id: session[:university_id])
+      puts @library.inspect
+      @count = @library.count
+      @arr = []
+      @library.each do |library|
+        @arr<<library.library_id
+      end
+    puts @arr.inspect
+
+      @book = Book.where(library_id: @arr)
+      puts @book.inspect
     else
       if session[:role] == 'librarian'
         @book = Book.where(library_id: session[:library])
