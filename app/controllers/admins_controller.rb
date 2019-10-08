@@ -77,13 +77,13 @@ end
     end
   end
 
+
   def editlibrarian
       if !session[:admin_id]
         flash[:notice] = "Login to access Account "
         redirect_to root_url
       else
-        @librarian = Librarian.find_by(params[:librarian_id])
-        puts @librarian.inspect
+        @librarian = Librarian.find_by_librarian_id(params[:librarian_id])
       end
   end
 
