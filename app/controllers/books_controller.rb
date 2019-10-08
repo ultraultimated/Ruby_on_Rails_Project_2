@@ -17,7 +17,7 @@ class BooksController < ApplicationController
       @book = Book.where(library_id: @library[:library_id])
     else
       if session[:role] == 'librarian'
-        @book = Book.where("library_id = " + session[:library])
+        @book = Book.where(library_id: session[:library])
       else
         @book = Book.all
       end
