@@ -4,5 +4,4 @@ class Library < ApplicationRecord
   validates :max_days, :presence =>true, :numericality => {only_integer: true}
   validates :fines, :presence => true, :numericality =>true
   validates :location, :presence => true
-
 end
