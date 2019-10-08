@@ -129,26 +129,27 @@ end
   end
 
   def approval_requests
-    puts "&&&&&&&&&&&&&&&************************&&&&&&&&&&&&&&&&&&"
     if session[:role] != 'librarian'
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
-      puts "***************MEEEEEEELELELELEL"
       @holds = Transaction.where(["status = ? and library_id = ?", "approval request", session[:library]])
       puts @holds.inspect
     end
   end
 
   def update_approval
-    puts session[:role]
     if session[:role] != 'librarian'
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
       @hold = Transaction.find_by_id(params[:id])
+      @student = Student.find_by_id(@hold[:student_id])
       @type = params[:request]
       if @type == 'approve'
+        puts "***************"
+        puts @student[:email]
+        LibrarianMailer.confirm_book(@student).deliver_now
         @hold.update_attribute(:status, "checked out")
         @hold.update_attribute(:checkout_date, Date.today)
         @library = Library.find_by_library_id(@hold[:library_id])
@@ -157,6 +158,7 @@ end
         @book = Book.find_by_ISBN(@hold[:ISBN])
         copies = @book[:copies]
         @book.update_attribute(:copies, (copies.to_i - 1).to_s)
+
       else
         @hold.update_attribute(:status, "rejected")
 
@@ -166,7 +168,6 @@ end
   end
 
   def checked_out_books
-    puts "INCHECKED OUT BOOKS"
     if session[:role] != 'librarian' and session[:role] != 'admin'
       flash[:notice] = "login to access Account "
       redirect_to root_url

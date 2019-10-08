@@ -43,7 +43,7 @@ class BooksController < ApplicationController
       @tran = Transaction.find_by_student_id(session[:student_id])
       m = (Transaction.where(student_id: @tran[:student_id], status: "checked out").or(Transaction.where(student_id: @tran[:student_id], status: "hold request")).or(Transaction.where(student_id: @tran[:student_id], status: "approval request"))).count
 
-      if @student[:maximum_book_limit].to_i > m
+      if @student[:maximum_book_limit].to_i >= m
         @book = Book.find_by_ISBN(params[:ISBN])
 
         now = Date.today
@@ -53,7 +53,7 @@ class BooksController < ApplicationController
         copies = @book[:copies]
         if (copies.to_i > 0)
           ####special request###
-          if @book[:specialcollection] == "yes"
+          if @book[:specialcollection] == "Yes" or @book[:specialcollection] == "yes"
             @trn = Transaction.new(:student_id => session[:student_id], :bookname => params[:bookname], :ISBN => params[:ISBN], :status => "approval request", :library_id => @book[:library_id])
             @trn.save
             flash[:notice] = "Request sent to librarian for approval"

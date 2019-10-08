@@ -1,7 +1,9 @@
 class Library < ApplicationRecord
   has_many :librarians, :through => :librarians
   belongs_to :university, :foreign_key => :university_id
-  validates :max_days, :presence =>true, :numericality => {only_integer: true}
-  validates :fines, :presence => true, :numericality =>true
-  validates :location, :presence => true
+
+  validates :max_days,  :presence =>true, :numericality => { :greater_than_or_equal_to => 0 }
+  validates :fines, :presence => true, :numericality => { :greater_than_or_equal_to => 0 }
+   validates :location, :presence => true
+
 end
