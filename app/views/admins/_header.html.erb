@@ -1,0 +1,10 @@
+<div class="topnav">
+  <a><%= link_to "Home", :controller => "admins", :action => "index" %></a>
+  <a><%= link_to "Edit My Profile", edit_admin_path(session[:admin_id])%></a>
+  <a><%= link_to "View all Students", :controller => "admins", :action => "showallstudents" %></a>
+  <a><%= link_to "View all Librarians", :controller => "admins", :action => "showalllibrarians" %></a>
+  <a><%= link_to "Create Student Account", :controller => "students", :action => "new"%></a>
+  <a><%= link_to "Create Librarian Account", :controller => "librarians", :action => "new"%></a>
+  <a><%= link_to "Sign Out", :controller => "admins", :action => "destroy"%></a>
+ </div>
+

@@ -1,4 +1,3 @@
-
  require 'Date'
  class StudentsController < ApplicationController
   
