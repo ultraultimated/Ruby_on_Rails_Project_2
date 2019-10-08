@@ -68,7 +68,7 @@
         <td><%= bk.edition %></td>
         <td><%= bk.subject %></td>
         <td><%= bk.specialcollection %></td>
-        <td><%= ('<img src=bk.image;base64,%s">' % Base64.encode64(@the_data)).html_safe %></td>
+        <td><%= link_to 'View Image', :controller => "books", :action => "showimage", :ISBN => bk.ISBN %>
         <td><%= bk.summary %></td>
         &nbsp
         <% if session[:role] == 'librarian' or session[:role] == 'admin' %>
