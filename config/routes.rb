@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  get 'librarians/dest' => 'librarians#dest'
   get 'all_books' => 'admins#all_books'
   get 'approve_librarian' => 'admins#approve_librarian'
   get 'update_approval_librarian' => 'admins#update_approval_librarian'

@@ -15,7 +15,7 @@
     <a><%= link_to "Approval Requests", :controller => "librarians", :action => "approval_requests" %></a>
     <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id]) %></a>
     <a><%= link_to "Add a Book", new_book_url %></a>
-    <a><%= link_to "Sign out", :controller => "librarians", :action => "signout" %></a>
+    <a><%= link_to "Sign out", :controller => "librarians", :action => "dest" %></a>
   </div>
 <% end %>
 
@@ -52,6 +52,7 @@
   <th>Edition</th>
   <th>Subject</th>
   <th>Special Collection</th>
+  <th>Image</th>
   <th>Summary</th>
   <% if session[:role] == 'librarian' %>
     <th>Copies</th>
@@ -67,6 +68,7 @@
         <td><%= bk.edition %></td>
         <td><%= bk.subject %></td>
         <td><%= bk.specialcollection %></td>
+        <td><%= ('<img src=bk.image;base64,%s">' % Base64.encode64(@the_data)).html_safe %></td>
         <td><%= bk.summary %></td>
         &nbsp
         <% if session[:role] == 'librarian' or session[:role] == 'admin' %>
