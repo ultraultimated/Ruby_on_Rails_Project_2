@@ -1,12 +1,11 @@
 class AdminsController < ApplicationController
   private
-
   def admin_params
     params.require(:admin).permit(:name, :email, :password, :password_confirmation, :educational_level, :university_id, :maximum_book_limit, :libr, :library_id )
   end
 
   public
-#Home Page
+
   def index
     if !session[:admin_id]
       flash[:notice] = "Login to access Account "

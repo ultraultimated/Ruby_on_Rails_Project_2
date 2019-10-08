@@ -26,6 +26,9 @@ class LibrariansController < ApplicationController
 
   end
 
+  def show
+  end
+
 
   def create
 
@@ -114,6 +117,7 @@ class LibrariansController < ApplicationController
     end
   end
 end
+end
 
   def add_book
     if session[:role] != 'librarian'
@@ -125,6 +129,7 @@ end
   end
 
   def approval_requests
+    puts "&&&&&&&&&&&&&&&************************&&&&&&&&&&&&&&&&&&"
     if session[:role] != 'librarian'
       flash[:notice] = "login to access Account "
       redirect_to root_url
@@ -216,15 +221,12 @@ end
     else
       @overdue = Transaction.where(["status = ? and library_id = ?",
                                     "overdue", session[:library]])
-
     end
 
   end
-  def signout
+  def dest
     flash[:notice] = "Logged out successfully"
     reset_session
-    redirect_to root_path
+    redirect_to root_url
   end
-
-end
 end

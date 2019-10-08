@@ -13,7 +13,6 @@ group :production do
   gem 'pg'
 end
 
-
 gem 'devise'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'

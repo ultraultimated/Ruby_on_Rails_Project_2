@@ -172,7 +172,6 @@ class BooksController < ApplicationController
     else
       @book[:library_id] = params[:library_id]
     end
-
     @book[:specialcollection] = params[:specialcollection]
 
     respond_to do |format|

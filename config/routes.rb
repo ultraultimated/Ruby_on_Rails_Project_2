@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'librarians/dest' => 'librarians#dest'
   get 'all_books' => 'admins#all_books'
   get 'approve_librarian' => 'admins#approve_librarian'
   get 'update_approval_librarian' => 'admins#update_approval_librarian'
@@ -44,8 +45,13 @@ end
   get 'book_history' => 'librarians#book_history'
   get 'view_hold_requests' => 'librarians#view_hold_requests'
   get 'overdue' => 'librarians#overdue'
-  get 'signout' => 'librarians#signout'
-  resources :librarians
+  #get 'dest' => 'librarians#dest'
+  resources :librarians do
+    collection do
+      #get 'dest'
+      get 'search'
+    end
+  end
   get 'checkout' => 'books#checkout'
   get 'destroy' => 'books#destroy'
 
