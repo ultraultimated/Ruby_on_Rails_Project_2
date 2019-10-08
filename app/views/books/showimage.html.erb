@@ -1,0 +1,8 @@
+<% if !@book.nil? then
+       @book.each do |bk| %>
+      <tr>
+         <% if bk.avatar %>
+        <td><%= image_tag (bk.avatar_url.to_s) %> </td>
+ <% end %>
+ <% end %>
+ <% end %>

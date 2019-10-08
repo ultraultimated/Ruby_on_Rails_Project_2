@@ -10,7 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_08_014309) do
+ActiveRecord::Schema.define(version: 2019_10_08_025438) do
+
+  create_table "Books", force: :cascade do |t|
+    t.string "ISBN"
+    t.string "title", limit: 200
+    t.string "author", limit: 70
+    t.string "language", limit: 20
+    t.string "published", limit: 4
+    t.string "edition", limit: 4
+    t.string "library_id", limit: 10
+    t.string "avatar", limit: 500
+    t.string "subject", limit: 100
+    t.string "summary", limit: 1000
+    t.string "specialcollection"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "copies", limit: 6
+    t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string "name", limit: 200
@@ -25,24 +64,6 @@ ActiveRecord::Schema.define(version: 2019_10_08_014309) do
     t.string "ISBN"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "books", force: :cascade do |t|
-    t.string "ISBN"
-    t.string "title", limit: 200
-    t.string "author", limit: 70
-    t.string "language", limit: 20
-    t.string "published", limit: 4
-    t.string "edition", limit: 4
-    t.string "library_id", limit: 10
-    t.string "image", limit: 500
-    t.string "subject", limit: 100
-    t.string "summary", limit: 1000
-    t.string "specialcollection"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "copies", limit: 6
-    t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
   end
 
   create_table "holds", force: :cascade do |t|

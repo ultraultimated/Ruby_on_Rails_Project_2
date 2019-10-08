@@ -4,7 +4,7 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:ISBN, :title, :author, :language, :bookname,
-                                 :published, :edition, :image, :subject,
+                                 :published, :edition, :image, :avatar, :subject,
                                  :summary, :specialcollection, :library_id, :copies,
     )
   end
@@ -179,6 +179,7 @@ class BooksController < ApplicationController
       @book[:library_id] = params[:library_id]
     end
     @book[:specialcollection] = params[:specialcollection]
+   # @book.avatar.attach(params[:avatar])
 
     respond_to do |format|
       if @book.save
@@ -220,5 +221,10 @@ class BooksController < ApplicationController
     end
   end
 
+def showimage
+  
+  @book = Book.where(ISBN: params[:ISBN])
+
+end
 
 end

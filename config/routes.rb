@@ -36,6 +36,7 @@ end
     collection do
       get 'book_bookmark'
       get 'search'
+      get 'showimage'
     end
   end
   resources :libraries
