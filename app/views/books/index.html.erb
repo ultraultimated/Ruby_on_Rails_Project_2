@@ -14,6 +14,7 @@
     <a><%= link_to "Edit My Profile", edit_librarian_path(session[:librarian_id]) %></a>
     <a><%= link_to "Add a Book", new_book_url %></a>
     <a><%= link_to "Sign out", :controller => "librarians", :action => "dest" %></a>
+    <p>Welcome, </p><%=session[:role] %>
   </div>
 <% end %>
 <% if session[:role] == 'admin' %>
