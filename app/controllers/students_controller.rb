@@ -90,8 +90,6 @@
 
       elsif session[:role] == "admin"
             @student = Student.find(params[:id])
-
-            @student[:university_id] = params[:university_id]
             respond_to do |format|
                     if @student.update_attributes(student_params)
                       format.html { redirect_to :controller => 'admins', :action => 'showallstudents', notice: 'Student Info was successfully updated.' }

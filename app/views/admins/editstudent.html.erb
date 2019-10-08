@@ -37,19 +37,7 @@
   
   <br>
   
-  <div class="field">
-      University: 
-  <% @universities = University.all %>
-    <!--    <%#= f.label :lib %>
-    Library: <%#= select_tag :lib, options_from_collection_for_select(@library, "id", "name") %>-->
-    <select name="university_id" >
-      <%= @universities.each do |uni| %>
-       <% uni.university_id%>
-        <option value="<%= uni.university_id %>"><%= uni.name %></option>
-      <% end %>
-    </select>
-  </div>
-  <br>
+
 
 <div class="field">
     <%= f.label :MaximumBookLimit %>
