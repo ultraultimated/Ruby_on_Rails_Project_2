@@ -150,15 +150,19 @@ class BooksController < ApplicationController
 
 
   def destroy
-
     @book = Book.find_by_id(params[:format])
     @transaction = Transaction.where(ISBN: @book[:ISBN])
     @holds = Hold.where(ISBN: @book[:ISBN])
     @bookmark = Bookmark.where(ISBN: @book[:ISBN])
-    Transaction.where('ISBN =' + @book[:ISBN]).delete_all
-    Hold.where('ISBN =' + @book[:ISBN]).delete_all
-    Bookmark.where('ISBN =' + @book[:ISBN]).delete_all
-    @book.destroy
+    Transaction.where(ISBN: @book[:ISBN]).delete_all
+    Hold.where(ISBN:  @book[:ISBN]).delete_all
+    Bookmark.where(ISBN: @book[:ISBN]).delete_all
+    @book[:avatar] = nil
+    begin
+      @book.destroy
+    rescue
+      puts "&&&&&"
+    end
     redirect_to books_path
   end
 

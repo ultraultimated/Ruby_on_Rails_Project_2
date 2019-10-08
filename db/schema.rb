@@ -10,25 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_08_025438) do
-
-  create_table "Books", force: :cascade do |t|
-    t.string "ISBN"
-    t.string "title", limit: 200
-    t.string "author", limit: 70
-    t.string "language", limit: 20
-    t.string "published", limit: 4
-    t.string "edition", limit: 4
-    t.string "library_id", limit: 10
-    t.string "avatar", limit: 500
-    t.string "subject", limit: 100
-    t.string "summary", limit: 1000
-    t.string "specialcollection"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "copies", limit: 6
-    t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
-  end
+ActiveRecord::Schema.define(version: 2019_10_08_225526) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -64,6 +46,24 @@ ActiveRecord::Schema.define(version: 2019_10_08_025438) do
     t.string "ISBN"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "ISBN"
+    t.string "title", limit: 200
+    t.string "author", limit: 70
+    t.string "language", limit: 20
+    t.string "published", limit: 4
+    t.string "edition", limit: 4
+    t.string "library_id", limit: 10
+    t.string "avatar", limit: 500
+    t.string "subject", limit: 100
+    t.string "summary", limit: 1000
+    t.string "specialcollection"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "copies", limit: 6
+    t.index ["ISBN"], name: "index_books_on_ISBN", unique: true
   end
 
   create_table "holds", force: :cascade do |t|
