@@ -23,44 +23,37 @@
         </ul>
       </div>
     <% end %>
+<table>
 
-    <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name, :read_only => true %>
-    </div>
+  <tr>
+      <td><%= f.label :name %></td>
+      <td><%= f.text_field :name, :read_only => true, :size => "30"%></td>
+  </tr>
 
-    <br/>
+    <tr>
+      <td><%= f.label :university_id %></td>
+      <td><%= f.text_field :university_id, :readonly => true, :value => @university[:name], :size => "30" %></td>
+    </tr>
 
-    <div class="field">
-      <%= f.label :university_id %>
-      <%= f.text_field :university_id, :readonly => true, :value => @university[:university_id] %>
-    </div>
+    <tr>
+      <td><%= f.label :location %></td>
+      <td><%= f.text_field :location, :readonly => true, :size => "30" %></td>
+    </tr>
 
-    <br/>
 
-    <div class="field">
-      <%= f.label :location %>
-      <%= f.text_field :location, :readonly => true %>
-    </div>
+    <tr>
+      <td><%= f.label :fines %></td>
+      <td><%= f.text_field :fines, :required => true, :size => "30"%></td>
+    </tr>
 
-    <br>
+    <tr>
+      <td><%= f.label :max_days %></td>
+      <td><%= f.text_field :max_days, :required => true, :size => "30" %></td>
+    </tr>
 
-    <div class="field">
-      <%= f.label :fines %>
-      <%= f.text_field :fines, :required => true %>
-    </div>
-
-    <div class="field">
-      <%= f.label :max_days %>
-      <%= f.text_field :max_days, :required => true %>
-    </div>
-
-    <br/>
-
-    <br>
-
-    <div class="action">
-      <%= f.submit "Confirm Changes" %>
-    </div>
+    <tr>
+      <td><%= f.submit "Confirm Changes" %></td>
+    </tr>
+</table>
   <% end %>
 <% end %>

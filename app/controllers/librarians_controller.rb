@@ -26,6 +26,9 @@ class LibrariansController < ApplicationController
 
   end
 
+  def show
+  end
+
 
   def create
 
@@ -114,6 +117,7 @@ class LibrariansController < ApplicationController
     end
   end
 end
+end
 
   def add_book
     if session[:role] != 'librarian'
@@ -130,18 +134,22 @@ end
       redirect_to root_url
     else
       @holds = Transaction.where(["status = ? and library_id = ?", "approval request", session[:library]])
+      puts @holds.inspect
     end
   end
 
   def update_approval
-    puts session[:role]
     if session[:role] != 'librarian'
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
       @hold = Transaction.find_by_id(params[:id])
+      @student = Student.find_by_id(@hold[:student_id])
       @type = params[:request]
       if @type == 'approve'
+        puts "***************"
+        puts @student[:email]
+        LibrarianMailer.confirm_book(@student).deliver_now
         @hold.update_attribute(:status, "checked out")
         @hold.update_attribute(:checkout_date, Date.today)
         @library = Library.find_by_library_id(@hold[:library_id])
@@ -150,6 +158,7 @@ end
         @book = Book.find_by_ISBN(@hold[:ISBN])
         copies = @book[:copies]
         @book.update_attribute(:copies, (copies.to_i - 1).to_s)
+
       else
         @hold.update_attribute(:status, "rejected")
 
@@ -216,15 +225,12 @@ end
     else
       @overdue = Transaction.where(["status = ? and library_id = ?",
                                     "overdue", session[:library]])
-
     end
 
   end
-  def signout
+  def dest
     flash[:notice] = "Logged out successfully"
     reset_session
-    redirect_to root_path
+    redirect_to root_url
   end
-
-end
 end

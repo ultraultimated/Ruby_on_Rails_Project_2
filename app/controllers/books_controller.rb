@@ -4,7 +4,7 @@ class BooksController < ApplicationController
 
   def book_params
     params.require(:book).permit(:ISBN, :title, :author, :language, :bookname,
-                                 :published, :edition, :image, :subject,
+                                 :published, :edition, :image, :avatar, :subject,
                                  :summary, :specialcollection, :library_id, :copies,
     )
   end
@@ -17,7 +17,7 @@ class BooksController < ApplicationController
       @book = Book.where(library_id: @library[:library_id])
     else
       if session[:role] == 'librarian'
-        @book = Book.where("library_id = " + session[:library])
+        @book = Book.where(library_id: session[:library])
       else
         @book = Book.all
       end
@@ -43,7 +43,7 @@ class BooksController < ApplicationController
       @tran = Transaction.find_by_student_id(session[:student_id])
       m = (Transaction.where(student_id: @tran[:student_id], status: "checked out").or(Transaction.where(student_id: @tran[:student_id], status: "hold request")).or(Transaction.where(student_id: @tran[:student_id], status: "approval request"))).count
 
-      if @student[:maximum_book_limit].to_i > m
+      if @student[:maximum_book_limit].to_i >= m
         @book = Book.find_by_ISBN(params[:ISBN])
 
         now = Date.today
@@ -53,7 +53,7 @@ class BooksController < ApplicationController
         copies = @book[:copies]
         if (copies.to_i > 0)
           ####special request###
-          if @book[:specialcollection] == "yes"
+          if @book[:specialcollection] == "Yes"
             @trn = Transaction.new(:student_id => session[:student_id], :bookname => params[:bookname], :ISBN => params[:ISBN], :status => "approval request", :library_id => @book[:library_id])
             @trn.save
             flash[:notice] = "Request sent to librarian for approval"
@@ -142,6 +142,12 @@ class BooksController < ApplicationController
   def destroy
 
     @book = Book.find_by_id(params[:format])
+    @transaction = Transaction.where(ISBN: @book[:ISBN])
+    @holds = Hold.where(ISBN: @book[:ISBN])
+    @bookmark = Bookmark.where(ISBN: @book[:ISBN])
+    Transaction.where('ISBN =' + @book[:ISBN]).delete_all
+    Hold.where('ISBN =' + @book[:ISBN]).delete_all
+    Bookmark.where('ISBN =' + @book[:ISBN]).delete_all
     @book.destroy
     redirect_to books_path
   end
@@ -172,8 +178,8 @@ class BooksController < ApplicationController
     else
       @book[:library_id] = params[:library_id]
     end
-
     @book[:specialcollection] = params[:specialcollection]
+   # @book.avatar.attach(params[:avatar])
 
     respond_to do |format|
       if @book.save
@@ -215,5 +221,10 @@ class BooksController < ApplicationController
     end
   end
 
+def showimage
+  
+  @book = Book.where(ISBN: params[:ISBN])
+
+end
 
 end

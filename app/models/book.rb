@@ -1,4 +1,10 @@
+
+
+
 class Book < ApplicationRecord
+	has_many_attached :avatar
+
+	mount_uploader :avatar, ImageUploader
   belongs_to :library, optional: true
   validates :copies, :presence => true,
             numericality: {only_integer: true, :greater_than_or_equal_to => 1}
@@ -8,4 +14,5 @@ class Book < ApplicationRecord
   validates :subject, :presence => true
   validates :title, :presence => true
   validates :specialcollection, :presence => true
+  validates :ISBN, :presence => true
 end
