@@ -1,6 +1,4 @@
 
-
-
 class Book < ApplicationRecord
 	has_many_attached :avatar
 
@@ -14,5 +12,5 @@ class Book < ApplicationRecord
   validates :subject, :presence => true
   validates :title, :presence => true
   validates :specialcollection, :presence => true
-  validates :ISBN, :presence => true
+  validates :ISBN,  :presence => true
 end
