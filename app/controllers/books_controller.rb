@@ -53,7 +53,7 @@ class BooksController < ApplicationController
         copies = @book[:copies]
         if (copies.to_i > 0)
           ####special request###
-          if @book[:specialcollection] == "Yes"
+          if @book[:specialcollection] == "Yes" or @book[:specialcollection] == "yes"
             @trn = Transaction.new(:student_id => session[:student_id], :bookname => params[:bookname], :ISBN => params[:ISBN], :status => "approval request", :library_id => @book[:library_id])
             @trn.save
             flash[:notice] = "Request sent to librarian for approval"
