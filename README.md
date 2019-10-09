@@ -1,6 +1,6 @@
 Deployment link:- https://mighty-everglades-41541.herokuapp.com/
 
-Admin email: admin@admin.ncsu.edu
+Admin email: admin@lib.com
 Password: password
 
 ## Admin
