@@ -8,7 +8,7 @@ class Student < ApplicationRecord
   validates :educational_level,  :presence =>true
   validates :university_id,  :presence =>true
   validates :name, :presence => true
-  #validates :password, :presence => {:message => "please enter password"}, :length => {minimum: 8}, allow_nil: true
+  validates :password, :length => {minimum: 8}, allow_nil: true
   #validates :maximum_books, :presence => true, :length => {:in =>  1..1}
   
 end
