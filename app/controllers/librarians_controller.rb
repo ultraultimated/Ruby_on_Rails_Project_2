@@ -42,7 +42,7 @@ class LibrariansController < ApplicationController
 
     if student == nil
       if @librarian.save
-        if session[:admin_id] != nil
+        if session[:role] != 'admin'
           redirect_to :controller => "admins", :action => "index"
         else
           redirect_to root_path, notice: "Librarian created successfully"
@@ -67,48 +67,21 @@ class LibrariansController < ApplicationController
   end
 
   def update
-    if session[:admin_id] != nil
-      @librarian = Librarian.find(params[:id])
-
-    respond_to do |format|
-      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
-      #, 
-      if @librarian.update_attributes(librarian_params)
-        format.html { redirect_to :controller => 'admins', :action => 'showalllibrarians' }
-        flash[:notice]="Librarian info was successfully updated."
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @librarian.errors, status: :unprocessable_entity }
-      end
-    end
-    else 
-     if session[:admin_id] != nil
-      @librarian = Librarian.find(params[:id])
-
-    respond_to do |format|
-      #format.html { redirect_to @student, notice: 'Student Info was successfully updated.' }
-      #, 
-      if @librarian.update_attributes(librarian_params)
-        format.html { redirect_to :controller => 'admins', :action => 'showalllibrarians', notice: 'Librarian Info was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @librarian.errors, status: :unprocessable_entity }
-      end
-    end
-   else 
-
-    if session[:role] != 'librarian'
+    if session[:role] != 'admin' and session[:role] != 'librarian'
       flash[:notice] = "login to access Account "
       redirect_to root_url
     else
       @librarian = Librarian.find(params[:id])
+      puts params.inspect
+      @librarian[:library_id] = params[:libr]
       respond_to do |format|
         if @librarian.update_attributes(librarian_params)
-          format.html { redirect_to :controller => 'librarians', :action => 'index' }
-          flash[:notice] = "Librarian Info was successfully updated."
-          format.json { head :no_content }
+          if session[:role] == 'admin'
+            format.html { redirect_to :controller => 'admins', :action => 'showalllibrarians' }
+          else
+            format.html { redirect_to :controller => 'librarians', :action => 'index' }
+          end
+          flash[:notice] = "Librarian info was successfully updated."
         else
           format.html { render action: "edit" }
           format.json { render json: @librarian.errors, status: :unprocessable_entity }
@@ -116,8 +89,6 @@ class LibrariansController < ApplicationController
       end
     end
   end
-end
-end
 
   def add_book
     if session[:role] != 'librarian'
@@ -147,8 +118,6 @@ end
       @student = Student.find_by_id(@hold[:student_id])
       @type = params[:request]
       if @type == 'approve'
-        puts "***************"
-        puts @student[:email]
         LibrarianMailer.confirm_book(@student).deliver_now
         @hold.update_attribute(:status, "checked out")
         @hold.update_attribute(:checkout_date, Date.today)
@@ -228,6 +197,7 @@ end
     end
 
   end
+
   def dest
     flash[:notice] = "Logged out successfully"
     reset_session

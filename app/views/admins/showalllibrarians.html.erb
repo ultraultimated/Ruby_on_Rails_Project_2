@@ -25,7 +25,6 @@ th
 </style>
 
 <h2>List of all librarians</h2>
-<table>
   <table border="1px">
   <th>Name:</th>
   <th>Email:</th>
@@ -35,8 +34,11 @@ th
   <tr>
     <td><%=librarian.name %></td>
     <td><%=librarian.email %></td>
-    <td> <%=librarian.library_id%></td>
-    <td><%= librarian.librarian_id %></td>
+    <%@library = Library.find_by_library_id(librarian.library_id) %>
+    <%@university = University.find_by_university_id(@library[:university_id]) %>
+    <td> <%=@university[:name]%></td>
+    <td><%= @library[:name] %></td>
+
    <td><%= link_to "Update", :controller => "admins", :action => "editlibrarian" , :librarian_id => librarian.librarian_id %><td>
     <td><%= link_to "Delete", :controller => "admins", :action => "deletelibrarian", :librarian_id => librarian.librarian_id %><td>
 

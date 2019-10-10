@@ -154,13 +154,10 @@ class BooksController < ApplicationController
     @transaction = Transaction.where(ISBN: @book[:ISBN])
     @holds = Hold.where(ISBN: @book[:ISBN])
     @bookmark = Bookmark.where(ISBN: @book[:ISBN])
-    Transaction.where('ISBN =' + @book[:ISBN]).delete_all
-    Hold.where('ISBN =' + @book[:ISBN]).delete_all
-    Bookmark.where('ISBN =' + @book[:ISBN]).delete_all
+    Transaction.where(ISBN: @book[:ISBN]).delete_all
+    Hold.where(ISBN:  @book[:ISBN]).delete_all
+    Bookmark.where(ISBN: @book[:ISBN]).delete_all
     @book[:avatar] = nil
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&"
-    puts @book[:avatar] 
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&"
     begin
       @book.destroy
     rescue
