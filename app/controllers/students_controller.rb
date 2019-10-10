@@ -60,7 +60,8 @@
                   format.json { render json: @student, status: :created, location: @student }
                 else
                 #redirect_to controller: 'session', action: 'create', email: @student[:email]
-                  format.html { redirect_to @student }
+                  flash[:notice] = "Student created successfully!"
+                  format.html { redirect_to root_url }
                   format.json { render json: @student, status: :created, location: @student }
                 end
               else

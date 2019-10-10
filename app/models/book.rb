@@ -11,7 +11,7 @@ class Book < ApplicationRecord
   validates :subject, :presence => true
   validates :title, :presence => true
   validates :specialcollection, :presence => true
-  validates :ISBN, :presence => true, :numericality => true
+  validates :ISBN, :presence => true, :numericality => true, length: {minimum: 13, maximum: 13}
   def self.up
     change_column :published, :created_at, :datetime
   end
