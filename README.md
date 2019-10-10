@@ -17,6 +17,7 @@ Password: password
 * Admin can view overdues of all students using view overdues.
 * Admin can view book history of all libraries using book history in his home page.
 * Admin can approve/deny librarian request in view approval requests tab in his home page.
+* By default there is one library in the system, but admin can add more libraries to the university.
 
 ## Librarian
 * In the nav bar librarian can view approval requests sent by students for special collection of books, Librarian may approve/deny request.
@@ -28,6 +29,8 @@ Password: password
 * Librarian can view book history of all books along with overdue and rejected requests in book history.
 * If a student is placed on hold for a book, librarian can view holds in hold request tab.
 * Librarian can view overdues in overdues in his home page.
+* Librarian will not be able to access account without approval of librarian and user will see a message stating that "your request is still in queue"
+
 
 ## Student
 * Student can view his checked out books in My books in navbar.
