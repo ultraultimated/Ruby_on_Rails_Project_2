@@ -133,6 +133,12 @@ end
   def deletestudent
     @student = Student.find_by_id(params[:student_id])
     @student.delete
+    @tr = Transaction.where('student_id = '+params[:student_id])
+    @tr.each do |t|
+      @bk = Book.find_by_ISBN(t.ISBN)
+      c = @bk[:copies]
+      @bk.update_attribute(:copies, (c.to_i + 1).to_s)
+    end
     Transaction.where('student_id = '+params[:student_id]).delete_all
     Hold.where('student_id = '+params[:student_id]).delete_all
     Bookmark.where('student_id = '+params[:student_id]).delete_all
