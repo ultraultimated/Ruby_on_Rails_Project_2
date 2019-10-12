@@ -1,5 +1,7 @@
 Deployment link:- https://mighty-everglades-41541.herokuapp.com/
 
+To avoid the application malfunctioning, Admin account can't be deleted and admin email id can't be updated.
+ 
 Admin email: admin@lib.com
 Password: password
 
