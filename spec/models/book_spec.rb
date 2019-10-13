@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'spec_helper'
+
 RSpec.describe Book, type: :model do
   it "isbn invalid" do
     book = Book.new(isbn: nil)
