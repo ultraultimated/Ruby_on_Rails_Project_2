@@ -1,12 +1,18 @@
 require 'rails_helper'
 require 'spec_helper'
 RSpec.describe Book, type: :model do
-  describe 'validations' do
-  	describe ' name' do
-  		it 'must be present' do
-  			Book=described_class.new
-  			expect(Book).to_not be_valid
-  		end
-  	end	
+  it "isbn invalid" do
+    book = Book.new(isbn: nil)
+    expect(book).to_not be_valid
   end
+  it "summary invalid" do
+    book = Book.new(summary: nil)
+    expect(book).to_not be_valid
+  end
+  it "title invalid" do
+    book = Book.new(title: nil)
+    expect(book).to_not be_valid
+  end
+  
 end
+  
