@@ -3,6 +3,8 @@ class Book < ApplicationRecord
 
   mount_uploader :avatar, ImageUploader
   belongs_to :library, optional: true
+  belongs_to :bookmark, optional: true
+  belongs_to :hold, optional: true
   validates :copies, :presence => true,
             numericality: {only_integer: true, :greater_than_or_equal_to => 1}
   validates :author, :presence => true
