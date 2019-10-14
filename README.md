@@ -5,6 +5,12 @@ To avoid the application malfunctioning, Admin account can't be deleted and admi
 Admin email: admin@lib.com
 Password: password
 
+Librarian email: librarian@lib.com
+Password: password
+
+Student email: student@lib.com
+Password: password
+
 ## Admin
 * In the nav bar admin can edit his profile.
 * View all students shows list of all students along with edit, delete and view student.
